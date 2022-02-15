@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Aurora</string>
+    <string name="user_name">User Name:</string>
+    <string name="please_enter_your_user_name">enter your user name</string>
+    <string name="please_enter_your_phone_number">enter your phone number</string>
+    <string name="sign_up">Sign up</string>
+    <string name="verify">Verify</string>
+    <string name="enter_code_from_message">enter code from message</string>
 </resources>
