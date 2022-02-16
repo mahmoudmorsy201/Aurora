@@ -1,22 +1,62 @@
 package com.iti.aurora.database;
 
 
-import com.google.android.gms.tasks.Task;
+import android.app.Activity;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.iti.aurora.model.User;
+import com.iti.aurora.utils.Constants;
 
 public class DAOUser {
-    DatabaseReference databaseReference;
+     DatabaseReference databaseReference;
+     FirebaseDatabase database;
+     Activity activity;
 
-    public DAOUser() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("users");
+
+    public DAOUser(Activity activity) {
+         database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference(Constants.FirebaseConstants.USERS);
+        this.activity = activity;
     }
 
-    public Task<Void> addUser(User user) {
-        return databaseReference.push().setValue(user);
+    private void addUser(User user) {
+         databaseReference.push().setValue(user);
     }
+
+
+    public void checkForDuplicates(User user) {
+
+        databaseReference.orderByChild(Constants.FirebaseConstants.PHONE_NUMBER).equalTo(user.getPhoneNumber()).addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            makeToast("User is already exists");
+                        }else {
+                            addUser(user);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                }
+        );
+    }
+
+    private void makeToast(String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+        //TODO: Add alert view to notify the user that he is already exists.
+    }
+
 
 
 }
