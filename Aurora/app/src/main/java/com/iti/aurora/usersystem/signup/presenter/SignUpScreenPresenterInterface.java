@@ -1,6 +1,7 @@
 package com.iti.aurora.usersystem.signup.presenter;
 
-import com.iti.model.User;
+
+import com.iti.aurora.model.User;
 
 public interface SignUpScreenPresenterInterface {
 

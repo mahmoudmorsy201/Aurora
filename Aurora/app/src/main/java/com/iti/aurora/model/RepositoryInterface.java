@@ -1,4 +1,4 @@
-package com.iti.model;
+package com.iti.aurora.model;
 
 public interface RepositoryInterface {
 }

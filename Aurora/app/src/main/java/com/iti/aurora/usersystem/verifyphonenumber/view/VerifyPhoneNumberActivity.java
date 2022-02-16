@@ -2,7 +2,6 @@ package com.iti.aurora.usersystem.verifyphonenumber.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,8 @@ import com.iti.aurora.R;
 import com.iti.aurora.usersystem.signup.view.SignUpActivity;
 import com.iti.aurora.usersystem.verifyphonenumber.presenter.VerifyPhoneNumberPresenter;
 import com.iti.aurora.usersystem.verifyphonenumber.presenter.VerifyPhoneNumberPresenterInterface;
-import com.iti.database.DAOUser;
-import com.iti.model.User;
+import com.iti.aurora.database.DAOUser;
+import com.iti.aurora.model.User;
 
 public class VerifyPhoneNumberActivity extends AppCompatActivity implements VerifyPhoneNumberViewInterface{
 

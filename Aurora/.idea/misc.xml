@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android - Aurora/Aurora/Aurora/app/src/main/res/layout/activity_splash.xml" value="0.19635416666666666" />
+        <entry key="..\:/Android/Projects/ITI/Aurora/Aurora/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.1445" />
+        <entry key="..\:/Android/Projects/ITI/Aurora/Aurora/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android/Projects/ITI/Aurora/Aurora/app/src/main/res/layout/dialog_dosage_reminder.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
