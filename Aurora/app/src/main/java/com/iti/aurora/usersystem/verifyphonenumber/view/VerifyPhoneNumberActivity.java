@@ -33,7 +33,7 @@ public class VerifyPhoneNumberActivity extends AppCompatActivity implements Veri
         verifyButton = findViewById(R.id.verifyButton);
         verifyPhoneNumberPresenterInterface = new VerifyPhoneNumberPresenter(VerifyPhoneNumberActivity.this,VerifyPhoneNumberActivity.this);
         verifyPhoneNumberPresenterInterface.sendCodeToUser(getUser());
-        DAOUser daoUser = new DAOUser();
+        DAOUser daoUser = new DAOUser(this);
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +41,7 @@ public class VerifyPhoneNumberActivity extends AppCompatActivity implements Veri
                 if(getCode() != null) {
                     verifyPhoneNumberPresenterInterface.verifyUser(getCode());
 
-                    daoUser.addUser(getUser());
+                    daoUser.checkForDuplicates(getUser());
 
                 }
             }

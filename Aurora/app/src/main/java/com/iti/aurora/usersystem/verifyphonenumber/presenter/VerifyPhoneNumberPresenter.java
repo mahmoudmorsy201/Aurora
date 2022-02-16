@@ -39,7 +39,7 @@ public class VerifyPhoneNumberPresenter implements VerifyPhoneNumberPresenterInt
         this.activity = activity;
         this._view = _view;
         mAuth = FirebaseAuth.getInstance();
-        daoUser = new DAOUser();
+        daoUser = new DAOUser(activity);
 
 
     }
