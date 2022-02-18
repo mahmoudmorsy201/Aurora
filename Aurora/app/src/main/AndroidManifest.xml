@@ -11,15 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aurora">
+
         <activity
             android:name=".editmeds.view.EditMedsActivity"
             android:exported="false" />
+
         <activity
             android:name=".usersystem.verifyphonenumber.view.VerifyPhoneNumberActivity"
             android:exported="false" />
+
         <activity
             android:name=".home.view.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+
         <activity
             android:name=".usersystem.signup.view.SignUpActivity"
             android:exported="true">
@@ -29,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
