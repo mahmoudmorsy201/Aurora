@@ -1,5 +1,8 @@
 package com.iti.aurora.model;
 
+import com.iti.aurora.model.medicine.Medicine;
+import com.iti.aurora.model.medicine.MedicineForm;
+
 import java.io.Serializable;
 
 public class User implements Serializable {

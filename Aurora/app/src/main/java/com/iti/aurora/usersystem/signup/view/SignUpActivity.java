@@ -26,9 +26,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.hbb20.CountryCodePicker;
 import com.iti.aurora.R;
+import com.iti.aurora.database.AppDataBase;
+import com.iti.aurora.database.ConcreteLocalSource;
 import com.iti.aurora.database.DAOUser;
 import com.iti.aurora.home.view.MainActivity;
 import com.iti.aurora.model.User;
+import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.usersystem.signup.presenter.SignUpScreenPresenter;
 import com.iti.aurora.usersystem.signup.presenter.SignUpScreenPresenterInterface;
 import com.iti.aurora.usersystem.verifyphonenumber.view.VerifyPhoneNumberActivity;
@@ -56,6 +59,10 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
         setContentView(R.layout.activity_sign_up);
         initUI();
         mAuth = FirebaseAuth.getInstance();
+        ConcreteLocalSource concreteLocalSource = ConcreteLocalSource.getInstance(this);
+        Medicine medicine = new Medicine();
+        concreteLocalSource.insertMedicine(medicine);
+
 
     }
 
