@@ -85,5 +85,13 @@
         android:text="@string/sign_up"
         android:textAlignment="center" />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.4"
+        android:layout_marginHorizontal="20dp"/>
+
 
 </LinearLayout>

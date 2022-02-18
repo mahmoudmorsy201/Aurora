@@ -37,10 +37,8 @@ public class VerifyPhoneNumberActivity extends AppCompatActivity implements Veri
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkForEditTexts();
-                if(getCode() != null) {
+                if(getCode() != null && checkForEditTexts()) {
                     verifyPhoneNumberPresenterInterface.verifyUser(getCode());
-
                     daoUser.checkForDuplicates(getUser());
 
                 }
@@ -50,13 +48,17 @@ public class VerifyPhoneNumberActivity extends AppCompatActivity implements Veri
     }
 
 
-    private void checkForEditTexts() {
+    private boolean checkForEditTexts() {
+        boolean result = false;
         String code = otpCode.getText().toString().trim();
 
         if(code.isEmpty()) {
             otpCode.setError("Code is required");
             otpCode.requestFocus();
+        }else {
+            result = true;
         }
+        return result;
     }
 
 

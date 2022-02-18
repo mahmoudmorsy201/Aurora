@@ -6,6 +6,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +34,9 @@ public class DAOUser {
     }
 
 
-    public void checkForDuplicates(User user) {
 
+
+    public void checkForDuplicates(User user) {
         databaseReference.orderByChild(Constants.FirebaseConstants.PHONE_NUMBER).equalTo(user.getPhoneNumber()).addValueEventListener(
                 new ValueEventListener() {
                     @Override
