@@ -6,13 +6,4 @@
     <string name="sign_up">Sign up</string>
     <string name="verify">Verify</string>
     <string name="enter_code_from_message">enter code from message</string>
-    <string name="drug_name">Drug Name</string>
-    <string name="reminders">Reminders</string>
-    <string name="suspended">Suspended</string>
-    <string name="active">Active</string>
-    <string name="refill">Refill</string>
-    <string name="instructions">Instructions</string>
-    <string name="howToUse">How to use</string>
-    <string name="before_eating">Before eating</string>
-    <string name="add_dose">ADD DOSE</string>
 </resources>

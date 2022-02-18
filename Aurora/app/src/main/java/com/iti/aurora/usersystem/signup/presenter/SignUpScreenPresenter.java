@@ -1,7 +1,6 @@
 package com.iti.aurora.usersystem.signup.presenter;
 
 import android.app.Activity;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -11,7 +10,7 @@ import com.iti.aurora.model.User;
 
 public class SignUpScreenPresenter implements SignUpScreenPresenterInterface{
 
-    SignUpViewInterface _view;
+     SignUpViewInterface _view;
     Activity activity;
 
     GoogleSignInOptions gso;
