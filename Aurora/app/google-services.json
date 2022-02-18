@@ -1,7 +1,6 @@
 {
   "project_info": {
     "project_number": "255715706065",
-    "firebase_url": "https://aurora-8c935-default-rtdb.firebaseio.com",
     "project_id": "aurora-8c935",
     "storage_bucket": "aurora-8c935.appspot.com"
   },
@@ -14,14 +13,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "255715706065-176e5drf1ga7eiqbfmem3hbaum7245kt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.iti.aurora",
-            "certificate_hash": "14295a71ef08f8ccf108116b03c0fcfe532d298c"
-          }
-        },
         {
           "client_id": "255715706065-e3uq4g6php7ncqo7tank63l6e0s4j0of.apps.googleusercontent.com",
           "client_type": 3
