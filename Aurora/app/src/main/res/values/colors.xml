@@ -8,4 +8,30 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dot_light_screen1">#FFFFFF</color>
+    <color name="dot_light_screen2">#FFFFFF</color>
+    <color name="dot_light_screen3">#FFFFFF</color>
+    <color name="dot_light_screen4">#FFFFFF</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#A5A5A5</color>
+    <color name="dot_dark_screen2">#A5A5A5</color>
+    <color name="dot_dark_screen3">#A5A5A5</color>
+    <color name="dot_dark_screen4">#A5A5A5</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
+
+    <color name="background_color">#144A91CE</color>
 </resources>
