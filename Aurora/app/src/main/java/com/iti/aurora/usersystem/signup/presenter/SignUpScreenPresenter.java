@@ -29,7 +29,7 @@ public class SignUpScreenPresenter implements SignUpScreenPresenterInterface{
     @Override
     public void signInWithGoogle() {
          gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(activity.getString(R.string.default_web_client_id))
+                .requestIdToken("255715706065-176e5drf1ga7eiqbfmem3hbaum7245kt.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
