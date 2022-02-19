@@ -1,4 +1,4 @@
-package com.iti.aurora.database;
+package com.iti.aurora.database.dao;
 
 import android.app.Activity;
 import android.widget.Toast;

@@ -16,9 +16,9 @@ import java.util.List;
 public class Medicine {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "medId")
     @NonNull
-    int medId;
+    long medId;
 
     @TypeConverters({DateConverter.class})
     private Date startDate;
@@ -38,8 +38,8 @@ public class Medicine {
     @ColumnInfo(name = "reasonOfTaking")
     private String reasonOfTaking;
 
-    @TypeConverters(DoseListConverter.class)
-    private List<Dose> doseList;
+//    @TypeConverters(DoseListConverter.class)
+//    private List<Dose> doseList;
 
     @ColumnInfo(name = "isActive")
     private Boolean isActive;
@@ -181,11 +181,11 @@ public class Medicine {
 
     }
 
-    public int getMedId() {
+    public long getMedId() {
         return medId;
     }
 
-    public void setMedId(int medId) {
+    public void setMedId(long medId) {
         this.medId = medId;
     }
 
@@ -235,14 +235,6 @@ public class Medicine {
 
     public void setReasonOfTaking(String reasonOfTaking) {
         this.reasonOfTaking = reasonOfTaking;
-    }
-
-    public List<Dose> getDoseList() {
-        return doseList;
-    }
-
-    public void setDoseList(List<Dose> doseList) {
-        this.doseList = doseList;
     }
 
     public Boolean getActive() {

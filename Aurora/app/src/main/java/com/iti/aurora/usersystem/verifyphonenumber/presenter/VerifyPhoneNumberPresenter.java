@@ -17,7 +17,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.iti.aurora.usersystem.verifyphonenumber.view.VerifyPhoneNumberViewInterface;
-import com.iti.aurora.database.DAOUser;
+import com.iti.aurora.database.dao.DAOUser;
 import com.iti.aurora.model.User;
 import java.util.concurrent.TimeUnit;
 

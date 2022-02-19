@@ -11,7 +11,7 @@ import com.iti.aurora.R;
 import com.iti.aurora.usersystem.signup.view.SignUpActivity;
 import com.iti.aurora.usersystem.verifyphonenumber.presenter.VerifyPhoneNumberPresenter;
 import com.iti.aurora.usersystem.verifyphonenumber.presenter.VerifyPhoneNumberPresenterInterface;
-import com.iti.aurora.database.DAOUser;
+import com.iti.aurora.database.dao.DAOUser;
 import com.iti.aurora.model.User;
 
 public class VerifyPhoneNumberActivity extends AppCompatActivity implements VerifyPhoneNumberViewInterface{
