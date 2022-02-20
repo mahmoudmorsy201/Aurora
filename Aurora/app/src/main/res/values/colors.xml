@@ -34,4 +34,5 @@
     </array>
 
     <color name="background_color">#144A91CE</color>
+    <color name="warning">#cc3300</color>
 </resources>
