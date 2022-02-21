@@ -4,15 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android - Aurora/Aurora Development/Aurora/Aurora/app/src/main/res/drawable/background_layout.xml" value="0.1675" />
-        <entry key="..\:/Android - Aurora/Aurora Development/Aurora/Aurora/app/src/main/res/layout/item_add_medication.xml" value="0.25" />
+        <entry key="..\:/Android - Aurora/Aurora Development/Aurora/Aurora/app/src/main/res/layout/item_add_medication.xml" value="0.33" />
         <entry key="..\:/Android - Aurora/Aurora/Aurora/app/src/main/res/layout/activity_splash.xml" value="0.19635416666666666" />
-        <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/item_add_medication.xml" value="0.2898089171974522" />
-        <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/item_med_main.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/layout/acitivty_medication_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_edit_meds.xml" value="0.40850500479931706" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.30945231119791666" />
         <entry key="app/src/main/res/layout/dialog_dosage_reminder.xml" value="0.11354166666666667" />
+        <entry key="app/src/main/res/layout/item_med_main.xml" value="0.246875" />
       </map>
     </option>
   </component>

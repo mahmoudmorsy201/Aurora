@@ -16,7 +16,11 @@ import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Date;
 import java.util.List;
 
 public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
@@ -48,7 +52,14 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
 //        holder.medicationNameTextView.setText(medicine.getName());
 //        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " of " + medicine.getUnit());
 //        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
-        holder.medicationTimeTextView.setText(new DateTime(doseList.get(position).getTimeToTake()).toString());
+
+        DateTime date = new DateTime(doseList.get(position).getTimeToTake());
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM");
+        DateTimeFormatter fmt2 = DateTimeFormat.forPattern("hh:mm");
+        String dateString = date.toString(fmt);
+        String timeString = date.toString(fmt2);
+        holder.medicationNameTextView.setText(String.valueOf(doseList.get(position).getMedId()));
+        holder.medicationTimeTextView.setText(dateString + " " + timeString);
     }
 
     @Override
