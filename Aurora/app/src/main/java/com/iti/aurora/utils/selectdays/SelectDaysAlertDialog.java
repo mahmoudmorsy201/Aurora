@@ -14,10 +14,20 @@ public class SelectDaysAlertDialog {
     Context context;
     IUpdateText iUpdateText;
 
+    int daysCountMax;
+    int currentCount = 0;
+
     public SelectDaysAlertDialog(Context context, IUpdateText iUpdateText) {
         this.context = context;
         this.iUpdateText = iUpdateText;
     }
+
+    public SelectDaysAlertDialog(Context context, IUpdateText iUpdateText, int daysCount) {
+        this.context = context;
+        this.iUpdateText = iUpdateText;
+        this.daysCountMax = daysCount;
+    }
+
 
     private final static String[] days = {"Saturday",
             "Sunday",
@@ -30,7 +40,7 @@ public class SelectDaysAlertDialog {
     private boolean[] selectedDays = new boolean[days.length];
     private ArrayList<Integer> dayList = new ArrayList<>();
 
-    public void showSelectDaysDialog(Context context) {
+    public void showSelectDaysDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select Days");
@@ -41,7 +51,11 @@ public class SelectDaysAlertDialog {
                 if (isChecked) {
                     dayList.add(which);
                     Collections.sort(dayList);
+                    currentCount++;
+                    if (currentCount >= daysCountMax)
+                        dialog.dismiss();
                 } else {
+                    currentCount--;
                     ArrayList<Integer> dayListDub = new ArrayList<>(dayList);
                     for (Integer day : dayList) {
                         if (day == which) {

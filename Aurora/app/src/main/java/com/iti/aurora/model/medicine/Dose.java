@@ -51,6 +51,12 @@ public class Dose {
     public Dose() {
     }
 
+    public Dose(long medId, long treatmentId, Date timeToTake) {
+        this.medId = medId;
+        this.treatmentId = treatmentId;
+        this.timeToTake = timeToTake;
+    }
+
     public Dose(Date timeToTake, Boolean isTaken, Date timeTaken, long medId, long treatmentId) {
         this.timeToTake = timeToTake;
         this.isTaken = isTaken;
