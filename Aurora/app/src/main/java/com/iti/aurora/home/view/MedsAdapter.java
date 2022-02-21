@@ -48,9 +48,9 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-//        Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
-//        holder.medicationNameTextView.setText(medicine.getName());
-//        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " of " + medicine.getUnit());
+        Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
+        holder.medicationNameTextView.setText(medicine.getName());
+        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " " + medicine.getMedicineForm() + " of " + medicine.getStrengthUnit());
 //        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
 
         DateTime date = new DateTime(doseList.get(position).getTimeToTake());
@@ -58,8 +58,8 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
         DateTimeFormatter fmt2 = DateTimeFormat.forPattern("hh:mm");
         String dateString = date.toString(fmt);
         String timeString = date.toString(fmt2);
-        holder.medicationNameTextView.setText(String.valueOf(doseList.get(position).getMedId()));
-        holder.medicationTimeTextView.setText(dateString + " " + timeString);
+        //holder.medicationNameTextView.setText(String.valueOf(doseList.get(position).getMedId()));
+        holder.medicationTimeTextView.setText(timeString + " " + dateString);
     }
 
     @Override
