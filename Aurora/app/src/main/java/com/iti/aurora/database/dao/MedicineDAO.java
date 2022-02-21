@@ -24,7 +24,7 @@ public interface MedicineDAO {
     void updateMedicine(Medicine medicine);
 
     @Query("SELECT * FROM medicine WHERE medId = :medId")
-    Medicine getSpecificMedicine(int medId);
+    Medicine getSpecificMedicine(long medId);
 
     @Delete
     void deleteMedicine(Medicine medicine);

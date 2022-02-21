@@ -11,17 +11,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.aurora.R;
+import com.iti.aurora.model.RepositoryInterface;
+import com.iti.aurora.model.medicine.Dose;
+import com.iti.aurora.model.medicine.Medicine;
+
+import org.joda.time.DateTime;
 
 import java.util.List;
 
 public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
 
-    List<String> medList;
+    List<Dose> doseList;
     Context context;
+    RepositoryInterface repositoryInterface;
 
-    public MedsAdapter(List<String> medList, Context context) {
-        this.medList = medList;
+    public void setDoseList(List<Dose> doseList) {
+        this.doseList = doseList;
+    }
+
+    public MedsAdapter(List<Dose> medList, Context context, RepositoryInterface repositoryInterface) {
+        this.doseList = medList;
         this.context = context;
+        this.repositoryInterface = repositoryInterface;
     }
 
     @NonNull
@@ -33,12 +44,16 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        //TODO bind data from list to the holder
+        Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
+        holder.medicationNameTextView.setText(medicine.getName());
+        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " of " + medicine.getUnit());
+        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
+        holder.medicationTimeTextView.setText(new DateTime(doseList.get(position).getTimeToTake()).toString());
     }
 
     @Override
     public int getItemCount() {
-        return medList.size();
+        return doseList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,7 +62,7 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
         TextView medicationTimeTextView;
         TextView medicationNameTextView;
         TextView medicationDosageTextView;
-        TextView medicationTypeImageView;
+        TextView medicationTypeTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,7 +70,7 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
             medicationTimeTextView = itemView.findViewById(R.id.medicationTimeTextView);
             medicationNameTextView = itemView.findViewById(R.id.medicationNameTextView);
             medicationDosageTextView = itemView.findViewById(R.id.medicationDosageTextView);
-            medicationTypeImageView = itemView.findViewById(R.id.medicationTypeImageView);
+            medicationTypeTextView = itemView.findViewById(R.id.medicationTypeImageView);
         }
     }
 }

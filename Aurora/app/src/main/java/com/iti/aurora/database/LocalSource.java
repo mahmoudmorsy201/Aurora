@@ -17,7 +17,7 @@ public interface LocalSource {
     @NonNull Single<Long> insertMedicine(Medicine medicine);
     void deleteMedicine(Medicine medicine);
     void updateMedicine(Medicine medicine);
-    Medicine getSpecificMedicine(int medId);
+    Medicine getSpecificMedicine(long medId);
     LiveData<List<Medicine>> getAllStoredMedicines();
 
     @NonNull Single<Long> insetTreatment(Treatment treatment);

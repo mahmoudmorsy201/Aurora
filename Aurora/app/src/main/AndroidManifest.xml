@@ -14,9 +14,7 @@
         android:theme="@style/Theme.Aurora">
         <activity
             android:name=".addmedicine.AddMedicineActivity"
-            android:exported="true" >
-
-
+            android:exported="true">
 
         </activity>
         <activity
@@ -24,19 +22,17 @@
             android:exported="false" />
         <activity
             android:name=".home.view.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+
         <activity
             android:name=".editmeds.view.EditMedsActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

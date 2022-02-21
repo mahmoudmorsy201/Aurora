@@ -70,7 +70,7 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
-    public Medicine getSpecificMedicine(int medId) {
+    public Medicine getSpecificMedicine(long medId) {
         return medicineDAO.getSpecificMedicine(medId);
     }
 
