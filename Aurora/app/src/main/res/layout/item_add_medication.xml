@@ -83,6 +83,7 @@
             android:id="@+id/strenghtAddMedication_spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="@+id/strengthMedication_TextInputEditText"
             app:layout_constraintLeft_toRightOf="@+id/guideline"
@@ -233,6 +234,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/datesAddMedication_cardview"
         style="@style/daysWeekCardview"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/recurrencyAddMedication_cardview"
         app:layout_constraintStart_toStartOf="@+id/recurrencyAddMedication_cardview"
         app:layout_constraintTop_toBottomOf="@id/reasonOfTakingTextView">
@@ -240,7 +242,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            >
 
             <TextView
                 android:id="@+id/dayTextView"

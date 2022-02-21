@@ -4,19 +4,21 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
 import com.iti.aurora.database.ConcreteLocalSource;
-import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.model.medicine.Treatment;
@@ -26,10 +28,7 @@ import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -50,7 +49,7 @@ public class AddMedicineActivity extends AppCompatActivity {
             recurrencyAddMedication_spinner,
             instructionsAddMedication_spinner,
             strenghtAddMedication_spinner;
-
+    CardView datesAddMedication_cardview;
     TextView startDatepickerAddmedication_Textview, endDatePicker_textview, timePicker_textview;
     TextView selectedDaysTextView;
     Button addMedication_button;
@@ -69,7 +68,7 @@ public class AddMedicineActivity extends AppCompatActivity {
     final static String[] strength = {"Strength ", "g", "mg", "IU", "mcg", "mcg_ml", "mEq", "mL", "percentage", "mg_g", "mg_cm2", "mg_ml", "mcg_hr"};
     final static String[] instructions = {"Taken with food?", "Before eating", "While eating", "After eating", "Doesn’t matter"};
     final static String[] recurrency = {"Select Doses", "Once a week", "Every day", "Every 2 days", "Every 3 days", "2 days a week", "3 days a week", "5 days a week", "Every 28 days"};
-
+    int recurrencyDaysNumber;
     Calendar myCalendar = Calendar.getInstance();
     String myFormat = "MM/dd/yy";
     int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
@@ -112,8 +111,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         endDatePicker_textview = findViewById(R.id.endDatePicker_textview);
         timePicker_textview = findViewById(R.id.timePicker_textview);
         addMedication_button = findViewById(R.id.addMedication_button);
-
-
+        datesAddMedication_cardview = findViewById(R.id.datesAddMedication_cardview);
 
         selectedDaysTextView = findViewById(R.id.dayTextView);
         selectedDaysTextView.setOnClickListener(new View.OnClickListener() {
@@ -129,12 +127,12 @@ public class AddMedicineActivity extends AppCompatActivity {
         setSpinnerAdapter(strenghtAddMedication_spinner, strength);
         DatePickerDialog.OnDateSetListener startDate = (view, year, month, day) -> {
             setMyCalendar(year, month, day);
-            selectedStartDate = new DateTime(year, month+1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
+            selectedStartDate = new DateTime(year, month + 1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
             setStartDateTimeField();
         };
         DatePickerDialog.OnDateSetListener endDate = (view, year, month, day) -> {
             setMyCalendar(year, month, day);
-            selectedEndDate = new DateTime(year, month+1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
+            selectedEndDate = new DateTime(year, month + 1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
             setEndDatePickerTimeField();
         };
 
@@ -175,7 +173,27 @@ public class AddMedicineActivity extends AppCompatActivity {
                 getMedicationFormValue();
             }
         });
+        recurrencyAddMedication_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemSelected = adapterView.getSelectedItem().toString();
+                if ((itemSelected.equals("Select Doses") |
+                        itemSelected.equals("Every day") |
+                        itemSelected.equals("Every 2 days") |
+                        itemSelected.equals("Every 3 days") |
+                        itemSelected.equals("Every 28 days"))) {
+                    datesAddMedication_cardview.setVisibility(View.INVISIBLE);
+                } else {
+                    datesAddMedication_cardview.setVisibility(View.VISIBLE);
+                    recurrencyDaysNumber = mapDosesNameWithNum(recurrencyAddMedication_spinner.getSelectedItem().toString());
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void getMedicationFormValue() {
@@ -186,7 +204,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         strenghtMedicationValue = strenghtAddMedication_spinner.getSelectedItem().toString();
         recurrencyMedication = recurrencyAddMedication_spinner.getSelectedItem().toString();
         instructionMedication = instructionsAddMedication_spinner.getSelectedItem().toString();
-        resonMedication = reason_inputEditText.getText().toString();
+        resonMedication = String.valueOf(reason_inputEditText.getText());
 
         startDate = startDatepickerAddmedication_Textview.getText().toString();
         endDate = endDatePicker_textview.getText().toString();
@@ -363,5 +381,26 @@ public class AddMedicineActivity extends AppCompatActivity {
 
 
         return isValid;
+    }
+
+    private int mapDosesNameWithNum(String name) {
+        int numberOfDays = 0;
+        switch (name) {
+            case "Once a week":
+                numberOfDays = 1;
+                break;
+            case "2 days a week":
+                numberOfDays = 2;
+                break;
+            case "3 days a week":
+                numberOfDays = 3;
+                break;
+            case "5 days a week":
+                numberOfDays = 5;
+                break;
+        }
+
+
+        return numberOfDays;
     }
 }

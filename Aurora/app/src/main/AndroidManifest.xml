@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aurora">
         <activity
-            android:name=".editmeds.view.EditMedsActivity"
+            android:name=".addmedicine.AddMedicineActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             android:name=".home.view.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".addmedicine.AddMedicineActivity"
+            android:name=".editmeds.view.EditMedsActivity"
             android:exported="true">
 
         </activity>
