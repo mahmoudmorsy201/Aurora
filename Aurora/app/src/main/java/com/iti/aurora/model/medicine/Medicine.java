@@ -51,7 +51,7 @@ public class Medicine {
     private int dosagesLeft;
 
     @ColumnInfo(name = "medicineForm")
-    private int medicineForm;
+    private String medicineForm;
 
     /*
     public MedicineForm getMedicineForm() {
@@ -261,7 +261,7 @@ public class Medicine {
         this.dosagesLeft = dosagesLeft;
     }
 
-    public void setMedicineForm(int medicineForm) {
+    public void setMedicineForm(String medicineForm) {
         this.medicineForm = medicineForm;
     }
 
@@ -281,7 +281,7 @@ public class Medicine {
         this.unit = unit;
     }
 
-    public int getMedicineForm() {
+    public String getMedicineForm() {
         return medicineForm;
     }
 }

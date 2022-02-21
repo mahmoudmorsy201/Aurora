@@ -16,5 +16,16 @@
     <string name="howToUse">How to use</string>
     <string name="before_eating">Before eating</string>
     <string name="add_dose">ADD DOSE</string>
+    <string name="select_start_day_hint">select start day</string>
+    <string name="selcet_end_day_hint">selcet end day</string>
+    <string name="select_time_hint">Select time</string>
+    <string name="medication_days">Medication Days :</string>
+    <string name="enter_name_medication">Enter Name Medication</string>
+    <string name="enter_strength">Enter Strength</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="the_reason_of_taking_this_drug">The reason of taking this drug</string>
+    <string name="add_medication">Add Medication</string>
 
 </resources>

@@ -1,14 +1,11 @@
 package com.iti.aurora.addmedicine;
 
-import static android.graphics.Color.RED;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -18,10 +15,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
+import com.iti.aurora.database.ConcreteLocalSource;
+import com.iti.aurora.model.medicine.Dose;
+import com.iti.aurora.model.medicine.Medicine;
+import com.iti.aurora.model.medicine.StrengthUnit;
+import com.iti.aurora.model.medicine.Treatment;
+import com.iti.aurora.utils.selectdays.IUpdateText;
+import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
+
+import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddMedicineActivity extends AppCompatActivity {
     TextInputEditText nameAddMedication_inputEditText,
@@ -36,26 +52,48 @@ public class AddMedicineActivity extends AppCompatActivity {
             strenghtAddMedication_spinner;
 
     TextView startDatepickerAddmedication_Textview, endDatePicker_textview, timePicker_textview;
+    TextView selectedDaysTextView;
     Button addMedication_button;
-
+    static String nameMedication,
+            strenghtNameMedication,
+            formTypeMedication,
+            recurrencyMedication,
+            instructionMedication,
+            strenghtMedicationValue,
+            resonMedication,
+            startDate,
+            endDate, time;
     //todo days cardview;
-    final static String[] formMedication = {"Select Medication Type", "Pills", "solution", "Injection", "Powder",
+    final static String[] formType = {"Select Medication Type", "Pills", "solution", "Injection", "Powder",
             "Drops", "Inhaler", "Others"};
-    final static String[] strength = {"Strength ", "g", "mg", "UI", "mcg", "mcg/ml", "mEq", "mL", "%", "mg/g", "mg/cm2", "mg/ml", "mcg/hr"};
+    final static String[] strength = {"Strength ", "g", "mg", "IU", "mcg", "mcg_ml", "mEq", "mL", "percentage", "mg_g", "mg_cm2", "mg_ml", "mcg_hr"};
     final static String[] instructions = {"Taken with food?", "Before eating", "While eating", "After eating", "Doesn’t matter"};
     final static String[] recurrency = {"Select Doses", "Once a week", "Every day", "Every 2 days", "Every 3 days", "2 days a week", "3 days a week", "5 days a week", "Every 28 days"};
+
     Calendar myCalendar = Calendar.getInstance();
     String myFormat = "MM/dd/yy";
     int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
     int minute = myCalendar.get(Calendar.MINUTE);
 
     SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+    SelectDaysAlertDialog selectDaysAlertDialog = new SelectDaysAlertDialog(this, new IUpdateText() {
+        @Override
+        public void updateText(String text) {
+            selectedDaysTextView.setText(text);
+        }
+    });
 
+    private DateTime selectedStartDate;
+    private DateTime selectedEndDate;
+    private ConcreteLocalSource concreteLocalSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_add_medication);
+        concreteLocalSource = ConcreteLocalSource.getInstance(AddMedicineActivity.this);
+        selectedStartDate = new DateTime();
+        selectedEndDate = new DateTime();
         setInitialUI();
     }
 
@@ -76,16 +114,27 @@ public class AddMedicineActivity extends AppCompatActivity {
         addMedication_button = findViewById(R.id.addMedication_button);
 
 
-        setSpinnerAdapter(formAddMedication_spinner, formMedication);
+
+        selectedDaysTextView = findViewById(R.id.dayTextView);
+        selectedDaysTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectDaysAlertDialog.showSelectDaysDialog(AddMedicineActivity.this);
+            }
+        });
+
+        setSpinnerAdapter(formAddMedication_spinner, formType);
         setSpinnerAdapter(instructionsAddMedication_spinner, instructions);
         setSpinnerAdapter(recurrencyAddMedication_spinner, recurrency);
         setSpinnerAdapter(strenghtAddMedication_spinner, strength);
         DatePickerDialog.OnDateSetListener startDate = (view, year, month, day) -> {
             setMyCalendar(year, month, day);
+            selectedStartDate = new DateTime(year, month+1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
             setStartDateTimeField();
         };
-        DatePickerDialog.OnDateSetListener endtDate = (view, year, month, day) -> {
+        DatePickerDialog.OnDateSetListener endDate = (view, year, month, day) -> {
             setMyCalendar(year, month, day);
+            selectedEndDate = new DateTime(year, month+1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
             setEndDatePickerTimeField();
         };
 
@@ -95,18 +144,18 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         });
         endDatePicker_textview.setOnClickListener(view -> {
-            new DatePickerDialog(this, endtDate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            new DatePickerDialog(this, endDate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
         });
 
         timePicker_textview.setOnClickListener(view -> {
             new TimePickerDialog(this,
                     new TimePickerDialog.OnTimeSetListener() {
-
-
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
+
+                            selectedStartDate = new DateTime(selectedStartDate.getYear(), selectedStartDate.getMonthOfYear(), selectedStartDate.getDayOfMonth(), hourOfDay, minute);
                             String AM_PM;
                             int hours = hourOfDay;
                             if (hourOfDay < 12) {
@@ -122,9 +171,6 @@ public class AddMedicineActivity extends AppCompatActivity {
         });
 
         addMedication_button.setOnClickListener(view -> {
-            textInputLayout_addMedication.setErrorEnabled(false);
-            strengthMedication_TextInputEditText.setErrorEnabled(false);
-            reason_TextInputEditText.setErrorEnabled(false);
             if (checkInputMedication()) {
                 getMedicationFormValue();
             }
@@ -134,15 +180,94 @@ public class AddMedicineActivity extends AppCompatActivity {
 
     private void getMedicationFormValue() {
         //todo get values
+        nameMedication = String.valueOf(nameAddMedication_inputEditText.getText());
+        formTypeMedication = formAddMedication_spinner.getSelectedItem().toString();
+        strenghtNameMedication = String.valueOf(strengthAddMedication_inputEditText.getText());
+        strenghtMedicationValue = strenghtAddMedication_spinner.getSelectedItem().toString();
+        recurrencyMedication = recurrencyAddMedication_spinner.getSelectedItem().toString();
+        instructionMedication = instructionsAddMedication_spinner.getSelectedItem().toString();
+        resonMedication = reason_inputEditText.getText().toString();
+
+        startDate = startDatepickerAddmedication_Textview.getText().toString();
+        endDate = endDatePicker_textview.getText().toString();
+        time = timePicker_textview.getText().toString();
+
+        Medicine medicine = new Medicine();
+        medicine.setName(nameMedication);
+        medicine.setActive(true);
+        medicine.setStrengthUnit(StrengthUnit.valueOf(strenghtMedicationValue));
+        medicine.setNumberOfUnits(Integer.parseInt(strenghtNameMedication));
+        medicine.setInstruction(instructionMedication);
+        medicine.setMedicineForm(formTypeMedication);
+        medicine.setReasonOfTaking(resonMedication);
+
+        insertMedicine(medicine, selectedStartDate, selectedEndDate);
     }
 
+    private void insertMedicine(Medicine medicine, DateTime startDate, DateTime endDate) {
+
+        concreteLocalSource.insertMedicine(medicine)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Long>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Long aLong) {
+                        medicine.setMedId(aLong);
+                        Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
+                        //insertTreatment(treatment, aLong);
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
+    /*
+    private void insertTreatment(Treatment treatment, long medicineId) {
+        concreteLocalSource.insetTreatment(treatment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Long>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Long aLong) {
+                        long treatmentId = aLong;
+                        treatment.setTreatmentId(aLong);
+                        //TODO
+                        Dose dose = new Dose(dateNow, true, dateTaken, medicine.getMedId(), treatment.getTreatmentId());
+                        List<Dose> doses = new ArrayList<>();
+                        for (int i = 0; i < 10; i++) {
+                            doses.add(dose);
+
+                        }
+                        concreteLocalSource.insertDoses(doses);
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+*/
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {
         ArrayAdapter<String> formArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, formArray);
         formArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(formArrayAdapter);
-
-
     }
 
     private void setMyTime(int hour, int minutes) {
@@ -158,35 +283,36 @@ public class AddMedicineActivity extends AppCompatActivity {
 
     private void setStartDateTimeField() {
         startDatepickerAddmedication_Textview.setText(dateFormat.format(myCalendar.getTime()));
-
     }
 
     private void setEndDatePickerTimeField() {
         endDatePicker_textview.setText(dateFormat.format(myCalendar.getTime()));
-
     }
 
     private boolean checkInputMedication() {
         boolean isValid = false;
-        if (nameAddMedication_inputEditText.getText().equals("") && nameAddMedication_inputEditText.getText() != null)
+        if ((Objects.requireNonNull(nameAddMedication_inputEditText.getText()).length() > 0)) {
             isValid = true;
-        else {
+            String s = nameAddMedication_inputEditText.getText().toString();
+            s.length();
+        } else {
             textInputLayout_addMedication.setErrorEnabled(true);
             textInputLayout_addMedication.setError("enter name");
-            isValid = true;
+            isValid = false;
         }
-        if (strengthAddMedication_inputEditText.getText().equals("") && strengthAddMedication_inputEditText != null)
+        if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText().toString()).length() > 0)
             isValid = true;
         else {
             strengthMedication_TextInputEditText.setErrorEnabled(true);
             strengthMedication_TextInputEditText.setError("Enter Strength");
             isValid = false;
         }
-        if (reason_inputEditText.getText().equals("") && reason_inputEditText != null)
+        if (Objects.requireNonNull(reason_inputEditText.getText()).length() > 0)
             isValid = true;
         else {
             reason_TextInputEditText.setErrorEnabled(true);
             reason_TextInputEditText.setError("Please specify reason");
+            isValid = false;
         }
         if (strenghtAddMedication_spinner.getSelectedItemPosition() != strenghtAddMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
@@ -214,19 +340,21 @@ public class AddMedicineActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        if (startDatepickerAddmedication_Textview.getText().equals("") && startDatepickerAddmedication_Textview.getText() != null)
+        if (!startDatepickerAddmedication_Textview.getText().toString().equals(""))
             isValid = true;
         else {
             startDatepickerAddmedication_Textview.setHintTextColor(getResources().getColor(R.color.warning));
             isValid = false;
         }
-        if (endDatePicker_textview.getText().equals("") && endDatePicker_textview.getText() != null)
+        if (!endDatePicker_textview.getText().toString().equals(""))
+
             isValid = true;
         else {
             endDatePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
             isValid = false;
         }
-        if (timePicker_textview.getText().equals("") && timePicker_textview.getText() != null)
+        if (!timePicker_textview.getText().toString().equals(""))
+
             isValid = true;
         else {
             timePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
