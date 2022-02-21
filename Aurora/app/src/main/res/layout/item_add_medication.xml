@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
@@ -19,10 +18,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameAddMedication_inputEditText"
             android:layout_width="match_parent"
-            android:maxLines="1"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:hint="Enter Name Medication" />
+            android:ems="1"
+            android:hint="@string/enter_name_medication"
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
@@ -64,10 +64,10 @@
                 android:id="@+id/strengthAddMedication_inputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:backgroundTint="@color/white"
-                android:hint="Enter Strength "
-                android:inputType="number" />
+                android:hint="@string/enter_strength"
+                android:inputType="number"
+                android:maxLines="1" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -126,10 +126,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:paddingStart="0dp"
         android:paddingTop="4dp"
         android:paddingEnd="4dp"
         android:paddingBottom="4dp"
-        android:text="Start Date"
+        android:text="@string/start_date"
         app:layout_constraintEnd_toEndOf="@+id/recurrencyAddMedication_cardview"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -162,7 +163,7 @@
         android:layout_marginTop="12dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:text="End Date"
+        android:text="@string/end_date"
         app:layout_constraintEnd_toEndOf="@+id/startDate_textView"
         app:layout_constraintStart_toStartOf="@+id/startDate_textView"
         app:layout_constraintTop_toBottomOf="@+id/startDate_textView" />
@@ -190,7 +191,7 @@
         android:layout_marginTop="4dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:text="Select Time"
+        android:text="@string/select_time"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/endDate_textView"
         app:layout_constraintHorizontal_bias="0.0"
@@ -226,7 +227,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:hint="The reason of taking this drug" />
+            android:hint="@string/the_reason_of_taking_this_drug" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
@@ -245,92 +246,12 @@
                 android:id="@+id/dayTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/medication_days"
                 android:padding="20dp"
-                android:text="Medication Days : "
                 android:textColor="@color/primary_color"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="8"
-                app:layout_constraintEnd_toEndOf="@+id/dayTextView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/dayTextView"
-                app:layout_constraintTop_toBottomOf="@id/dayTextView">
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView
-
-                    android:id="@+id/satCar"
-                    style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Sat" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Sun" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Mon" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Tue" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Wed" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Thr" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-                <androidx.cardview.widget.CardView style="@style/daysWeekSelectorCardview">
-
-                    <TextView
-                        style="@style/daysTextview"
-                        android:text="Fri" />
-                </androidx.cardview.widget.CardView>
-
-                <Space style="@style/spaces" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
@@ -343,9 +264,9 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/button_add_medication"
-        android:text="Add Medication"
+        android:text="@string/add_medication"
         android:textAllCaps="false"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

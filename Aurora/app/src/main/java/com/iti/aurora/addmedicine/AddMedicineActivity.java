@@ -3,6 +3,7 @@ package com.iti.aurora.addmedicine;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
+import com.iti.aurora.utils.selectdays.IUpdateText;
+import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,6 +36,7 @@ public class AddMedicineActivity extends AppCompatActivity {
             strenghtAddMedication_spinner;
 
     TextView startDatepickerAddmedication_Textview, endDatePicker_textview, timePicker_textview;
+    TextView selectedDaysTextView;
     Button addMedication_button;
     static String nameMedication,
             strenghtNameMedication,
@@ -56,7 +60,12 @@ public class AddMedicineActivity extends AppCompatActivity {
     int minute = myCalendar.get(Calendar.MINUTE);
 
     SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
-
+    SelectDaysAlertDialog selectDaysAlertDialog = new SelectDaysAlertDialog(this, new IUpdateText() {
+        @Override
+        public void updateText(String text) {
+            selectedDaysTextView.setText(text);
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +90,13 @@ public class AddMedicineActivity extends AppCompatActivity {
         timePicker_textview = findViewById(R.id.timePicker_textview);
         addMedication_button = findViewById(R.id.addMedication_button);
 
+        selectedDaysTextView = findViewById(R.id.dayTextView);
+        selectedDaysTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectDaysAlertDialog.showSelectDaysDialog(AddMedicineActivity.this);
+            }
+        });
 
         setSpinnerAdapter(formAddMedication_spinner, formType);
         setSpinnerAdapter(instructionsAddMedication_spinner, instructions);
@@ -128,9 +144,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         });
 
         addMedication_button.setOnClickListener(view -> {
-            textInputLayout_addMedication.setErrorEnabled(false);
-            strengthMedication_TextInputEditText.setErrorEnabled(false);
-            reason_TextInputEditText.setErrorEnabled(false);
+
             if (checkInputMedication()) {
                 getMedicationFormValue();
             }
@@ -193,7 +207,7 @@ public class AddMedicineActivity extends AppCompatActivity {
             textInputLayout_addMedication.setError("enter name");
             isValid = false;
         }
-        if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText()).length() > 0)
+        if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText().toString()).length() > 0)
             isValid = true;
         else {
             strengthMedication_TextInputEditText.setErrorEnabled(true);
