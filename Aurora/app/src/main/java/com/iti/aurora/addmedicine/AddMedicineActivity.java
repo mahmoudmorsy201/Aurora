@@ -63,7 +63,7 @@ public class AddMedicineActivity extends AppCompatActivity {
             startDate,
             endDate, time;
     //todo days cardview;
-    final static String[] formType = {"Select Medication Type", "Pills", "solution", "Injection", "Powder",
+    final static String[] formType = {"Select Medication Type", "Pills", "Solution", "Injection", "Powder",
             "Drops", "Inhaler", "Others"};
     final static String[] strength = {"Strength ", "g", "mg", "IU", "mcg", "mcg_ml", "mEq", "mL", "percentage", "mg_g", "mg_cm2", "mg_ml", "mcg_hr"};
     final static String[] instructions = {"Taken with food?", "Before eating", "While eating", "After eating", "Doesn’t matter"};
@@ -117,7 +117,13 @@ public class AddMedicineActivity extends AppCompatActivity {
         selectedDaysTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectDaysAlertDialog.showSelectDaysDialog(AddMedicineActivity.this);
+                selectDaysAlertDialog = new SelectDaysAlertDialog(AddMedicineActivity.this, new IUpdateText() {
+                    @Override
+                    public void updateText(String text) {
+                        selectedDaysTextView.setText(text);
+                    }
+                }, recurrencyDaysNumber);
+                selectDaysAlertDialog.showSelectDaysDialog();
             }
         });
 
