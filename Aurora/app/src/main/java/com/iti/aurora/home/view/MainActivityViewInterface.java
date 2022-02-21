@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MainActivityViewInterface {
     void showLocalData(LiveData<List<Dose>> doses);
+    void showLocalDataByDay(LiveData<List<Dose>> doseList);
 }

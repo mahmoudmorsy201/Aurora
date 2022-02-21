@@ -27,19 +27,15 @@ public class ConcreteLocalSource implements LocalSource {
     private LiveData<List<Medicine>> storedMedicines;
     private LiveData<List<Dose>> storedDoses;
     private LiveData<List<Treatment>> storedTreatments;
-    private LiveData<List<Dose>> getStoredDosesByDay;
-
-
-
 
     private ConcreteLocalSource(Context context) {
         AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
+
         medicineDAO = db.medicineDAO();
         storedMedicines = medicineDAO.getAllMedicines();
 
         doseDAO = db.doseDAO();
         storedDoses = doseDAO.getAllDoses();
-        getStoredDosesByDay = doseDAO.getDosesByDay(new DateTime(System.currentTimeMillis()).getMillis() ,new DateTime(System.currentTimeMillis()).plusHours(24).getMillis());
 
         treatmentDAO = db.treatmentDAO();
         storedTreatments = treatmentDAO.getAllTreatments();
@@ -137,6 +133,6 @@ public class ConcreteLocalSource implements LocalSource {
 
     @Override
     public LiveData<List<Dose>> getDosesByDay(long start, long end) {
-        return getStoredDosesByDay;
+        return doseDAO.getDosesByDay(start,end);
     }
 }

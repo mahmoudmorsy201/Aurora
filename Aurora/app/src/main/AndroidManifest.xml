@@ -16,6 +16,7 @@
             android:name=".addmedicine.AddMedicineActivity"
             android:exported="true">
 
+
         </activity>
         <activity
             android:name=".usersystem.verifyphonenumber.view.VerifyPhoneNumberActivity"
@@ -28,6 +29,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity

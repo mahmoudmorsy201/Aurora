@@ -44,10 +44,10 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
-        holder.medicationNameTextView.setText(medicine.getName());
-        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " of " + medicine.getUnit());
-        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
+//        Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
+//        holder.medicationNameTextView.setText(medicine.getName());
+//        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " of " + medicine.getUnit());
+//        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
         holder.medicationTimeTextView.setText(new DateTime(doseList.get(position).getTimeToTake()).toString());
     }
 
@@ -70,7 +70,7 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
             medicationTimeTextView = itemView.findViewById(R.id.medicationTimeTextView);
             medicationNameTextView = itemView.findViewById(R.id.medicationNameTextView);
             medicationDosageTextView = itemView.findViewById(R.id.medicationDosageTextView);
-            medicationTypeTextView = itemView.findViewById(R.id.medicationTypeImageView);
+            //medicationTypeTextView = itemView.findViewById(R.id.medicationTypeImageView);
         }
     }
 }

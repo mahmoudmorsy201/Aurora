@@ -19,6 +19,6 @@ public class MainActivityPresenter implements MainActivityPresenterInterface{
 
     @Override
     public void getDosesByDay(long start, long end) {
-        _view.showLocalData(_repo.getDosesByDay(start , end));
+        _view.showLocalDataByDay(_repo.getDosesByDay(start , end));
     }
 }

@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
         calendarView = findViewById(R.id.mainCalendarView);
         medsRecyclerView = findViewById(R.id.medsRecyclerView);
 
+
         calendarView.setOnDateChangeListener((calendarView, year, month, day) -> {
             mainActivityPresenterInterface.getDosesByDay(new DateTime(year, month + 1, day, 0, 0).getMillis(), new DateTime(year, month + 1, day, 0, 0).plusDays(1).getMillis());
         });
@@ -53,16 +54,22 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
         medsRecyclerView.setAdapter(adapter);
 
         FirebaseUser user = getIntent().getParcelableExtra("GOOGLE_ACCOUNT");
+        mainActivityPresenterInterface.getLocalDoses();
+
     }
 
     @Override
     public void showLocalData(LiveData<List<Dose>> doses) {
-        doses.observe(this, new Observer<List<Dose>>() {
-            @Override
-            public void onChanged(List<Dose> doses) {
-                adapter.setDoseList(doses);
-                adapter.notifyDataSetChanged();
-            }
+       doses.observe(this, doseList -> {
+
+       });
+    }
+
+    @Override
+    public void showLocalDataByDay(LiveData<List<Dose>> doseList) {
+        doseList.observe(this, doses -> {
+            adapter.setDoseList(doses);
+            adapter.notifyDataSetChanged();
         });
     }
 }
