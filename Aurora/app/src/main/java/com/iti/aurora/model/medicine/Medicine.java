@@ -20,12 +20,6 @@ public class Medicine {
     @NonNull
     long medId;
 
-    @TypeConverters({DateConverter.class})
-    private Date startDate;
-
-    @TypeConverters({DateConverter.class})
-    private Date endDate;
-
     @ColumnInfo(name = "medName")
     private String name;
 
@@ -187,22 +181,6 @@ public class Medicine {
 
     public void setMedId(long medId) {
         this.medId = medId;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public String getName() {
