@@ -33,4 +33,7 @@ public interface DoseDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDoses(List<Dose> doses);
 
+    @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end")
+    LiveData<List<Dose>> getDosesByDay(long start, long end);
+
 }

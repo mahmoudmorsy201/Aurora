@@ -32,4 +32,5 @@ public interface LocalSource {
     Dose getSpecificDose(int doseId);
     LiveData<List<Dose>> getAllStoredDoses();
     void insertDoses(List<Dose> doses);
+    LiveData<List<Dose>> getDosesByDay(long start, long end);
 }

@@ -6,8 +6,8 @@ public enum RecurrencyModel {
     Every_day,
     Every_2_days,
     Every_3_days,
-    two_days_a_week,
-    three_days_a_week,
-    five_days_a_week,
+    Two_days_a_week,
+    Three_days_a_week,
+    Five_days_a_week,
     Every_28_days
 }

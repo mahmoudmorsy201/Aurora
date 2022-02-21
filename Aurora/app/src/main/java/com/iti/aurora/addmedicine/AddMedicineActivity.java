@@ -275,7 +275,7 @@ public class AddMedicineActivity extends AppCompatActivity {
                             doses = generatePeriodicDoses(medicineId, treatmentId, startDate, endDate, 24 * 3);
                         } else if (recurrencyModel == RecurrencyModel.Every_28_days) {
                             doses = generatePeriodicDoses(medicineId, treatmentId, startDate, endDate, 24 * 28);
-                        } else if (recurrencyModel == RecurrencyModel.two_days_a_week || recurrencyModel == RecurrencyModel.three_days_a_week || recurrencyModel == RecurrencyModel.five_days_a_week || recurrencyModel == RecurrencyModel.Once_a_week) {
+                        } else if (recurrencyModel == RecurrencyModel.Two_days_a_week || recurrencyModel == RecurrencyModel.Three_days_a_week || recurrencyModel == RecurrencyModel.Five_days_a_week || recurrencyModel == RecurrencyModel.Once_a_week) {
                             doses = generateNonPeriodicDoses(medicineId, treatmentId, startDate, endDate, selectDaysAlertDialog.getSelectedDaysFromDialog());
                         } else {
                             doses = new ArrayList<>();

@@ -11,6 +11,8 @@ import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.Treatment;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -25,6 +27,8 @@ public class ConcreteLocalSource implements LocalSource {
     private LiveData<List<Medicine>> storedMedicines;
     private LiveData<List<Dose>> storedDoses;
     private LiveData<List<Treatment>> storedTreatments;
+    private LiveData<List<Dose>> getStoredDosesByDay;
+
 
 
 
@@ -35,6 +39,7 @@ public class ConcreteLocalSource implements LocalSource {
 
         doseDAO = db.doseDAO();
         storedDoses = doseDAO.getAllDoses();
+        getStoredDosesByDay = doseDAO.getDosesByDay(new DateTime(System.currentTimeMillis()).getMillis() ,new DateTime(System.currentTimeMillis()).plusHours(24).getMillis());
 
         treatmentDAO = db.treatmentDAO();
         storedTreatments = treatmentDAO.getAllTreatments();
@@ -128,5 +133,10 @@ public class ConcreteLocalSource implements LocalSource {
     @Override
     public void insertDoses(List<Dose> doses) {
         new Thread(() -> doseDAO.insertDoses(doses)).start();
+    }
+
+    @Override
+    public LiveData<List<Dose>> getDosesByDay(long start, long end) {
+        return getStoredDosesByDay;
     }
 }
