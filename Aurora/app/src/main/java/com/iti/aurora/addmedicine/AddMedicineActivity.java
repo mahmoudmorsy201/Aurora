@@ -1,14 +1,10 @@
 package com.iti.aurora.addmedicine;
 
-import static android.graphics.Color.RED;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,6 +18,7 @@ import com.iti.aurora.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AddMedicineActivity extends AppCompatActivity {
     TextInputEditText nameAddMedication_inputEditText,
@@ -37,13 +34,22 @@ public class AddMedicineActivity extends AppCompatActivity {
 
     TextView startDatepickerAddmedication_Textview, endDatePicker_textview, timePicker_textview;
     Button addMedication_button;
-
+    static String nameMedication,
+            strenghtNameMedication,
+            formTypeMedication,
+            recurrencyMedication,
+            instructionMedication,
+            strenghtMedicationValue,
+            resonMedication,
+            startDate,
+            endDate, time;
     //todo days cardview;
-    final static String[] formMedication = {"Select Medication Type", "Pills", "solution", "Injection", "Powder",
+    final static String[] formType = {"Select Medication Type", "Pills", "solution", "Injection", "Powder",
             "Drops", "Inhaler", "Others"};
     final static String[] strength = {"Strength ", "g", "mg", "UI", "mcg", "mcg/ml", "mEq", "mL", "%", "mg/g", "mg/cm2", "mg/ml", "mcg/hr"};
     final static String[] instructions = {"Taken with food?", "Before eating", "While eating", "After eating", "Doesn’t matter"};
     final static String[] recurrency = {"Select Doses", "Once a week", "Every day", "Every 2 days", "Every 3 days", "2 days a week", "3 days a week", "5 days a week", "Every 28 days"};
+
     Calendar myCalendar = Calendar.getInstance();
     String myFormat = "MM/dd/yy";
     int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
@@ -76,7 +82,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         addMedication_button = findViewById(R.id.addMedication_button);
 
 
-        setSpinnerAdapter(formAddMedication_spinner, formMedication);
+        setSpinnerAdapter(formAddMedication_spinner, formType);
         setSpinnerAdapter(instructionsAddMedication_spinner, instructions);
         setSpinnerAdapter(recurrencyAddMedication_spinner, recurrency);
         setSpinnerAdapter(strenghtAddMedication_spinner, strength);
@@ -134,6 +140,16 @@ public class AddMedicineActivity extends AppCompatActivity {
 
     private void getMedicationFormValue() {
         //todo get values
+        nameMedication = String.valueOf(nameAddMedication_inputEditText.getText());
+        formTypeMedication = formAddMedication_spinner.getSelectedItem().toString();
+        strenghtNameMedication = String.valueOf(strengthAddMedication_inputEditText.getText());
+        strenghtMedicationValue = strenghtAddMedication_spinner.getSelectedItem().toString();
+        recurrencyMedication = recurrencyAddMedication_spinner.getSelectedItem().toString();
+        instructionMedication = instructionsAddMedication_spinner.getSelectedItem().toString();
+        resonMedication = reason_inputEditText.getText().toString();
+        startDate = startDatepickerAddmedication_Textview.getText().toString();
+        endDate = endDatePicker_textview.getText().toString();
+        time = timePicker_textview.getText().toString();
     }
 
 
@@ -168,25 +184,28 @@ public class AddMedicineActivity extends AppCompatActivity {
 
     private boolean checkInputMedication() {
         boolean isValid = false;
-        if (nameAddMedication_inputEditText.getText().equals("") && nameAddMedication_inputEditText.getText() != null)
+        if ((Objects.requireNonNull(nameAddMedication_inputEditText.getText()).length() > 0)) {
             isValid = true;
-        else {
+            String s = nameAddMedication_inputEditText.getText().toString();
+            s.length();
+        } else {
             textInputLayout_addMedication.setErrorEnabled(true);
             textInputLayout_addMedication.setError("enter name");
-            isValid = true;
+            isValid = false;
         }
-        if (strengthAddMedication_inputEditText.getText().equals("") && strengthAddMedication_inputEditText != null)
+        if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText()).length() > 0)
             isValid = true;
         else {
             strengthMedication_TextInputEditText.setErrorEnabled(true);
             strengthMedication_TextInputEditText.setError("Enter Strength");
             isValid = false;
         }
-        if (reason_inputEditText.getText().equals("") && reason_inputEditText != null)
+        if (Objects.requireNonNull(reason_inputEditText.getText()).length() > 0)
             isValid = true;
         else {
             reason_TextInputEditText.setErrorEnabled(true);
             reason_TextInputEditText.setError("Please specify reason");
+            isValid = false;
         }
         if (strenghtAddMedication_spinner.getSelectedItemPosition() != strenghtAddMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
@@ -214,19 +233,21 @@ public class AddMedicineActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        if (startDatepickerAddmedication_Textview.getText().equals("") && startDatepickerAddmedication_Textview.getText() != null)
+        if (!startDatepickerAddmedication_Textview.getText().toString().equals(""))
             isValid = true;
         else {
             startDatepickerAddmedication_Textview.setHintTextColor(getResources().getColor(R.color.warning));
             isValid = false;
         }
-        if (endDatePicker_textview.getText().equals("") && endDatePicker_textview.getText() != null)
+        if (!endDatePicker_textview.getText().toString().equals(""))
+
             isValid = true;
         else {
             endDatePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
             isValid = false;
         }
-        if (timePicker_textview.getText().equals("") && timePicker_textview.getText() != null)
+        if (!timePicker_textview.getText().toString().equals(""))
+
             isValid = true;
         else {
             timePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));

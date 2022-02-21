@@ -19,6 +19,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameAddMedication_inputEditText"
             android:layout_width="match_parent"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:hint="Enter Name Medication" />
@@ -57,12 +58,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/guideline"
 
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/strengthAddMedication_inputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:backgroundTint="@color/white"
                 android:hint="Enter Strength "
                 android:inputType="number" />
@@ -82,10 +84,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/strengthMedication_TextInputEditText"
             app:layout_constraintLeft_toRightOf="@+id/guideline"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/strengthMedication_TextInputEditText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
@@ -140,7 +142,7 @@
         android:layout_marginBottom="4dp"
         android:background="@drawable/button_add_medication"
         android:gravity="center"
-        android:hint="select start day"
+        android:hint="@string/select_start_day_hint"
         android:padding="4dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -171,7 +173,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_add_medication"
         android:gravity="center"
-        android:hint="selcet end day"
+        android:hint="@string/selcet_end_day_hint"
         android:padding="4dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -201,7 +203,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_add_medication"
         android:gravity="center"
-        android:hint="Select time"
+        android:hint="@string/select_time_hint"
 
         android:padding="4dp"
         android:textColor="@color/white"

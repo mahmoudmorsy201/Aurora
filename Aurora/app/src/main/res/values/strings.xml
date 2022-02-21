@@ -16,5 +16,8 @@
     <string name="howToUse">How to use</string>
     <string name="before_eating">Before eating</string>
     <string name="add_dose">ADD DOSE</string>
+    <string name="select_start_day_hint">select start day</string>
+    <string name="selcet_end_day_hint">selcet end day</string>
+    <string name="select_time_hint">Select time</string>
 
 </resources>
