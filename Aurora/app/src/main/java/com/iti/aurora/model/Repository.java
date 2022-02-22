@@ -11,6 +11,7 @@ import com.iti.aurora.model.medicine.Treatment;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 
 public class Repository implements RepositoryInterface{
@@ -47,7 +48,7 @@ public class Repository implements RepositoryInterface{
     }
 
     @Override
-    public Medicine getSpecificMedicine(long medId) {
+    public Maybe<Medicine> getSpecificMedicine(long medId) {
         return localSource.getSpecificMedicine(medId);
     }
 
@@ -72,7 +73,7 @@ public class Repository implements RepositoryInterface{
     }
 
     @Override
-    public Treatment getSpecificTreatment(long treatmentId) {
+    public Maybe<Treatment> getSpecificTreatment(long treatmentId) {
         return localSource.getSpecificTreatment(treatmentId);
     }
 
@@ -97,7 +98,7 @@ public class Repository implements RepositoryInterface{
     }
 
     @Override
-    public Dose getSpecificDose(int doseId) {
+    public Maybe<Dose> getSpecificDose(int doseId) {
         return localSource.getSpecificDose(doseId);
     }
 

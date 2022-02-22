@@ -23,6 +23,12 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.MaybeObserver;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
 
     List<Dose> doseList;
@@ -48,9 +54,34 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
-        holder.medicationNameTextView.setText(medicine.getName());
-        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " " + medicine.getMedicineForm() + " of " + medicine.getStrengthUnit());
+        //Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
+        repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MaybeObserver<Medicine>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Medicine medicine) {
+                        holder.medicationNameTextView.setText(medicine.getName());
+                        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " " + medicine.getMedicineForm() + " of " + medicine.getStrengthUnit());
+
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
 //        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
 
         DateTime date = new DateTime(doseList.get(position).getTimeToTake());

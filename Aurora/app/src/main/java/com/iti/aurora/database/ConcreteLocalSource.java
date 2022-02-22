@@ -11,11 +11,10 @@ import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.Treatment;
 
-import org.joda.time.DateTime;
-
 import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 
 public class ConcreteLocalSource implements LocalSource {
@@ -66,8 +65,8 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
-    public Medicine getSpecificMedicine(long medId) {
-        return medicineDAO.getSpecificMedicine(medId);
+    public Maybe<Medicine> getSpecificMedicine(long medId) {
+        return Maybe.fromCallable(() -> medicineDAO.getSpecificMedicine(medId));
     }
 
     @Override
@@ -91,8 +90,8 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
-    public Treatment getSpecificTreatment(long treatmentId) {
-        return treatmentDAO.getSpecificTreatment(treatmentId);
+    public Maybe<Treatment> getSpecificTreatment(long treatmentId) {
+        return Maybe.fromCallable (() -> treatmentDAO.getSpecificTreatment(treatmentId));
     }
 
     @Override
@@ -117,8 +116,8 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
-    public Dose getSpecificDose(int doseId) {
-        return doseDAO.getSpecificDose(doseId);
+    public Maybe<Dose> getSpecificDose(int doseId) {
+        return Maybe.fromCallable (() -> doseDAO.getSpecificDose(doseId));
     }
 
     @Override
