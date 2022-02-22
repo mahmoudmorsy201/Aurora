@@ -18,9 +18,11 @@
 
 
         </activity>
-
         <activity
-            android:name=".addmedicine.AddMedicineActivity"
+            android:name=".editmeds.view.EditMedsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".addmedicine.view.AddMedicineActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

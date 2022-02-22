@@ -1,4 +1,4 @@
-package com.iti.aurora.addmedicine;
+package com.iti.aurora.addmedicine.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -18,12 +16,17 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
+import com.iti.aurora.addmedicine.presenter.AddMedicinePresenter;
+import com.iti.aurora.addmedicine.presenter.AddMedicinePresenterInterface;
+import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
 import com.iti.aurora.database.ConcreteLocalSource;
+import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.RecurrencyModel;
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.model.medicine.Treatment;
+import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
@@ -43,7 +46,7 @@ import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class AddMedicineActivity extends AppCompatActivity {
+public class AddMedicineActivity extends AppCompatActivity implements AddMedicineViewInterface {
     TextInputEditText nameAddMedication_inputEditText,
             strengthAddMedication_inputEditText,
             reason_inputEditText;
@@ -67,12 +70,8 @@ public class AddMedicineActivity extends AppCompatActivity {
             resonMedication,
             startDate,
             endDate, time;
-    //todo days cardview;
-    final static String[] formType = {"Select Medication Type", "Pills", "Solution", "Injection", "Powder",
-            "Drops", "Inhaler", "Others"};
-    final static String[] strength = {"Strength ", "g", "mg", "IU", "mcg", "mcg_ml", "mEq", "mL", "percentage", "mg_g", "mg_cm2", "mg_ml", "mcg_hr"};
-    final static String[] instructions = {"Taken with food?", "Before eating", "While eating", "After eating", "Doesn’t matter"};
-    final static String[] recurrency = {"Select Doses", "Once a week", "Every day", "Every 2 days", "Every 3 days", "Two days a week", "Three days a week", "Five days a week", "Every 28 days"};
+
+
     int recurrencyDaysNumber;
     Calendar myCalendar = Calendar.getInstance();
     String myFormat = "MM/dd/yy";
@@ -91,6 +90,8 @@ public class AddMedicineActivity extends AppCompatActivity {
     private DateTime selectedEndDate;
     private ConcreteLocalSource concreteLocalSource;
 
+    AddMedicinePresenterInterface addMedicinePresenterInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +99,10 @@ public class AddMedicineActivity extends AppCompatActivity {
         concreteLocalSource = ConcreteLocalSource.getInstance(AddMedicineActivity.this);
         selectedStartDate = new DateTime();
         selectedEndDate = new DateTime();
+        addMedicinePresenterInterface = new AddMedicinePresenter(
+                AddMedicineActivity.this, Repository.getInstance(
+                ConcreteLocalSource.getInstance(AddMedicineActivity.this), AddMedicineActivity.this)
+        );
         setInitialUI();
     }
 
@@ -132,10 +137,10 @@ public class AddMedicineActivity extends AppCompatActivity {
             }
         });
 
-        setSpinnerAdapter(formAddMedication_spinner, formType);
-        setSpinnerAdapter(instructionsAddMedication_spinner, instructions);
-        setSpinnerAdapter(recurrencyAddMedication_spinner, recurrency);
-        setSpinnerAdapter(strenghtAddMedication_spinner, strength);
+        setSpinnerAdapter(formAddMedication_spinner, Constants.AddMedicineConstants.formType);
+        setSpinnerAdapter(instructionsAddMedication_spinner, Constants.AddMedicineConstants.instructions);
+        setSpinnerAdapter(recurrencyAddMedication_spinner, Constants.AddMedicineConstants.recurrency);
+        setSpinnerAdapter(strenghtAddMedication_spinner, Constants.AddMedicineConstants.strength);
         DatePickerDialog.OnDateSetListener startDate = (view, year, month, day) -> {
             setMyCalendar(year, month, day);
             selectedStartDate = new DateTime(year, month + 1, day, selectedStartDate.getHourOfDay(), selectedStartDate.getMinuteOfHour());
@@ -156,21 +161,18 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         timePicker_textview.setOnClickListener(view -> {
             new TimePickerDialog(this,
-                    new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            selectedStartDate = new DateTime(selectedStartDate.getYear(), selectedStartDate.getMonthOfYear(), selectedStartDate.getDayOfMonth(), hourOfDay, minute);
-                            selectedEndDate = new DateTime(selectedEndDate.getYear(), selectedEndDate.getMonthOfYear(), selectedEndDate.getDayOfMonth(), hourOfDay, minute);
-                            String AM_PM;
-                            int hours = hourOfDay;
-                            if (hourOfDay < 12) {
-                                AM_PM = "AM";
-                            } else {
-                                AM_PM = "PM";
-                                hours -= 12;
-                            }
-                            timePicker_textview.setText(hours + ":" + minute + " " + AM_PM);
+                    (view1, hourOfDay, minute) -> {
+                        selectedStartDate = new DateTime(selectedStartDate.getYear(), selectedStartDate.getMonthOfYear(), selectedStartDate.getDayOfMonth(), hourOfDay, minute);
+                        selectedEndDate = new DateTime(selectedEndDate.getYear(), selectedEndDate.getMonthOfYear(), selectedEndDate.getDayOfMonth(), hourOfDay, minute);
+                        String AM_PM;
+                        int hours = hourOfDay;
+                        if (hourOfDay < 12) {
+                            AM_PM = "AM";
+                        } else {
+                            AM_PM = "PM";
+                            hours -= 12;
                         }
+                        timePicker_textview.setText(hours + ":" + minute + " " + AM_PM);
                     }, hour, minute, false).show();
         });
 
@@ -204,7 +206,6 @@ public class AddMedicineActivity extends AppCompatActivity {
     }
 
     private void getMedicationFormValue() {
-        //todo get values
         nameMedication = String.valueOf(nameAddMedication_inputEditText.getText());
         formTypeMedication = formAddMedication_spinner.getSelectedItem().toString();
         strenghtNameMedication = String.valueOf(strengthAddMedication_inputEditText.getText());
@@ -226,107 +227,15 @@ public class AddMedicineActivity extends AppCompatActivity {
         medicine.setMedicineForm(formTypeMedication);
         medicine.setReasonOfTaking(resonMedication);
 
-        insertMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2), RecurrencyModel.valueOf(recurrencyMedication.replace(' ', '_')));
+        addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2), RecurrencyModel.valueOf(recurrencyMedication.replace(' ', '_')));
     }
 
-    private void insertMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
-
-        concreteLocalSource.insertMedicine(medicine)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Long>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull Long aLong) {
-                        medicine.setMedId(aLong);
-                        Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
-                        insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                    }
-                });
-    }
-
-
-    private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
-        concreteLocalSource.insetTreatment(treatment)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Long>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull Long aLong) {
-                        long treatmentId = aLong;
-                        List<Dose> doses;
-                        if (recurrencyModel == RecurrencyModel.Every_day) {
-                            doses = generatePeriodicDoses(medicineId, treatmentId, startDate, endDate, 24);
-                        } else if (recurrencyModel == RecurrencyModel.Every_2_days) {
-                            doses = generatePeriodicDoses(medicineId, treatmentId, startDate, endDate, 24 * 2);
-                        } else if (recurrencyModel == RecurrencyModel.Every_3_days) {
-                            doses = generatePeriodicDoses(medicineId, treatmentId, startDate, endDate, 24 * 3);
-                        } else if (recurrencyModel == RecurrencyModel.Every_28_days) {
-                            doses = generatePeriodicDoses(medicineId, treatmentId, startDate, endDate, 24 * 28);
-                        } else if (recurrencyModel == RecurrencyModel.Two_days_a_week || recurrencyModel == RecurrencyModel.Three_days_a_week || recurrencyModel == RecurrencyModel.Five_days_a_week || recurrencyModel == RecurrencyModel.Once_a_week) {
-                            doses = generateNonPeriodicDoses(medicineId, treatmentId, startDate, endDate, selectDaysAlertDialog.getSelectedDaysFromDialog());
-                        } else {
-                            doses = new ArrayList<>();
-                        }
-                        concreteLocalSource.insertDoses(doses);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
-    }
-
-
-    private List<Dose> generatePeriodicDoses(long medID, long treatmentId, DateTime startDate, DateTime endDate, int noOfHours) {
-        List<Dose> doseList = new ArrayList<>();
-        while (startDate.isBefore(endDate)) {
-            Dose dose = new Dose(medID, treatmentId, startDate.toDate());
-            doseList.add(dose);
-            startDate = startDate.plusHours(noOfHours);
-        }
-        return doseList;
-    }
-
-    @androidx.annotation.NonNull
-    private List<Dose> generateNonPeriodicDoses(long medID, long treatmentId, DateTime startDate, DateTime endDate, @androidx.annotation.NonNull List<DaysOfWeek> days) {
-        List<Dose> doseList = new ArrayList<>();
-        for (DaysOfWeek day : days) {
-            DateTime nextDayDateTime = findDateOfNextDayOfWeek(startDate, day);
-            doseList.addAll(generatePeriodicDoses(medID, treatmentId, nextDayDateTime, endDate, 24 * 7));
-        }
-        return doseList;
-    }
-
-    private DateTime findDateOfNextDayOfWeek(@androidx.annotation.NonNull DateTime startDate, @androidx.annotation.NonNull DaysOfWeek day) {
-        while (!startDate.dayOfWeek().getAsText().equalsIgnoreCase(day.toString())) {
-            startDate = startDate.plusHours(24);
-        }
-        return startDate;
-    }
 
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {
         ArrayAdapter<String> formArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, formArray);
         formArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(formArrayAdapter);
-    }
-
-    private void setMyTime(int hour, int minutes) {
-        timePicker_textview.setText("");
     }
 
     private void setMyCalendar(int year, int month, int day) {
@@ -430,5 +339,17 @@ public class AddMedicineActivity extends AppCompatActivity {
                 break;
         }
         return numberOfDays;
+    }
+
+
+    @Override
+    public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
+        addMedicinePresenterInterface.addMedicineToDB(medicine,startDate,endDate,recurrencyModel);
+
+    }
+
+    @Override
+    public void setSelectedDaysAlertdialog() {
+        addMedicinePresenterInterface.getSelectedDaysAlertdialog(this.selectDaysAlertDialog);
     }
 }
