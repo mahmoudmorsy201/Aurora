@@ -57,9 +57,9 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
 
     @Override
     public void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog) {
-        _view.setSelectedDaysAlertdialog();
         this.selectDaysAlertDialog = selectDaysAlertDialog;
     }
+
 
     private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
         _repo.insetTreatment(treatment)

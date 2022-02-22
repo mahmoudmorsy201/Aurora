@@ -9,10 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
@@ -21,30 +19,18 @@ import com.iti.aurora.addmedicine.presenter.AddMedicinePresenterInterface;
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
 import com.iti.aurora.database.ConcreteLocalSource;
 import com.iti.aurora.model.Repository;
-import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.RecurrencyModel;
 import com.iti.aurora.model.medicine.StrengthUnit;
-import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.Constants;
-import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
-
 import org.joda.time.DateTime;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddMedicineActivity extends AppCompatActivity implements AddMedicineViewInterface {
     TextInputEditText nameAddMedication_inputEditText,
@@ -61,16 +47,6 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     TextView startDatepickerAddmedication_Textview, endDatePicker_textview, timePicker_textview;
     TextView selectedDaysTextView;
     Button addMedication_button;
-    static String nameMedication,
-            strenghtNameMedication,
-            formTypeMedication,
-            recurrencyMedication,
-            instructionMedication,
-            strenghtMedicationValue,
-            resonMedication,
-            startDate,
-            endDate, time;
-
 
     int recurrencyDaysNumber;
     Calendar myCalendar = Calendar.getInstance();
@@ -88,15 +64,12 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
     private DateTime selectedStartDate;
     private DateTime selectedEndDate;
-    private ConcreteLocalSource concreteLocalSource;
-
     AddMedicinePresenterInterface addMedicinePresenterInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_add_medication);
-        concreteLocalSource = ConcreteLocalSource.getInstance(AddMedicineActivity.this);
         selectedStartDate = new DateTime();
         selectedEndDate = new DateTime();
         addMedicinePresenterInterface = new AddMedicinePresenter(
@@ -136,6 +109,8 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
                 selectDaysAlertDialog.showSelectDaysDialog();
             }
         });
+
+        addMedicinePresenterInterface.getSelectedDaysAlertdialog(this.selectDaysAlertDialog);
 
         setSpinnerAdapter(formAddMedication_spinner, Constants.AddMedicineConstants.formType);
         setSpinnerAdapter(instructionsAddMedication_spinner, Constants.AddMedicineConstants.instructions);
@@ -206,31 +181,22 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     }
 
     private void getMedicationFormValue() {
-        nameMedication = String.valueOf(nameAddMedication_inputEditText.getText());
-        formTypeMedication = formAddMedication_spinner.getSelectedItem().toString();
-        strenghtNameMedication = String.valueOf(strengthAddMedication_inputEditText.getText());
-        strenghtMedicationValue = strenghtAddMedication_spinner.getSelectedItem().toString();
-        recurrencyMedication = recurrencyAddMedication_spinner.getSelectedItem().toString();
-        instructionMedication = instructionsAddMedication_spinner.getSelectedItem().toString();
-        resonMedication = String.valueOf(reason_inputEditText.getText());
-
-        startDate = startDatepickerAddmedication_Textview.getText().toString();
-        endDate = endDatePicker_textview.getText().toString();
-        time = timePicker_textview.getText().toString();
-
         Medicine medicine = new Medicine();
-        medicine.setName(nameMedication);
+        medicine.setName(String.valueOf(nameAddMedication_inputEditText.getText()));
         medicine.setActive(true);
-        medicine.setStrengthUnit(StrengthUnit.valueOf(strenghtMedicationValue));
-        medicine.setNumberOfUnits(Integer.parseInt(strenghtNameMedication));
-        medicine.setInstruction(instructionMedication);
-        medicine.setMedicineForm(formTypeMedication);
-        medicine.setReasonOfTaking(resonMedication);
+        medicine.setStrengthUnit(StrengthUnit.valueOf(strenghtAddMedication_spinner.getSelectedItem().toString()));
+        medicine.setNumberOfUnits(Integer.parseInt(String.valueOf(strengthAddMedication_inputEditText.getText())));
+        medicine.setInstruction(instructionsAddMedication_spinner.getSelectedItem().toString());
+        medicine.setMedicineForm(formAddMedication_spinner.getSelectedItem().toString());
+        medicine.setReasonOfTaking(String.valueOf(reason_inputEditText.getText()));
 
-        addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2), RecurrencyModel.valueOf(recurrencyMedication.replace(' ', '_')));
+        addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2), RecurrencyModel.valueOf(recurrencyAddMedication_spinner.getSelectedItem().toString().replace(' ', '_')));
     }
 
-
+    @Override
+    public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
+        addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel);
+    }
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {
         ArrayAdapter<String> formArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, formArray);
@@ -342,14 +308,4 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     }
 
 
-    @Override
-    public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
-        addMedicinePresenterInterface.addMedicineToDB(medicine,startDate,endDate,recurrencyModel);
-
-    }
-
-    @Override
-    public void setSelectedDaysAlertdialog() {
-        addMedicinePresenterInterface.getSelectedDaysAlertdialog(this.selectDaysAlertDialog);
-    }
 }

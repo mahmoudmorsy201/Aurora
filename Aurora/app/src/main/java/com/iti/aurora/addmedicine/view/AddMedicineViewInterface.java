@@ -8,6 +8,5 @@ import org.joda.time.DateTime;
 
 public interface AddMedicineViewInterface {
     void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel);
-    void setSelectedDaysAlertdialog();
 
 }
