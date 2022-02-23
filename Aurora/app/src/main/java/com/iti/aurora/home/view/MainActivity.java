@@ -40,9 +40,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
                 Repository.getInstance(ConcreteLocalSource.getInstance(this), this)
         );
 
+        DateTime startDate = new DateTime(System.currentTimeMillis());
+        DateTime start2 = new DateTime(startDate.getYear(), startDate.getMonthOfYear(), startDate.getDayOfMonth(), 0, 0);
+        DateTime endDate = new DateTime(start2.plusDays(1));
+        mainActivityPresenterInterface.getDosesByDay(start2.getMillis(), endDate.getMillis());
+
         calendarView = findViewById(R.id.mainCalendarView);
         medsRecyclerView = findViewById(R.id.medsRecyclerView);
-
 
         calendarView.setOnDateChangeListener((calendarView, year, month, day) -> {
             mainActivityPresenterInterface.getDosesByDay(new DateTime(year, month + 1, day, 0, 0).getMillis(), new DateTime(year, month + 1, day, 0, 0).plusDays(1).getMillis());
@@ -60,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
 
     @Override
     public void showLocalData(LiveData<List<Dose>> doses) {
-       doses.observe(this, doseList -> {
+        doses.observe(this, doseList -> {
 
-       });
+        });
     }
 
     @Override
