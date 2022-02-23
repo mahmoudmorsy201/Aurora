@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -200,6 +201,8 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     @Override
     public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
         addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel);
+        //TODO
+        Toast.makeText(AddMedicineActivity.this, "Medicine Added", Toast.LENGTH_SHORT).show();
     }
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {

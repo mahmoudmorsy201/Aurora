@@ -114,5 +114,15 @@ public class Dose {
         this.timeTaken = timeTaken;
     }
 
-
+    @Override
+    public String toString() {
+        return "Dose{" +
+                "doseId=" + doseId +
+                ", medId=" + medId +
+                ", treatmentId=" + treatmentId +
+                ", timeToTake=" + timeToTake +
+                ", isTaken=" + isTaken +
+                ", timeTaken=" + timeTaken +
+                '}';
+    }
 }

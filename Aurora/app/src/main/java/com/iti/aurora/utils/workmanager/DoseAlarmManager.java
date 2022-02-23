@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -25,13 +26,14 @@ public class DoseAlarmManager {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public DoseAlarmManager(Context context, Dose doseMode) {
         setAlarmSingle(context, doseMode);
+        Log.d("WORK_MANAGER", "DoseAlarmManager: Constructor");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setAlarmSingle(Context context, Dose doseModel) {
         Intent intent = new Intent(context, NotifierAlarm.class);
+        Log.d("WORK_MANAGER", "setAlarmSingle: constructor");
         intent.putExtra("Message", doseModel.getTimeTaken());
-
         intent.putExtra("RemindDate", new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
         intent.putExtra("id", doseModel.getDoseId());
         PendingIntent intent1 = PendingIntent.getBroadcast(context, doseModel.getDoseId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -45,6 +47,7 @@ public class DoseAlarmManager {
         int i = 0;
         // AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         AlarmManager alaManager[] = new AlarmManager[doseModelList.size()];
+        Log.d("WORK_MANAGER", "setAlarm: ");
         for (Dose doseModel : doseModelList) {
             Intent intent = new Intent(context, NotifierAlarm.class);
 

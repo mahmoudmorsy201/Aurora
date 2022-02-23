@@ -134,4 +134,9 @@ public class ConcreteLocalSource implements LocalSource {
     public LiveData<List<Dose>> getDosesByDay(long start, long end) {
         return doseDAO.getDosesByDay(start,end);
     }
+
+    @Override
+    public Single<List<Dose>> getDosesByDayOverLoad(long start, long end) {
+        return Single.fromCallable (() -> doseDAO.getDosesByDayOverLoad(start,end));
+    }
 }

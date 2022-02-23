@@ -13,6 +13,8 @@ import com.iti.aurora.model.medicine.Medicine;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface DoseDAO {
     @Query("SELECT * FROM dose")
@@ -35,5 +37,8 @@ public interface DoseDAO {
 
     @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end")
     LiveData<List<Dose>> getDosesByDay(long start, long end);
+
+    @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end")
+    List<Dose> getDosesByDayOverLoad(long start,long end);
 
 }
