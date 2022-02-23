@@ -3,7 +3,7 @@
     package="com.iti.aurora">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -23,21 +23,22 @@
         <activity
             android:name=".editmeds.view.EditMedsActivity"
             android:exported="false" />
+
         <activity
-            android:name=".addmedicine.view.AddMedicineActivity"
-            android:exported="true">
+            android:name=".home.view.MainActivity"
+            android:exported="true"
+
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
-        <activity
-            android:name=".editmeds.view.EditMedsActivity"
-            android:exported="true"></activity>
+        <receiver android:name=".utils.workmanager.NotifierAlarm" />
+
+
     </application>
 
 </manifest>

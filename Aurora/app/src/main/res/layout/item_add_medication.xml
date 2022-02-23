@@ -11,6 +11,7 @@
         android:id="@+id/textInputLayout_addMedication"
         style="@style/inputEditText"
         app:errorEnabled="false"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +23,9 @@
             android:backgroundTint="@color/white"
             android:ems="1"
             android:hint="@string/enter_name_medication"
-            android:maxLines="1" />
+            android:inputType="text"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/formAddMedication_spinner" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
@@ -66,8 +69,10 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:hint="@string/enter_strength"
+
                 android:inputType="number"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:nextFocusDown="@+id/recurrencyAddMedication_spinner" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -228,7 +233,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:hint="@string/the_reason_of_taking_this_drug" />
+            android:hint="@string/the_reason_of_taking_this_drug"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
@@ -241,8 +247,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/dayTextView"
