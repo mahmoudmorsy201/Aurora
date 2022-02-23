@@ -2,12 +2,11 @@ package com.iti.aurora.home.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CalendarView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -27,10 +26,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
 
     CalendarView calendarView;
     RecyclerView medsRecyclerView;
-    public static final String TAG = "TAG";
+    public static final String TAG = "MainActivity";
 
     MainActivityPresenterInterface mainActivityPresenterInterface;
     MedsAdapter adapter;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void showLocalDataByDay(LiveData<List<Dose>> doseList) {
         doseList.observe(this, doses -> {
