@@ -9,8 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
@@ -25,7 +27,9 @@ import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
+
 import org.joda.time.DateTime;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -222,23 +226,25 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         boolean isValid = false;
         if ((Objects.requireNonNull(nameAddMedication_inputEditText.getText()).length() > 0)) {
             isValid = true;
-            String s = nameAddMedication_inputEditText.getText().toString();
-            s.length();
+            textInputLayout_addMedication.setErrorEnabled(false);
+
         } else {
             textInputLayout_addMedication.setErrorEnabled(true);
             textInputLayout_addMedication.setError("enter name");
             isValid = false;
         }
-        if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText().toString()).length() > 0)
+        if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText().toString()).length() > 0) {
             isValid = true;
-        else {
+            strengthMedication_TextInputEditText.setErrorEnabled(false);
+        } else {
             strengthMedication_TextInputEditText.setErrorEnabled(true);
             strengthMedication_TextInputEditText.setError("Enter Strength");
             isValid = false;
         }
-        if (Objects.requireNonNull(reason_inputEditText.getText()).length() > 0)
+        if (Objects.requireNonNull(reason_inputEditText.getText()).length() > 0) {
             isValid = true;
-        else {
+            reason_TextInputEditText.setErrorEnabled(false);
+        } else {
             reason_TextInputEditText.setErrorEnabled(true);
             reason_TextInputEditText.setError("Please specify reason");
             isValid = false;
