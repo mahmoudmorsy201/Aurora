@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:constraint_referenced_ids="content,medNameEditText"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -309,7 +309,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:constraint_referenced_ids="contentReminder,takeOnePill,takeOnePill2,takeOnePill3,howManyReminderToday,firstDose,secondDose,thirdDose,smallArrow"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
