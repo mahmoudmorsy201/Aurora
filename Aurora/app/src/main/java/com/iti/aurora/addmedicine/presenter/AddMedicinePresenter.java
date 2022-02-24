@@ -1,5 +1,7 @@
 package com.iti.aurora.addmedicine.presenter;
 
+import android.app.AlarmManager;
+import android.content.Context;
 
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
 import com.iti.aurora.model.RepositoryInterface;
@@ -9,10 +11,12 @@ import com.iti.aurora.model.medicine.RecurrencyModel;
 import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
+import com.iti.aurora.utils.workmanager.DoseAlarmManager;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -22,9 +26,16 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddMedicinePresenter implements AddMedicinePresenterInterface {
-    private AddMedicineViewInterface _view;
-    private RepositoryInterface _repo;
+    AddMedicineViewInterface _view;
+    RepositoryInterface _repo;
     SelectDaysAlertDialog selectDaysAlertDialog;
+
+
+    Context context;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     public AddMedicinePresenter(AddMedicineViewInterface _view, RepositoryInterface _repo) {
         this._view = _view;
@@ -98,10 +109,31 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                 });
     }
 
+        /*
+
+    final int SELF_REMINDER_HOUR = 24;
+
+        long delay;
+        if (DateTime.now().getHourOfDay() < SELF_REMINDER_HOUR) {
+            delay = new org.joda.time.Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay().plusHours(SELF_REMINDER_HOUR)).getStandardMinutes();
+        } else {
+            delay = new org.joda.time.Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay().plusDays(1).plusHours(SELF_REMINDER_HOUR)).getStandardMinutes();
+        }
+
+     */
+
 
     private List<Dose> generatePeriodicDoses(long medID, long treatmentId, DateTime startDate, DateTime endDate, int noOfHours) {
         List<Dose> doseList = new ArrayList<>();
+
+        DateTime currentWhole = new DateTime(System.currentTimeMillis());
+        DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
+        if (startDate.isBefore(nextDayAt12Am)) {
+            DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()));
+        }
+
         while (startDate.isBefore(endDate)) {
+
             Dose dose = new Dose(medID, treatmentId, startDate.toDate());
             doseList.add(dose);
             startDate = startDate.plusHours(noOfHours);
@@ -125,6 +157,5 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         }
         return startDate;
     }
-
 
 }
