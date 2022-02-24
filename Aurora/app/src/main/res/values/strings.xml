@@ -27,5 +27,12 @@
     <string name="select_time">Select Time</string>
     <string name="the_reason_of_taking_this_drug">The reason of taking this drug</string>
     <string name="add_medication">Add Medication</string>
+    <string name="title_activity_main_home">MainHome</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_medication">Medication</string>
+    <string name="title_taker">care</string>
+    <string name="title_hisory">History</string>
 
 </resources>

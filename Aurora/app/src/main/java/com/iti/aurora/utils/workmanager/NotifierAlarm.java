@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.iti.aurora.R;
 import com.iti.aurora.home.view.MainActivity;
+import com.iti.aurora.utils.Constants;
 
 import java.util.Random;
 
@@ -38,18 +39,18 @@ public class NotifierAlarm extends BroadcastReceiver {
         taskStackBuilder.addParentStack(MainActivity.class);
         taskStackBuilder.addNextIntent(intent1);
 
-        PendingIntent intent2 = taskStackBuilder.getPendingIntent(1,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent intent2 = taskStackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         NotificationChannel channel = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channel = new NotificationChannel("my_channel_01","hello", NotificationManager.IMPORTANCE_HIGH);
+            channel = new NotificationChannel("my_channel_01", "hello", NotificationManager.IMPORTANCE_HIGH);
         }
 
         Notification notification = builder.setContentTitle(intent.getStringExtra("Message"))
                 .setContentText(intent.getStringExtra("RemindDate")).setAutoCancel(true)
-                .setSound(alarmsound).setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSound(Constants.NotificationUtil.alarmSound).setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentIntent(intent2)
                 .setChannelId("my_channel_01")
                 .build();
