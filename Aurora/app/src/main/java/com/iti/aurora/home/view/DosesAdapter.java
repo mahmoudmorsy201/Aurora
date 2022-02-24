@@ -16,20 +16,17 @@ import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.MaybeObserver;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
+public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> {
 
     List<Dose> doseList;
     Context context;
@@ -39,7 +36,7 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
         this.doseList = doseList;
     }
 
-    public MedsAdapter(List<Dose> medList, Context context, RepositoryInterface repositoryInterface) {
+    public DosesAdapter(List<Dose> medList, Context context, RepositoryInterface repositoryInterface) {
         this.doseList = medList;
         this.context = context;
         this.repositoryInterface = repositoryInterface;
@@ -48,7 +45,7 @@ public class MedsAdapter extends RecyclerView.Adapter<MedsAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_med_main, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dose_in_main_activity, parent, false));
     }
 
     @Override

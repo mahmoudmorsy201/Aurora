@@ -1,6 +1,6 @@
 package com.iti.aurora.home.presenter;
 
-public interface MainActivityPresenterInterface {
+public interface FragmentHomePresenterInterface {
     void getLocalDoses();
 
     void getDosesByDay(long start, long end);
