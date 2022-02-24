@@ -2,6 +2,7 @@ package com.iti.aurora.model.medicine;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Delete;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -16,12 +17,13 @@ import java.util.Date;
                 @ForeignKey(entity = Medicine.class,
                         parentColumns = "medId",
                         childColumns = "medId",
-                        onDelete = ForeignKey.SET_DEFAULT
+                        onDelete = ForeignKey.CASCADE
                 ),
 
                 @ForeignKey(entity = Treatment.class,
                         parentColumns = {"treatmentId"},
-                        childColumns = {"treatmentId"})
+                        childColumns = {"treatmentId"},
+                        onDelete = ForeignKey.CASCADE)
 
         })
 public class Dose {

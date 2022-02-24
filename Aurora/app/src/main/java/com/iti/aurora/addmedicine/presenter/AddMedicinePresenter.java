@@ -1,6 +1,5 @@
 package com.iti.aurora.addmedicine.presenter;
 
-import android.app.AlarmManager;
 import android.content.Context;
 
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
@@ -12,13 +11,9 @@ import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 import com.iti.aurora.utils.workmanager.DoseAlarmManager;
-
 import org.joda.time.DateTime;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;

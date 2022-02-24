@@ -15,7 +15,7 @@ import java.util.Date;
         foreignKeys = @ForeignKey(entity = Medicine.class,
                 parentColumns = "medId",
                 childColumns = "medId",
-                onDelete = ForeignKey.SET_DEFAULT
+                onDelete = ForeignKey.CASCADE
         )
 )
 public class Treatment {
