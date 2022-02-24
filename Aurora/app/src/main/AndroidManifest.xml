@@ -15,15 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aurora">
         <activity
+            android:name=".dummy.MedicineDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".addmedicine.view.AddMedicineActivity"
             android:exported="false"
             android:label="@string/title_activity_main_home" />
         <activity
             android:name=".usersystem.verifyphonenumber.view.VerifyPhoneNumberActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".editmeds.view.EditMedsActivity"
-            android:exported="true" >
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".MainHome"
+            android:exported="true"
+            android:windowSoftInputMode="stateVisible|adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,18 +41,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainHome"
-            android:exported="true"
-
-            android:windowSoftInputMode="stateVisible|adjustResize">
-
-
-        </activity>
-
         <receiver android:name=".utils.workmanager.NotifierAlarm" />
-
-
     </application>
 
 </manifest>
