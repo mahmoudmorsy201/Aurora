@@ -84,6 +84,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         );
         //for using alarm manager
         addMedicinePresenterInterface.setContext(AddMedicineActivity.this);
+        addMedicinePresenterInterface.getSelectedDaysAlertdialog(this.selectDaysAlertDialog);
         setInitialUI();
     }
 
@@ -114,11 +115,11 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
                         selectedDaysTextView.setText(text);
                     }
                 }, recurrencyDaysNumber);
+                addMedicinePresenterInterface.getSelectedDaysAlertdialog(selectDaysAlertDialog);
                 selectDaysAlertDialog.showSelectDaysDialog();
             }
         });
 
-        addMedicinePresenterInterface.getSelectedDaysAlertdialog(this.selectDaysAlertDialog);
 
         setSpinnerAdapter(formAddMedication_spinner, Constants.AddMedicineConstants.formType);
         setSpinnerAdapter(instructionsAddMedication_spinner, Constants.AddMedicineConstants.instructions);
