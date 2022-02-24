@@ -40,11 +40,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
     String workMangerName = "DAILY_WORK_MANAGER";
     PeriodicWorkRequest periodic;
 
-    // start work manager
-    //
     // in add medicine screen add medicine to work manager only current day using delay
     // change the calnder view
-    //
 
 
     @Override
