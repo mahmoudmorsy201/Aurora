@@ -81,6 +81,8 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
                 AddMedicineActivity.this, Repository.getInstance(
                 ConcreteLocalSource.getInstance(AddMedicineActivity.this), AddMedicineActivity.this)
         );
+        //for using alarm manager
+        addMedicinePresenterInterface.setContext(AddMedicineActivity.this);
         setInitialUI();
     }
 
@@ -197,6 +199,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
         addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2), RecurrencyModel.valueOf(recurrencyAddMedication_spinner.getSelectedItem().toString().replace(' ', '_')));
     }
+
 
     @Override
     public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
