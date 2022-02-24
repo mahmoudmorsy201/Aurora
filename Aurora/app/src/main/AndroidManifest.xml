@@ -25,7 +25,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".home.view.MainActivity"
+            android:name=".addmedicine.view.AddMedicineActivity"
             android:exported="true"
 
             android:windowSoftInputMode="stateVisible|adjustResize">
