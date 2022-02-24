@@ -1,7 +1,7 @@
 package com.iti.aurora.model.medicine;
 
 public enum MedicineForm {
-    Pill,
+    Pills,
     Solution,
     Injection,
     Powder,

@@ -22,4 +22,6 @@ public class Constants {
         public static final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
     }
+
+    public static final String MEDICINE_PASSING_FLAG = "MEDICINE_PASSING_FLAG";
 }

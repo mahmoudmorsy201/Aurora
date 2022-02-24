@@ -16,16 +16,13 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
-import com.iti.aurora.addmedicine.presenter.AddMedicinePresenter;
-import com.iti.aurora.addmedicine.presenter.AddMedicinePresenterInterface;
-import com.iti.aurora.addmedicine.view.AddMedicineActivity;
 import com.iti.aurora.database.ConcreteLocalSource;
 import com.iti.aurora.editmeds.presenter.EditMedicinePresenter;
 import com.iti.aurora.editmeds.presenter.EditMedicinePresenterInterface;
-import com.iti.aurora.home.view.MainActivity;
+
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Medicine;
-import com.iti.aurora.model.medicine.RecurrencyModel;
+
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.selectdays.IUpdateText;

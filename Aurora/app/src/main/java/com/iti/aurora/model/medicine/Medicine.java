@@ -9,11 +9,12 @@ import androidx.room.TypeConverters;
 import com.iti.aurora.database.DateConverter;
 import com.iti.aurora.database.DoseListConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "medicine")
-public class Medicine {
+public class Medicine implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "medId")
