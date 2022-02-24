@@ -31,6 +31,9 @@ public class NotifierAlarm extends BroadcastReceiver {
         Intent intent1 = new Intent(context, MainActivity.class);
         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+
+        //parent stack is different from main activity to add medicine activity
+        // i think we should make another notifier alarm for add medicine activity
         TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(context);
         taskStackBuilder.addParentStack(MainActivity.class);
         taskStackBuilder.addNextIntent(intent1);

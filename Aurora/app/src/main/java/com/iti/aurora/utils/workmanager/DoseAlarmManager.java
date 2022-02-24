@@ -46,14 +46,14 @@ public class DoseAlarmManager {
     private void setAlarm(Context context, List<Dose> doseModelList) {
         int i = 0;
         // AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        AlarmManager alaManager[] = new AlarmManager[doseModelList.size()];
+        AlarmManager[] alaManager = new AlarmManager[doseModelList.size()];
         Log.d("WORK_MANAGER", "setAlarm: ");
         for (Dose doseModel : doseModelList) {
             Intent intent = new Intent(context, NotifierAlarm.class);
 
-            intent.putExtra("Message", doseModel.getDoseId());
+            //intent.putExtra("Message", doseModel.getDoseId());
             intent.putExtra("RemindDate", new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
-            intent.putExtra("id", doseModel.getDoseId());
+            //intent.putExtra("id", doseModel.getDoseId());
             PendingIntent intent1 = PendingIntent.getBroadcast(context, doseModel.getDoseId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alaManager[i] = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alaManager[i].setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
