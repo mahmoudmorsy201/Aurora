@@ -1,6 +1,5 @@
 package com.iti.aurora.usersystem.signup.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.SignInButton;
@@ -20,10 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.hbb20.CountryCodePicker;
+import com.iti.aurora.MainHome;
 import com.iti.aurora.R;
 import com.iti.aurora.database.ConcreteLocalSource;
 import com.iti.aurora.database.dao.DAOUser;
-import com.iti.aurora.home.view.MainActivity;
 import com.iti.aurora.model.User;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;
@@ -207,7 +210,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     @Override
     public void gotToHomePage(FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignUpActivity.this, MainHome.class);
             intent.putExtra("GOOGLE_ACCOUNT", firebaseUser);
             startActivity(intent);
         } else {
