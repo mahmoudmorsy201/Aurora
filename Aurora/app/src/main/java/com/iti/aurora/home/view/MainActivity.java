@@ -35,14 +35,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
     public static final String TAG = "MainActivity";
 
     MainActivityPresenterInterface mainActivityPresenterInterface;
-    MedsAdapter adapter;
+    DosesAdapter adapter;
 
     String workMangerName = "DAILY_WORK_MANAGER";
     PeriodicWorkRequest periodic;
-
-    // in add medicine screen add medicine to work manager only current day using delay
-    // change the calnder view
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
 
         List<Dose> list = new ArrayList<>();
         medsRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false));
-        adapter = new MedsAdapter(list, MainActivity.this, Repository.getInstance(ConcreteLocalSource.getInstance(this), this));
+        adapter = new DosesAdapter(list, MainActivity.this, Repository.getInstance(ConcreteLocalSource.getInstance(this), this));
         medsRecyclerView.setAdapter(adapter);
 
         FirebaseUser user = getIntent().getParcelableExtra("GOOGLE_ACCOUNT");
