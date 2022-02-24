@@ -2,6 +2,7 @@ package com.iti.aurora.addmedicine.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import com.iti.aurora.addmedicine.presenter.AddMedicinePresenter;
 import com.iti.aurora.addmedicine.presenter.AddMedicinePresenterInterface;
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
 import com.iti.aurora.database.ConcreteLocalSource;
+import com.iti.aurora.home.view.MainActivity;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.RecurrencyModel;
@@ -206,6 +208,8 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel);
         //TODO
         Toast.makeText(AddMedicineActivity.this, "Medicine Added", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {
