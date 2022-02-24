@@ -1,4 +1,4 @@
-package com.iti.aurora.ui;
+package com.iti.aurora.mainactivity.healthtaker.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,11 +10,12 @@ import androidx.fragment.app.Fragment;
 
 import com.iti.aurora.R;
 
-public class LogFragment extends Fragment {
+public class HealthTakerFragment extends Fragment {
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_log,container,false);
+
+    public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_taker, container, false);
+
         return view;
     }
 

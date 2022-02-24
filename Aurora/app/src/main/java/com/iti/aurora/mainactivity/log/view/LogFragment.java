@@ -1,4 +1,4 @@
-package com.iti.aurora.ui;
+package com.iti.aurora.mainactivity.log.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,13 +10,12 @@ import androidx.fragment.app.Fragment;
 
 import com.iti.aurora.R;
 
-public class TakerFragment extends Fragment {
-
+public class LogFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_taker,container,false);
-             return view;
+        View view = inflater.inflate(R.layout.fragment_log,container,false);
+        return view;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.iti.aurora.ui;
+package com.iti.aurora.mainactivity.medicines.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.aurora.R;
 import com.iti.aurora.database.ConcreteLocalSource;
-import com.iti.aurora.dummy.MedicineDetailsActivity;
-import com.iti.aurora.dummy.MedicinesAdapter;
+import com.iti.aurora.medicinedetails.view.MedicineDetailsActivity;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Medicine;
@@ -26,7 +25,7 @@ import com.iti.aurora.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Medication extends Fragment {
+public class MedicinesFragment extends Fragment {
     Context context;
 
     RecyclerView medicinesRecyclerView;

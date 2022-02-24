@@ -1,4 +1,4 @@
-package com.iti.aurora.dummy;
+package com.iti.aurora.mainactivity.medicines.view;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;

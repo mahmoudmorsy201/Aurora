@@ -14,7 +14,7 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.iti.aurora.MainHome;
+import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
 import com.iti.aurora.utils.Constants;
 
@@ -29,14 +29,14 @@ public class NotifierAlarm extends BroadcastReceiver {
 
         Uri alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         //todo here luncher activity name form notification click
-        Intent intent1 = new Intent(context, MainHome.class);
+        Intent intent1 = new Intent(context, MainActivity.class);
         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 
         //parent stack is different from main activity to add medicine activity
         // i think we should make another notifier alarm for add medicine activity
         TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(context);
-        taskStackBuilder.addParentStack(MainHome.class);
+        taskStackBuilder.addParentStack(MainActivity.class);
         taskStackBuilder.addNextIntent(intent1);
 
         PendingIntent intent2 = taskStackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);

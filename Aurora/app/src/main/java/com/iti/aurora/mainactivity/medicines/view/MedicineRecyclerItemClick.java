@@ -1,4 +1,4 @@
-package com.iti.aurora.dummy;
+package com.iti.aurora.mainactivity.medicines.view;
 
 import com.iti.aurora.model.medicine.Medicine;
 

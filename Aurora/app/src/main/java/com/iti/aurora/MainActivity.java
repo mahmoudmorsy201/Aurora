@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iti.aurora.addmedicine.view.AddMedicineActivity;
 import com.iti.aurora.databinding.ActivityMainHomeBinding;
 
-public class MainHome extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
 
     @Override

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aurora">
         <activity
-            android:name=".dummy.MedicineDetailsActivity"
+            android:name=".medicinedetails.view.MedicineDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".addmedicine.view.AddMedicineActivity"
@@ -30,7 +30,7 @@
 
         </activity>
         <activity
-            android:name=".MainHome"
+            android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="stateVisible|adjustResize">
 

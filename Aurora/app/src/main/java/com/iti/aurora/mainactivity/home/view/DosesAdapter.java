@@ -1,4 +1,4 @@
-package com.iti.aurora.home.view;
+package com.iti.aurora.mainactivity.home.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;

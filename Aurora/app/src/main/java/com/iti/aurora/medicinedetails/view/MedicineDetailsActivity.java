@@ -1,4 +1,4 @@
-package com.iti.aurora.dummy;
+package com.iti.aurora.medicinedetails.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 

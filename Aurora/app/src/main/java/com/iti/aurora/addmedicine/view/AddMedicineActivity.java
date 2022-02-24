@@ -17,7 +17,7 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.iti.aurora.MainHome;
+import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
 import com.iti.aurora.addmedicine.presenter.AddMedicinePresenter;
 import com.iti.aurora.addmedicine.presenter.AddMedicinePresenterInterface;
@@ -208,7 +208,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel);
         //TODO
         Toast.makeText(AddMedicineActivity.this, "Medicine Added", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(AddMedicineActivity.this, MainHome.class);
+        Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
         startActivity(intent);
     }
 

@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.hbb20.CountryCodePicker;
-import com.iti.aurora.MainHome;
+import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
 import com.iti.aurora.database.ConcreteLocalSource;
 import com.iti.aurora.database.dao.DAOUser;
@@ -210,7 +210,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     @Override
     public void gotToHomePage(FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
-            Intent intent = new Intent(SignUpActivity.this, MainHome.class);
+            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             intent.putExtra("GOOGLE_ACCOUNT", firebaseUser);
             startActivity(intent);
         } else {

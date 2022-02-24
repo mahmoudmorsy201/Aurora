@@ -1,13 +1,13 @@
-package com.iti.aurora.home.presenter;
+package com.iti.aurora.mainactivity.home.presenter;
 
-import com.iti.aurora.home.view.HomeFragmentViewInterface;
+import com.iti.aurora.mainactivity.home.view.HomeFragmentViewInterface;
 import com.iti.aurora.model.RepositoryInterface;
 
-public class FragmentHomePresenter implements FragmentHomePresenterInterface {
+public class HomeFragmentPresenter implements HomeFragmentPresenterInterface {
     private HomeFragmentViewInterface _view;
     private RepositoryInterface _repo;
 
-    public FragmentHomePresenter(HomeFragmentViewInterface _view, RepositoryInterface _repo) {
+    public HomeFragmentPresenter(HomeFragmentViewInterface _view, RepositoryInterface _repo) {
         this._view = _view;
         this._repo = _repo;
     }

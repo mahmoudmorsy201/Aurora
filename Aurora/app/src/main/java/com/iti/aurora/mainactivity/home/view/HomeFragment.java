@@ -1,4 +1,4 @@
-package com.iti.aurora.home.view;
+package com.iti.aurora.mainactivity.home.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,8 +24,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iti.aurora.R;
 import com.iti.aurora.addmedicine.view.AddMedicineActivity;
 import com.iti.aurora.database.ConcreteLocalSource;
-import com.iti.aurora.home.presenter.FragmentHomePresenter;
-import com.iti.aurora.home.presenter.FragmentHomePresenterInterface;
+import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenter;
+import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenterInterface;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.utils.workmanager.DailyWorker;
@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
     public static final String TAG = "MainActivity";
     FloatingActionButton fab;
 
-    FragmentHomePresenterInterface fragmentHomePresenterInterface;
+    HomeFragmentPresenterInterface fragmentHomePresenterInterface;
     DosesAdapter adapter;
 
     String workMangerName = "DAILY_WORK_MANAGER";
@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        fragmentHomePresenterInterface = new FragmentHomePresenter(this,
+        fragmentHomePresenterInterface = new HomeFragmentPresenter(this,
                 Repository.getInstance(ConcreteLocalSource.getInstance(context), context)
         );
 
