@@ -2,13 +2,16 @@ package com.iti.aurora.medicinedetails.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iti.aurora.R;
 import com.iti.aurora.database.ConcreteLocalSource;
+import com.iti.aurora.editmeds.view.EditMedsActivity;
 import com.iti.aurora.medicinedetails.presenter.MedicineDetailsPresenter;
 import com.iti.aurora.medicinedetails.presenter.MedicineDetailsPresenterInterface;
 import com.iti.aurora.model.Repository;
@@ -36,6 +39,7 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
     Button activeOrSuspendButton;
 
     ImageView deleteImageView;
+    ImageView editMedicineImageView;
 
     RepositoryInterface repositoryInterface;
 
@@ -61,6 +65,7 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
         instructionTextView = findViewById(R.id.instructionTextView);
         reasonOfTakingUserValueTextView = findViewById(R.id.reasonOfTakingUserValueTextView);
         deleteImageView = findViewById(R.id.deleteImageView);
+        editMedicineImageView = findViewById(R.id.editImageView);
 
         deleteImageView.setOnClickListener(view -> TwoButtonsDialog.TwoButtonsDialogBuilder(
                 MedicineDetailsActivity.this,
@@ -74,6 +79,13 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
                     MedicineDetailsActivity.this.finish();
                 }, (dialogInterface, i) -> dialogInterface.dismiss()
         ).show());
+
+        editMedicineImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MedicineDetailsActivity.this, EditMedsActivity.class).putExtra(Constants.MEDICINE_PASSING_FLAG, medicine));
+            }
+        });
 
 
         if (medicine != null) {
