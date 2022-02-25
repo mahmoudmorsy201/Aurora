@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
+import com.iti.aurora.NotificationDialogOverApp;
 import com.iti.aurora.utils.Constants;
 
 import java.util.Random;
@@ -60,6 +61,17 @@ public class NotifierAlarm extends BroadcastReceiver {
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(new Random(System.currentTimeMillis()).nextInt(120), notification);
+        showDialog(context);
+    }
 
+    private void showDialog(Context context) {
+
+        NotificationDialogOverApp notificationDialogOverApp =new NotificationDialogOverApp(context);
+
+        notificationDialogOverApp.open();
+        /*Intent scheduledIntent = new Intent(context, textActivity.class);
+        scheduledIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        scheduledIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        context.startActivity(scheduledIntent);*/
     }
 }
