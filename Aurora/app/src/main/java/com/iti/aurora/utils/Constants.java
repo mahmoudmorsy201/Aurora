@@ -20,8 +20,20 @@ public class Constants {
 
     public static class NotificationUtil {
         public static final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        public static final String DOSE_ID_KEY="DOSE_ID_KEY";
+        public static final String MEDICNIE_NAME="MEDICNIE_NAME";
+        public static final String MEDICINE_TIME="MEDICINE_TIME";
+        public static final String MEDICINE_INSTRUCTION="MEDICINE_INSTRUCTION";
+        public static final String MEDICNIE_RESONE="MEDICNIE_RESONE";
+        public static final String MEDICNIE_FORM="MEDICNIE_FORM";
+    }
+
+    public static class WorkManagerConstants {
+        public static final int INTERVAL_TIME_HOUR = 24;
+        public static final String WORK_MANAGER_NAME = "DAILY_WORK_MANAGER";
 
     }
+
 
     public static final String MEDICINE_PASSING_FLAG = "MEDICINE_PASSING_FLAG";
 }
