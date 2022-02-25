@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 
-public class BattaryOptimization {
+public class PermissionUtil {
 
     public static boolean checkBatteryOptimizePermission(Context context) {
 
@@ -33,6 +33,17 @@ public class BattaryOptimization {
             }
             context.startActivity(intent);
 
+        }
+    }
+
+    public static void checkOverlayPermission(Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(context)) {
+                // send user to the device settings
+                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                context.startActivity(myIntent);
+            }
         }
     }
 }
