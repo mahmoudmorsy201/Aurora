@@ -28,6 +28,7 @@ import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenter;
 import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenterInterface;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Dose;
+import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.workmanager.DailyWorker;
 
 import org.joda.time.DateTime;
@@ -45,7 +46,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
     HomeFragmentPresenterInterface fragmentHomePresenterInterface;
     DosesAdapter adapter;
 
-    String workMangerName = "DAILY_WORK_MANAGER";
     PeriodicWorkRequest periodic;
     Context context;
 
@@ -61,16 +61,16 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
         fragmentHomePresenterInterface = new HomeFragmentPresenter(this,
                 Repository.getInstance(ConcreteLocalSource.getInstance(context), context)
         );
-
+        //todo don't forget change interval time -> use Constant
         periodic = new PeriodicWorkRequest.Builder(DailyWorker.class,
                 1,
                 TimeUnit.MINUTES)
-                .addTag(workMangerName)
+                .addTag(Constants.WorkManagerConstants.WORK_MANAGER_NAME)
                 .build();
 
         WorkManager workManager = WorkManager.getInstance(getActivity());
         //workManager.cancelAllWork();
-        workManager.enqueueUniquePeriodicWork(workMangerName, ExistingPeriodicWorkPolicy.KEEP, periodic);
+        workManager.enqueueUniquePeriodicWork(Constants.WorkManagerConstants.WORK_MANAGER_NAME, ExistingPeriodicWorkPolicy.KEEP, periodic);
         Log.d("WORK_MANAGER", "onCreate: creating work manager");
         DateTime startDate = new DateTime(System.currentTimeMillis());
         DateTime start2 = new DateTime(startDate.getYear(), startDate.getMonthOfYear(), startDate.getDayOfMonth(), 0, 0);
