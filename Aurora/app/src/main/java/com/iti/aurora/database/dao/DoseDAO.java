@@ -9,11 +9,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.iti.aurora.model.medicine.Dose;
-import com.iti.aurora.model.medicine.Medicine;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface DoseDAO {

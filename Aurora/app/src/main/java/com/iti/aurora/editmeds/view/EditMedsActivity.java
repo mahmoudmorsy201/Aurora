@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.iti.aurora.R;
@@ -24,13 +26,17 @@ import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Medicine;
 
 import com.iti.aurora.model.medicine.StrengthUnit;
+import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
+
 import org.joda.time.DateTime;
+
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -51,9 +57,6 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
     TextView selectedDaysEditTextView;
     Button editMedication_button;
 
-
-
-    //Arrays.asList(TYPES).indexOf("Sedan");
     int recurrencyDaysNumber;
     Calendar myCalendar = Calendar.getInstance();
     String myFormat = "MM/dd/yy";
@@ -72,8 +75,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
     private DateTime selectedEndDate;
     EditMedicinePresenterInterface editMedicinePresenterInterface;
     Medicine medicine;
-
-
+    List<Treatment> treatments;
 
 
     @Override
@@ -197,7 +199,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         });
     }
 
-    private void setInitialValues(Medicine medicine) {
+    private void setInitialValues(Medicine medicine, List<Treatment> treatments) {
 
         int formArrayPosition = Arrays.asList(Constants.AddMedicineConstants.formType).indexOf(medicine.getMedicineForm());
         int instructionArrayPosition = Arrays.asList(Constants.AddMedicineConstants.instructions).indexOf(medicine.getInstruction());
@@ -209,6 +211,9 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         strenghtEditMedication_spinner.setSelection(strengthArrayPosition);
         instructionsEditMedication_spinner.setSelection(instructionArrayPosition);
         formEditMedication_spinner.setSelection(formArrayPosition);
+        //todo list treatments !-0
+        startDatepickerEditmedication_Textview.setText(dateFormat.format(treatments.get(0).getStartDate()));
+        endDateEditPicker_textview.setText(dateFormat.format(treatments.get(0).getEndDate()));
 
     }
 
@@ -233,10 +238,12 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
     }
 
     @Override
-    public void showMedicine(Medicine medicine) {
-        setInitialValues(medicine);
+    public void showMedicine(Medicine medicine,List<Treatment> treatments) {
         this.medicine = medicine;
+        this.treatments = treatments;
+        setInitialValues(medicine,treatments);
     }
+
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {
         ArrayAdapter<String> formArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, formArray);

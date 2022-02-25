@@ -66,8 +66,7 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
 
                     @Override
                     public void onSuccess(@NonNull Medicine medicine) {
-                        _view.showMedicine(medicine);
-
+                        getListOfTreatmentsFromRepo(medicine);
                     }
 
                     @Override
@@ -77,6 +76,28 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
 
                     @Override
                     public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getListOfTreatmentsFromRepo(Medicine medicine) {
+        _repo.getTreatmentsMedId(medicine.getMedId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<Treatment>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<Treatment> treatments) {
+                        _view.showMedicine(medicine,treatments);;
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
 
                     }
                 });
