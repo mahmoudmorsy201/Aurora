@@ -1,17 +1,16 @@
 package com.iti.aurora.medicinedetails.view;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iti.aurora.R;
 import com.iti.aurora.database.ConcreteLocalSource;
+import com.iti.aurora.medicinedetails.presenter.MedicineDetailsPresenter;
+import com.iti.aurora.medicinedetails.presenter.MedicineDetailsPresenterInterface;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Medicine;
@@ -20,7 +19,7 @@ import com.iti.aurora.utils.dialogs.TwoButtonsDialog;
 
 import java.text.MessageFormat;
 
-public class MedicineDetailsActivity extends AppCompatActivity {
+public class MedicineDetailsActivity extends AppCompatActivity implements MedicineDetailsViewInterface {
 
     Medicine medicine;
 
@@ -40,6 +39,8 @@ public class MedicineDetailsActivity extends AppCompatActivity {
 
     RepositoryInterface repositoryInterface;
 
+    MedicineDetailsPresenterInterface presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,8 @@ public class MedicineDetailsActivity extends AppCompatActivity {
         repositoryInterface = Repository.getInstance(ConcreteLocalSource.getInstance(this), this);
 
         medicine = (Medicine) getIntent().getSerializableExtra(Constants.MEDICINE_PASSING_FLAG);
+
+        presenter = new MedicineDetailsPresenter(MedicineDetailsActivity.this, Repository.getInstance(ConcreteLocalSource.getInstance(MedicineDetailsActivity.this), this));
 
         medicineImageView = findViewById(R.id.medicineImageView);
         medicineNameTextView = findViewById(R.id.medicineNameTextView);
@@ -66,12 +69,10 @@ public class MedicineDetailsActivity extends AppCompatActivity {
                 getResources().getString(R.string.deleteMedicine),
                 getResources().getString(R.string.cancel),
                 (dialogInterface, i) -> {
-                    repositoryInterface.deleteMedicine(medicine);
+                    presenter.deleteMedicine(medicine);
                     dialogInterface.dismiss();
                     MedicineDetailsActivity.this.finish();
-                }, (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                }
+                }, (dialogInterface, i) -> dialogInterface.dismiss()
         ).show());
 
 
