@@ -7,6 +7,7 @@ import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.Treatment;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -36,4 +37,5 @@ public interface LocalSource {
     void insertDoses(List<Dose> doses);
     LiveData<List<Dose>> getDosesByDay(long start, long end);
     Single<List<Dose>> getDosesByDayOverLoad(long start,long end);
+    Single<List<Dose>> getDosesByMedId(long medId);
 }
