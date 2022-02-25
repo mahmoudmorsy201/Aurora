@@ -2,6 +2,7 @@ package com.iti.aurora.editmeds.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -25,9 +27,11 @@ import com.iti.aurora.editmeds.presenter.EditMedicinePresenterInterface;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Medicine;
 
+import com.iti.aurora.model.medicine.RecurrencyModel;
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.Constants;
+import com.iti.aurora.utils.dialogs.TwoButtonsDialog;
 import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
@@ -94,9 +98,9 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         );
         //for using alarm manager
         editMedicinePresenterInterface.setContext(EditMedsActivity.this);
+        medicine = (Medicine) getIntent().getSerializableExtra(Constants.MEDICINE_PASSING_FLAG);
 
-        //TODO clear this line its only for testing
-        editMedicinePresenterInterface.getMedicineDetails(1);
+        editMedicinePresenterInterface.getListOfTreatmentsFromRepo(medicine);
 
         setInitialUI();
 
@@ -129,6 +133,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
                         selectedDaysEditTextView.setText(text);
                     }
                 }, recurrencyDaysNumber);
+                editMedicinePresenterInterface.getSelectedDaysAlertdialog(selectDaysAlertDialog);
                 selectDaysAlertDialog.showSelectDaysDialog();
             }
         });
@@ -177,6 +182,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         editMedication_button.setOnClickListener(view -> {
             if (checkInputMedication()) {
                 getMedicationFormValue(medicine);
+                editMedicinePresenterInterface.getDosesByMedId(medicine.getMedId());
             }
         });
 
@@ -228,21 +234,25 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         strenghtEditMedication_spinner.setSelection(strengthArrayPosition);
         instructionsEditMedication_spinner.setSelection(instructionArrayPosition);
         formEditMedication_spinner.setSelection(formArrayPosition);
-        //todo list treatments !-0
-
-        startDatepickerEditmedication_Textview.setText(dateFormat.format(treatments.get(0).getEndDate()));
+        startDatepickerEditmedication_Textview.setText(dateFormat.format(treatments.get(0).getStartDate()));
         endDateEditPicker_textview.setText(dateFormat.format(treatments.get(0).getEndDate()));
         recurrencyEditMedication_spinner.setSelection(selectDosesRecurrencyArrayPosition);
         timePickerEdit_textview.setText(outPut);
-        selectDaysAlertDialog.setSelectedDays(treatments.get(0).getDaysList());
+        showSelectedDays();
+    }
 
-        StringBuilder builder = new StringBuilder();
-        for (DaysOfWeek day : treatments.get(0).getDaysList()) {
-            builder.append(day.toString());
-            builder.append(",");
+    private void showSelectedDays() {
+        if (treatments.get(0).getDaysList().size() != 0) {
+            selectDaysAlertDialog.setSelectedDays(treatments.get(0).getDaysList());
+
+            StringBuilder builder = new StringBuilder();
+            for (DaysOfWeek day : treatments.get(0).getDaysList()) {
+                builder.append(day.toString());
+                builder.append(",");
+            }
+            builder.deleteCharAt(builder.lastIndexOf(","));
+            selectedDaysEditTextView.setText(builder.toString());
         }
-        builder.deleteCharAt(builder.lastIndexOf(","));
-        selectedDaysEditTextView.setText(builder.toString());
 
 
     }
@@ -255,15 +265,38 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         medicineToGet.setInstruction(instructionsEditMedication_spinner.getSelectedItem().toString());
         medicineToGet.setMedicineForm(formEditMedication_spinner.getSelectedItem().toString());
         medicineToGet.setReasonOfTaking(String.valueOf(reasonEdit_inputEditText.getText()));
+        List<DaysOfWeek> daysSelected = selectDaysAlertDialog.getSelectedDaysFromDialog();
 
-        editMedicine(medicineToGet);
+        editMedicine(medicineToGet, selectedStartDate, selectedEndDate.plusMinutes(2),
+                RecurrencyModel.valueOf(recurrencyEditMedication_spinner.getSelectedItem().toString().replace(' ', '_')),
+                daysSelected
+        );
     }
 
 
     @Override
-    public void editMedicine(Medicine medicine) {
-        editMedicinePresenterInterface.editMedicineToDB(medicine);
-        //TODO
+    public void editMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
+        AlertDialog.Builder builder = TwoButtonsDialog.TwoButtonsDialogBuilder(EditMedsActivity.this,
+                getResources().getString(R.string.edit_medication),
+                getResources().getString(R.string.doYouWantToSaveMedicine),
+                getResources().getString(R.string.edit_medication),
+                getResources().getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        editMedicinePresenterInterface.editMedicineToDB(medicine, startDate, endDate, recurrencyModel, daysSelected);
+                        EditMedsActivity.this.finish();
+                    }
+                },
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }
+
+        );
+        builder.show();
         Toast.makeText(EditMedsActivity.this, "Medicine Edited", Toast.LENGTH_SHORT).show();
     }
 
