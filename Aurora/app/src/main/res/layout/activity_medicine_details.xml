@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/backImageView"
         android:layout_width="32dp"
         android:layout_height="32dp"
