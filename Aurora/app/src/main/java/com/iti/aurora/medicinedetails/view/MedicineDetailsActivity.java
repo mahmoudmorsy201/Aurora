@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,14 +79,18 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
                 }, (dialogInterface, i) -> dialogInterface.dismiss()
         ).show());
 
-        editMedicineImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MedicineDetailsActivity.this, EditMedsActivity.class).putExtra(Constants.MEDICINE_PASSING_FLAG, medicine));
-            }
-        });
+        editMedicineImageView.setOnClickListener(view -> startActivity(new Intent(MedicineDetailsActivity.this, EditMedsActivity.class).putExtra(Constants.MEDICINE_PASSING_FLAG, medicine)));
+        showMedicine(medicine);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.getMedicine(medicine.getMedId());
+    }
 
+    @Override
+    public void showMedicine(Medicine medicine) {
         if (medicine != null) {
             medicineNameTextView.setText(medicine.getName());
             medicineStrengthTextView.setText(MessageFormat.format("{0} {1}", medicine.getNumberOfUnits(), medicine.getStrengthUnit()));
@@ -101,6 +104,5 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
             instructionTextView.setText(medicine.getInstruction());
             reasonOfTakingUserValueTextView.setText(medicine.getReasonOfTaking());
         }
-
     }
 }
