@@ -29,7 +29,7 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
     EditMedicineViewInterface _view;
     RepositoryInterface _repo;
     SelectDaysAlertDialog selectDaysAlertDialog;
-
+    Medicine medicineReference;
 
     Context context;
 
@@ -67,6 +67,8 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
                     @Override
                     public void onSuccess(@NonNull Medicine medicine) {
                         getListOfTreatmentsFromRepo(medicine);
+                        medicineReference = medicine;
+
                     }
 
                     @Override
@@ -93,7 +95,8 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
 
                     @Override
                     public void onSuccess(@NonNull List<Treatment> treatments) {
-                        _view.showMedicine(medicine,treatments);;
+                        _view.showMedicine(medicine, treatments);
+                        ;
                     }
 
                     @Override
@@ -110,7 +113,7 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
         DateTime currentWhole = new DateTime(System.currentTimeMillis());
         DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
         if (startDate.isBefore(nextDayAt12Am)) {
-            DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()));
+            DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()), medicineReference);
         }
 
         while (startDate.isBefore(endDate)) {

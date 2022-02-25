@@ -67,14 +67,14 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
                 Repository.getInstance(ConcreteLocalSource.getInstance(context), context)
         );
 
+        //todo don't forget change interval time -> use Constant
         periodic = new PeriodicWorkRequest.Builder(DailyWorker.class,
-                24,
-                TimeUnit.HOURS)
+                1,
+                TimeUnit.MINUTES)
                 .addTag(workMangerName)
                 .build();
 
         WorkManager workManager = WorkManager.getInstance(getActivity());
-        //workManager.cancelAllWork();
         workManager.enqueueUniquePeriodicWork(workMangerName, ExistingPeriodicWorkPolicy.KEEP, periodic);
         Log.d("WORK_MANAGER", "onCreate: creating work manager");
         DateTime startDate = new DateTime(System.currentTimeMillis());
@@ -129,7 +129,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
     public void showLocalData(LiveData<List<Dose>> doses) {
         doses.observe(this, doseList -> {
             //TODO all doses in the database are shown in here
-
         });
     }
 

@@ -42,6 +42,7 @@
     <string name="doYouWantToDeleteThisMedicine">Do you want to delete this medicine ?</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="youshould_take">\"You should take medicnie \"</string>
     <string name="take">Take</string>
     <string name="dismiss">Dismiss</string>
     <string name="scheduledFor">"Scheduled for "</string>
