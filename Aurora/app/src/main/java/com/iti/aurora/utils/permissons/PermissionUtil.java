@@ -10,7 +10,7 @@ import android.provider.Settings;
 
 public class PermissionUtil {
 
-    public static boolean checkBatteryOptimizePermission(Context context) {
+    public static boolean iskBatteryOptimizePermission(Context context) {
 
         String permission = android.Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS;
         int res = context.checkCallingOrSelfPermission(permission);
