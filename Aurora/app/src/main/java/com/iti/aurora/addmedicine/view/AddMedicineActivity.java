@@ -27,13 +27,17 @@ import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.RecurrencyModel;
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.utils.Constants;
+import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -198,14 +202,19 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         medicine.setInstruction(instructionsAddMedication_spinner.getSelectedItem().toString());
         medicine.setMedicineForm(formAddMedication_spinner.getSelectedItem().toString());
         medicine.setReasonOfTaking(String.valueOf(reason_inputEditText.getText()));
+        List<DaysOfWeek> daysSelected = selectDaysAlertDialog.getSelectedDaysFromDialog();
 
-        addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2), RecurrencyModel.valueOf(recurrencyAddMedication_spinner.getSelectedItem().toString().replace(' ', '_')));
+
+        addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2),
+                RecurrencyModel.valueOf(recurrencyAddMedication_spinner.getSelectedItem().toString().replace(' ', '_')),
+                daysSelected
+        );
     }
 
 
     @Override
-    public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
-        addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel);
+    public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
+        addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel,daysSelected);
         //TODO
         Toast.makeText(AddMedicineActivity.this, "Medicine Added", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
