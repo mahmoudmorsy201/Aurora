@@ -49,7 +49,6 @@ public class DoseAlarmManager {
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setAlarm(Context context, List<Dose> doseModelList) {
         int i = 0;
-        // AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         AlarmManager[] alaManager = new AlarmManager[doseModelList.size()];
         Log.d("WORK_MANAGER", "setAlarm: ");
         for (Dose doseModel : doseModelList) {

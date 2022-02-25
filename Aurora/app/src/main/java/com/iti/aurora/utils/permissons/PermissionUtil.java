@@ -22,6 +22,7 @@ public class PermissionUtil {
     public static void requestIgnorePowerOptimize(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Intent intent = new Intent();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             String packageName = context.getPackageName();
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             if (pm.isIgnoringBatteryOptimizations(packageName))
@@ -42,6 +43,7 @@ public class PermissionUtil {
             if (!Settings.canDrawOverlays(context)) {
                 // send user to the device settings
                 Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(myIntent);
             }
         }
