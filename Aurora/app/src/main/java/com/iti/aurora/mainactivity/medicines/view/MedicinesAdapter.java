@@ -41,7 +41,7 @@ public class MedicinesAdapter extends RecyclerView.Adapter<MedicinesAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         MedicineForm form = MedicineForm.valueOf(medicineList.get(position).getMedicineForm());
         holder.medicineNameTextView.setText(medicineList.get(position).getName());
-        holder.medicineStrengthTextView.setText(medicineList.get(position).getNumberOfUnits() + " " + medicineList.get(position).getUnit());
+        holder.medicineStrengthTextView.setText(medicineList.get(position).getNumberOfUnits() + " " + medicineList.get(position).getStrengthUnit());
         holder.medicineInstructionsTextView.setText(medicineList.get(position).getInstruction());
         holder.containerConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

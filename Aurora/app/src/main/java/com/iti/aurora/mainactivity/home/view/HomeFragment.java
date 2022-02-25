@@ -86,13 +86,20 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
 
         List<Dose> list = new ArrayList<>();
         medsRecyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        adapter = new DosesAdapter(list, context, Repository.getInstance(ConcreteLocalSource.getInstance(context), context));
+        adapter = new DosesAdapter(list, context, Repository.getInstance(ConcreteLocalSource.getInstance(context), context), new DosesRecyclerItemClick() {
+            @Override
+            public void showDoseDialog(Dose dose) {
+                //TODO show does dialog
+            }
+        });
+
         medsRecyclerView.setAdapter(adapter);
         fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, AddMedicineActivity.class);
             startActivity(intent);
         });
+
         //FirebaseUser user = getIntent().getParcelableExtra("GOOGLE_ACCOUNT");
         //mainActivityPresenterInterface.getLocalDoses();
 

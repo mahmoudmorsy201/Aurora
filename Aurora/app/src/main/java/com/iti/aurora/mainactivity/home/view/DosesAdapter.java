@@ -1,10 +1,12 @@
 package com.iti.aurora.mainactivity.home.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -31,15 +34,17 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
     List<Dose> doseList;
     Context context;
     RepositoryInterface repositoryInterface;
+    DosesRecyclerItemClick dosesRecyclerItemClick;
 
     public void setDoseList(List<Dose> doseList) {
         this.doseList = doseList;
     }
 
-    public DosesAdapter(List<Dose> medList, Context context, RepositoryInterface repositoryInterface) {
+    public DosesAdapter(List<Dose> medList, Context context, RepositoryInterface repositoryInterface, DosesRecyclerItemClick dosesRecyclerItemClick) {
         this.doseList = medList;
         this.context = context;
         this.repositoryInterface = repositoryInterface;
+        this.dosesRecyclerItemClick = dosesRecyclerItemClick;
     }
 
     @NonNull
@@ -49,9 +54,8 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        //Medicine medicine = repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId());
         repositoryInterface.getSpecificMedicine(doseList.get(position).getMedId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,7 +68,7 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
                     @Override
                     public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Medicine medicine) {
                         holder.medicationNameTextView.setText(medicine.getName());
-                        holder.medicationDosageTextView.setText(medicine.getNumberOfUnits() + " " + medicine.getMedicineForm() + " of " + medicine.getStrengthUnit());
+                        holder.medicationDosageTextView.setText(MessageFormat.format("{0} {1} of {2}", medicine.getNumberOfUnits(), medicine.getMedicineForm(), medicine.getStrengthUnit()));
 
                     }
 
@@ -79,15 +83,14 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
                     }
                 });
 
-//        holder.medicationTypeTextView.setText(medicine.getMedicineForm());
 
         DateTime date = new DateTime(doseList.get(position).getTimeToTake());
         DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM");
         DateTimeFormatter fmt2 = DateTimeFormat.forPattern("hh:mm");
         String dateString = date.toString(fmt);
         String timeString = date.toString(fmt2);
-        //holder.medicationNameTextView.setText(String.valueOf(doseList.get(position).getMedId()));
-        holder.medicationTimeTextView.setText(timeString + " " + dateString);
+        holder.medicationTimeTextView.setText(MessageFormat.format("{0} {1}", timeString, dateString));
+        holder.containerRelativeLayout.setOnClickListener(view -> dosesRecyclerItemClick.showDoseDialog(doseList.get(position)));
     }
 
     @Override
@@ -95,21 +98,21 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
         return doseList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        RelativeLayout containerRelativeLayout;
         ImageView notificationIconImageView;
         TextView medicationTimeTextView;
         TextView medicationNameTextView;
         TextView medicationDosageTextView;
-        TextView medicationTypeTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            containerRelativeLayout = itemView.findViewById(R.id.containerRelativeLayout);
             notificationIconImageView = itemView.findViewById(R.id.notificationIconImageView);
             medicationTimeTextView = itemView.findViewById(R.id.medicationTimeTextView);
             medicationNameTextView = itemView.findViewById(R.id.medicationNameTextView);
             medicationDosageTextView = itemView.findViewById(R.id.medicationDosageTextView);
-            //medicationTypeTextView = itemView.findViewById(R.id.medicationTypeImageView);
         }
     }
 }
