@@ -28,7 +28,6 @@ public class SelectDaysAlertDialog {
         this.daysCountMax = daysCount;
     }
 
-
     private final static String[] days = {"Saturday",
             "Sunday",
             "Monday",
@@ -126,4 +125,5 @@ public class SelectDaysAlertDialog {
             }
         }
     }
+
 }
