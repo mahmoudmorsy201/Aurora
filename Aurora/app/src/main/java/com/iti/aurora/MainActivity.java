@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemReselectedListener(menuItem -> {
         });
 
-        PermissionUtil.requestIgnorePowerOptimize(getApplicationContext());
-        PermissionUtil.checkOverlayPermission(getApplicationContext());
+//        PermissionUtil.requestIgnorePowerOptimize(getApplicationContext());
+//        PermissionUtil.checkOverlayPermission(getApplicationContext());
     }
 
 }

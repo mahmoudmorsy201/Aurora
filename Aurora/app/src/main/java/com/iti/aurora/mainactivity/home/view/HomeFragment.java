@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,9 @@ import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenter;
 import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenterInterface;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Dose;
+import com.iti.aurora.model.medicine.Medicine;
+import com.iti.aurora.utils.dialogs.DoseDetailsDialog;
+import com.iti.aurora.utils.dialogs.DoseDialogClickListener;
 import com.iti.aurora.utils.workmanager.DailyWorker;
 
 import org.joda.time.DateTime;
@@ -63,8 +68,8 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
         );
 
         periodic = new PeriodicWorkRequest.Builder(DailyWorker.class,
-                1,
-                TimeUnit.MINUTES)
+                24,
+                TimeUnit.HOURS)
                 .addTag(workMangerName)
                 .build();
 
@@ -89,7 +94,21 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
         adapter = new DosesAdapter(list, context, Repository.getInstance(ConcreteLocalSource.getInstance(context), context), new DosesRecyclerItemClick() {
             @Override
             public void showDoseDialog(Dose dose) {
-                //TODO show does dialog
+                DoseDetailsDialog doseDetailsDialog = new DoseDetailsDialog(context, dose, new DoseDialogClickListener() {
+                    @Override
+                    public void deleteDose(Dose dose) {
+                        fragmentHomePresenterInterface.deleteDose(dose);
+                    }
+
+                    @Override
+                    public void markDoseAsTaken(Dose dose, Medicine medicine) {
+                        fragmentHomePresenterInterface.markDoseAsTaken(dose, medicine);
+                    }
+                }, Repository.getInstance(ConcreteLocalSource.getInstance(context), context));
+                doseDetailsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                doseDetailsDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                doseDetailsDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                doseDetailsDialog.show();
             }
         });
 
@@ -110,6 +129,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
     public void showLocalData(LiveData<List<Dose>> doses) {
         doses.observe(this, doseList -> {
             //TODO all doses in the database are shown in here
+
         });
     }
 
