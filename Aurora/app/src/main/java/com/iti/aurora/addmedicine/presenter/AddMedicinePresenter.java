@@ -39,7 +39,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
 
 
     @Override
-    public void addMedicineToDB(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
+    public void addMedicineToDB(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
         _repo.insertMedicine(medicine)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -52,7 +52,10 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     public void onSuccess(@NonNull Long aLong) {
                         medicine.setMedId(aLong);
                         Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
-                        insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel);
+                        treatment.setRecurrency(recurrencyModel.name());
+                        treatment.setDaysList(daysSelected);
+
+                        insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel,daysSelected);
                     }
 
                     @Override
@@ -67,7 +70,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     }
 
 
-    private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel) {
+    private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel,List<DaysOfWeek> daysSelected) {
         _repo.insetTreatment(treatment)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

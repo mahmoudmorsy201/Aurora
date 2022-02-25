@@ -5,21 +5,22 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iti.aurora.model.medicine.Dose;
+import com.iti.aurora.utils.selectdays.DaysOfWeek;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DoseListConverter {
+public class DaysListConverter {
 
     @TypeConverter
-    public static List<Dose> stringToSomeObjectList(String data) {
+    public static List<DaysOfWeek> stringToSomeObjectList(String data) {
         if (data == null) {
             return Collections.emptyList();
         }
 
-        Type listType = new TypeToken<List<Dose>>() {}.getType();
+        Type listType = new TypeToken<List<DaysOfWeek>>() {}.getType();
 
         Gson gson = new Gson();
 
@@ -27,7 +28,7 @@ public class DoseListConverter {
     }
 
     @TypeConverter
-    public static String someObjectListToString(List<Dose> someObjects) {
+    public static String someObjectListToString(List<DaysOfWeek> someObjects) {
         Gson gson = new Gson();
         return gson.toJson(someObjects);
     }

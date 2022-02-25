@@ -28,14 +28,18 @@ import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.Constants;
+import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -204,6 +208,19 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         int formArrayPosition = Arrays.asList(Constants.AddMedicineConstants.formType).indexOf(medicine.getMedicineForm());
         int instructionArrayPosition = Arrays.asList(Constants.AddMedicineConstants.instructions).indexOf(medicine.getInstruction());
         int strengthArrayPosition = Arrays.asList(Constants.AddMedicineConstants.strength).indexOf(medicine.getStrengthUnit().toString());
+        int selectDosesRecurrencyArrayPosition = Arrays.asList(Constants.AddMedicineConstants.recurrency).indexOf(treatments.get(0).getRecurrency().replace('_', ' '));
+        String hourAndMinutesFormat = "hh:mm aa";
+        SimpleDateFormat dateHourFormat = new SimpleDateFormat(hourAndMinutesFormat, Locale.US);
+        String input = dateHourFormat.format(treatments.get(0).getStartDate());
+        Date hourDate = null;
+        String outPut = null;
+        try {
+            hourDate = dateHourFormat.parse(input);
+            outPut = dateHourFormat.format(hourDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         nameEditMedication_inputEditText.setText(medicine.getName());
         strengthEditMedication_inputEditText.setText(String.valueOf(medicine.getNumberOfUnits()));
@@ -212,8 +229,21 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         instructionsEditMedication_spinner.setSelection(instructionArrayPosition);
         formEditMedication_spinner.setSelection(formArrayPosition);
         //todo list treatments !-0
-        startDatepickerEditmedication_Textview.setText(dateFormat.format(treatments.get(0).getStartDate()));
+
+        startDatepickerEditmedication_Textview.setText(dateFormat.format(treatments.get(0).getEndDate()));
         endDateEditPicker_textview.setText(dateFormat.format(treatments.get(0).getEndDate()));
+        recurrencyEditMedication_spinner.setSelection(selectDosesRecurrencyArrayPosition);
+        timePickerEdit_textview.setText(outPut);
+        selectDaysAlertDialog.setSelectedDays(treatments.get(0).getDaysList());
+
+        StringBuilder builder = new StringBuilder();
+        for (DaysOfWeek day : treatments.get(0).getDaysList()) {
+            builder.append(day.toString());
+            builder.append(",");
+        }
+        builder.deleteCharAt(builder.lastIndexOf(","));
+        selectedDaysEditTextView.setText(builder.toString());
+
 
     }
 
@@ -238,10 +268,10 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
     }
 
     @Override
-    public void showMedicine(Medicine medicine,List<Treatment> treatments) {
+    public void showMedicine(Medicine medicine, List<Treatment> treatments) {
         this.medicine = medicine;
         this.treatments = treatments;
-        setInitialValues(medicine,treatments);
+        setInitialValues(medicine, treatments);
     }
 
 

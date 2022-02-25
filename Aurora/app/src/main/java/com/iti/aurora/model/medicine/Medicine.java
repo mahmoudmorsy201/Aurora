@@ -4,14 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.iti.aurora.database.DateConverter;
-import com.iti.aurora.database.DoseListConverter;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 @Entity(tableName = "medicine")
 public class Medicine implements Serializable {

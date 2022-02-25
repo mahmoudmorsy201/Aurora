@@ -8,8 +8,11 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.iti.aurora.database.DateConverter;
+import com.iti.aurora.database.DaysListConverter;
+import com.iti.aurora.utils.selectdays.DaysOfWeek;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "treatment",
         foreignKeys = @ForeignKey(entity = Medicine.class,
@@ -34,6 +37,12 @@ public class Treatment {
 
     @TypeConverters({DateConverter.class})
     private Date endDate;
+
+    @TypeConverters({DaysListConverter.class})
+    private List<DaysOfWeek> daysList;
+
+    @ColumnInfo(name = "recurrencyModel")
+    private String recurrency;
 
 
     public Treatment() {
@@ -75,5 +84,21 @@ public class Treatment {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<DaysOfWeek> getDaysList() {
+        return daysList;
+    }
+
+    public void setDaysList(List<DaysOfWeek> daysList) {
+        this.daysList = daysList;
+    }
+
+    public String getRecurrency() {
+        return recurrency;
+    }
+
+    public void setRecurrency(String recurrency) {
+        this.recurrency = recurrency;
     }
 }

@@ -115,4 +115,15 @@ public class SelectDaysAlertDialog {
         }
         return selectedDaysList;
     }
+
+    public void setSelectedDays(List<DaysOfWeek> selectedDaysList) {
+        for (DaysOfWeek day : selectedDaysList) {
+            for (int i = 0; i < days.length; i++) {
+                if (day.toString().equalsIgnoreCase(days[i])) {
+                    selectedDays[i] = true;
+                    dayList.add(i);
+                }
+            }
+        }
+    }
 }
