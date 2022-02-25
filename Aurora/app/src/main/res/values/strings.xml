@@ -43,5 +43,6 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="youshould_take">\"You should take medicnie \"</string>
+    <string name="take">Take</string>
 
 </resources>
