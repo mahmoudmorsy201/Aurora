@@ -100,6 +100,11 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
+    public Single<List<Treatment>> getTreatmentsMedId(long medId) {
+        return Single.fromCallable(()->treatmentDAO.getTreatmentsMedId(medId));
+    }
+
+    @Override
     public void insertDose(Dose dose) {
         new Thread(() -> doseDAO.insertDose(dose)).start();
     }

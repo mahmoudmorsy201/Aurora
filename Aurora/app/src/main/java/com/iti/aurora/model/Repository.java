@@ -14,22 +14,23 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 
-public class Repository implements RepositoryInterface{
-    private static  Repository repository = null;
+public class Repository implements RepositoryInterface {
+    private static Repository repository = null;
     private final Context context;
     LocalSource localSource;
 
-    public static Repository getInstance(LocalSource localSource,Context context) {
-        if(repository == null) {
-            repository = new Repository(localSource,context);
+    public static Repository getInstance(LocalSource localSource, Context context) {
+        if (repository == null) {
+            repository = new Repository(localSource, context);
         }
         return repository;
     }
 
-    private Repository(LocalSource localSource , Context context) {
+    private Repository(LocalSource localSource, Context context) {
         this.localSource = localSource;
         this.context = context;
     }
+
     @Override
     public Single<Long> insertMedicine(Medicine medicine) {
         return localSource.insertMedicine(medicine);
@@ -83,6 +84,11 @@ public class Repository implements RepositoryInterface{
     }
 
     @Override
+    public Single<List<Treatment>> getTreatmentsMedId(long medId) {
+        return localSource.getTreatmentsMedId(medId);
+    }
+
+    @Override
     public void insertDose(Dose dose) {
         localSource.insertDose(dose);
     }
@@ -114,11 +120,11 @@ public class Repository implements RepositoryInterface{
 
     @Override
     public LiveData<List<Dose>> getDosesByDay(long start, long end) {
-        return localSource.getDosesByDay(start,end);
+        return localSource.getDosesByDay(start, end);
     }
 
     @Override
     public Single<List<Dose>> getDosesByDayOverLoad(long start, long end) {
-        return localSource.getDosesByDayOverLoad(start,end);
+        return localSource.getDosesByDayOverLoad(start, end);
     }
 }

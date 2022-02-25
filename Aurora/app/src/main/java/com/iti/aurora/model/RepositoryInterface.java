@@ -25,6 +25,7 @@ public interface RepositoryInterface {
     void updateTreatment(Treatment treatment);
     @NonNull Maybe<Treatment> getSpecificTreatment(long treatmentId);
     LiveData<List<Treatment>> getAllStoredTreatments();
+    Single<List<Treatment>> getTreatmentsMedId(long medId);
 
     void insertDose(Dose dose);
     void deleteDose(Dose dose);
