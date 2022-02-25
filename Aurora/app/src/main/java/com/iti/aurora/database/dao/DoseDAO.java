@@ -35,10 +35,10 @@ public interface DoseDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDoses(List<Dose> doses);
 
-    @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end")
+    @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end ORDER BY timeToTake")
     LiveData<List<Dose>> getDosesByDay(long start, long end);
 
-    @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end")
+    @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end ORDER BY timeToTake")
     List<Dose> getDosesByDayOverLoad(long start,long end);
 
 }

@@ -67,6 +67,7 @@ public class EditMedicinePresenter implements EditMedicinePresenterInterface {
                     @Override
                     public void onSuccess(@NonNull Medicine medicine) {
                         _view.showMedicine(medicine);
+
                     }
 
                     @Override
