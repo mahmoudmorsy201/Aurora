@@ -3,7 +3,6 @@ package com.iti.aurora.utils.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,7 +17,6 @@ import com.iti.aurora.model.medicine.Medicine;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.text.MessageFormat;
 
@@ -82,13 +80,20 @@ public class DoseDetailsDialog extends Dialog {
             this.dismiss();
         });
 
+        if (dose.getTaken() == null || !dose.getTaken()) {
+            takeDosageImageButton.setEnabled(true);
+            takeDosageImageButton.setAlpha(1.0f);
+        }else{
+            takeDosageImageButton.setEnabled(false);
+            takeDosageImageButton.setAlpha(0.1f);
+        }
+
         repositoryInterface.getSpecificMedicine(dose.getMedId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MaybeObserver<Medicine>() {
                     @Override
                     public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
                     }
 
                     @Override
@@ -97,18 +102,15 @@ public class DoseDetailsDialog extends Dialog {
                         medicineNameTextView.setText(medicine.getName());
                         medicineStrengthAndDosageTextView.setText(MessageFormat.format("{0} {1} of {2}", medicine.getNumberOfUnits(), medicine.getStrengthUnit().toString(), medicine.getMedicineForm()));
                         medicineInstructionsTextView.setText(medicine.getInstruction());
-
-                        doseTimeTextView.setText(getContext().getResources().getString(R.string.scheduledFor) + new DateTime(dose.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm a")));
+                        doseTimeTextView.setText(MessageFormat.format("{0}{1}", getContext().getResources().getString(R.string.scheduledFor), new DateTime(dose.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm a"))));
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
 
