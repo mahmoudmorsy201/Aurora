@@ -38,4 +38,7 @@ public interface DoseDAO {
     @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end ORDER BY timeToTake")
     List<Dose> getDosesByDayOverLoad(long start,long end);
 
+    @Query("SELECT * FROM dose WHERE medId = :medId")
+    List<Dose> getDosesByMedId(long medId);
+
 }

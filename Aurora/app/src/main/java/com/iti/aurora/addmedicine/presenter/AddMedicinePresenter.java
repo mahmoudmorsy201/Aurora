@@ -131,6 +131,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         DateTime currentWhole = new DateTime(System.currentTimeMillis());
         DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
         if (startDate.isBefore(nextDayAt12Am)) {
+            //todo doseId
             DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()), medicineReference);
         }
 

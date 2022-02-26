@@ -24,6 +24,7 @@ public class MedicineDetailsPresenter implements MedicineDetailsPresenterInterfa
         repositoryInterface.deleteMedicine(medicine);
     }
 
+    @Override
     public void getMedicine(long medId) {
         repositoryInterface.getSpecificMedicine(medId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new MaybeObserver<Medicine>() {
             @Override

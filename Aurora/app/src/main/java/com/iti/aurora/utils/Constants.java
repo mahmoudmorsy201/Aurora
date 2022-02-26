@@ -20,12 +20,11 @@ public class Constants {
 
     public static class NotificationUtil {
         public static final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        public static final String DOSE_ID_KEY="DOSE_ID_KEY";
-        public static final String MEDICNIE_NAME="MEDICNIE_NAME";
-        public static final String MEDICINE_TIME="MEDICINE_TIME";
-        public static final String MEDICINE_INSTRUCTION="MEDICINE_INSTRUCTION";
-        public static final String MEDICNIE_RESONE="MEDICNIE_RESONE";
-        public static final String MEDICNIE_FORM="MEDICNIE_FORM";
+        public static final String DOSE_ID_KEY = "DOSE_ID_KEY";
+        public static final String DOSE_SPECS = "DOSE_SPECS";
+        public static final String MEDICINE_TIME = "MEDICINE_TIME";
+
+        public static final String MEDICNIE_SPECS = "MEDICNIE_SPECS";
     }
 
     public static class WorkManagerConstants {

@@ -241,6 +241,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     }
 
     private boolean checkInputMedication() {
+        //todo need to fix sequence not right
         boolean isValid = false;
         if ((Objects.requireNonNull(nameAddMedication_inputEditText.getText()).length() > 0)) {
             isValid = true;

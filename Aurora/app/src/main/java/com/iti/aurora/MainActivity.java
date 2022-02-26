@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, Navigation.findNavController(this, R.id.nav_host_fragment));
         bottomNavigationView.setOnNavigationItemReselectedListener(menuItem -> {
         });
-        if (!PermissionUtil.iskBatteryOptimizePermission(getApplicationContext()))
+       /* if (!PermissionUtil.iskBatteryOptimizePermission(getApplicationContext()))
             PermissionUtil.requestIgnorePowerOptimize(getApplicationContext());
-        PermissionUtil.checkOverlayPermission(getApplicationContext());
+        PermissionUtil.checkOverlayPermission(getApplicationContext());*/
     }
 
 }

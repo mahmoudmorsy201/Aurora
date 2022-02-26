@@ -127,4 +127,9 @@ public class Repository implements RepositoryInterface {
     public Single<List<Dose>> getDosesByDayOverLoad(long start, long end) {
         return localSource.getDosesByDayOverLoad(start, end);
     }
+
+    @Override
+    public Single<List<Dose>> getDosesByMedId(long medId) {
+        return localSource.getDosesByMedId(medId);
+    }
 }

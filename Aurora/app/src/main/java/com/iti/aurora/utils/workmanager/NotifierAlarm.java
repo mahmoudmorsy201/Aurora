@@ -12,12 +12,14 @@ import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
 
 import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
 import com.iti.aurora.NotificationDialogOverApp;
+import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.utils.Constants;
 
@@ -25,21 +27,17 @@ import java.util.Random;
 
 public class NotifierAlarm extends BroadcastReceiver {
     String time;
-    String medicineName;
-    String instruction;
-    String reason;
-String form;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        medicineName = intent.getStringExtra(Constants.NotificationUtil.MEDICNIE_NAME);
-        instruction = intent.getStringExtra(Constants.NotificationUtil.MEDICINE_INSTRUCTION);
-        reason = intent.getStringExtra(Constants.NotificationUtil.MEDICNIE_RESONE);
+
+        Bundle bundle = intent.getBundleExtra("MED_DATA");
+        Medicine medicine = (Medicine) bundle.getSerializable(Constants.NotificationUtil.MEDICNIE_SPECS);
+        Dose dose= (Dose) bundle.getSerializable(Constants.NotificationUtil.DOSE_SPECS);
         time = intent.getStringExtra(Constants.NotificationUtil.MEDICINE_TIME);
-        form=intent.getStringExtra(Constants.NotificationUtil.MEDICNIE_FORM);
         Uri alarmsound = Uri.parse("android.resource://" + context.getApplicationContext().getPackageName() + "/" + R.raw.messagetone);
         int NOTIFICATION_ID = new Random(System.currentTimeMillis()).nextInt(120);
-        //todo add data here for notification and dialog
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_ALARM)
@@ -63,8 +61,9 @@ String form;
 //todo add icon of medication
         Notification notification = builder
 
-                .setContentTitle("Time to Take : "+medicineName+" "+form)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(context.getString(R.string.youshould_take)+medicineName+" at " +time+"\n"+"don't forget "+instruction))
+                .setContentTitle("Time to Take : " + medicine.getName() + " " + medicine.getMedicineForm())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(context.getString(R.string.youshould_take) + medicine.getName()
+                        + " at " + time + "\n" + "don't forget " + medicine.getInstruction()))
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentIntent(intent2)
@@ -76,11 +75,11 @@ String form;
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(new Random(System.currentTimeMillis()).nextInt(120), notification);
-        showDialog(context);
+        showDialog(context,medicine,time,dose);
     }
 
-    private void showDialog(Context context) {
-        NotificationDialogOverApp notificationDialogOverApp = new NotificationDialogOverApp(context);
+    private void showDialog(Context context, Medicine medicine, String time, Dose dose) {
+        NotificationDialogOverApp notificationDialogOverApp = new NotificationDialogOverApp(context,medicine,time,dose);
         notificationDialogOverApp.open();
 
     }

@@ -35,4 +35,5 @@ public interface RepositoryInterface {
     void insertDoses(List<Dose> doses);
     LiveData<List<Dose>> getDosesByDay(long start, long end);
     Single<List<Dose>> getDosesByDayOverLoad(long start,long end);
+    Single<List<Dose>> getDosesByMedId(long medId);
 }

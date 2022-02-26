@@ -7,4 +7,5 @@ public interface MedicineDetailsPresenterInterface {
     void deleteMedicine(Medicine medicine);
 
     void getMedicine(long medId);
+
 }
