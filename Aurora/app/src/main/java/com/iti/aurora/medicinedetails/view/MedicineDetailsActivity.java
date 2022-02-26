@@ -87,7 +87,18 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
             }
         });
 
+        showMedicine(medicine);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.getMedicine(medicine.getMedId());
+    }
+
+    @Override
+    public void showMedicine(Medicine medicine) {
         if (medicine != null) {
             medicineNameTextView.setText(medicine.getName());
             medicineStrengthTextView.setText(MessageFormat.format("{0} {1}", medicine.getNumberOfUnits(), medicine.getStrengthUnit()));
@@ -101,6 +112,5 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
             instructionTextView.setText(medicine.getInstruction());
             reasonOfTakingUserValueTextView.setText(medicine.getReasonOfTaking());
         }
-
     }
 }
