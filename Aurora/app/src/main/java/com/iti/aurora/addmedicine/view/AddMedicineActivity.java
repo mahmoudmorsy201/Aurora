@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -141,13 +142,27 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         };
 
         startDatepickerAddmedication_Textview.setOnClickListener(view -> {
-            new DatePickerDialog(this, startDate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            startDatepickerAddmedication_Textview.setClickable(false);
+            DatePickerDialog dialog = new DatePickerDialog(this, startDate,
+                    myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+            dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+            dialog.show();
+            if (dialog.isShowing())
+                new Handler().postDelayed(() -> startDatepickerAddmedication_Textview.setClickable(true), 1000);
+
         });
         endDatePicker_textview.setOnClickListener(view -> {
-            new DatePickerDialog(this, endDate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            endDatePicker_textview.setClickable(false);
+            DatePickerDialog dialog = new DatePickerDialog(this, endDate,
+                    myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+            dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+            dialog.show();
+            if (dialog.isShowing())
+                new Handler().postDelayed(() -> endDatePicker_textview.setClickable(true), 1000);
         });
 
         timePicker_textview.setOnClickListener(view -> {
+            timePicker_textview.setClickable(false);
             new TimePickerDialog(this,
                     (view1, hourOfDay, minute) -> {
                         selectedStartDate = new DateTime(selectedStartDate.getYear(), selectedStartDate.getMonthOfYear(), selectedStartDate.getDayOfMonth(), hourOfDay, minute);
@@ -162,6 +177,9 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
                         }
                         timePicker_textview.setText(hours + ":" + minute + " " + AM_PM);
                     }, hour, minute, false).show();
+            timePicker_textview.setClickable(true);
+
+
         });
 
         addMedication_button.setOnClickListener(view -> {
@@ -250,7 +268,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         } else {
             textInputLayout_addMedication.setErrorEnabled(true);
             textInputLayout_addMedication.setError("enter name");
-            isValid = false;
+            return false;
         }
         if (Objects.requireNonNull(strengthAddMedication_inputEditText.getText().toString()).length() > 0) {
             isValid = true;
@@ -258,7 +276,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         } else {
             strengthMedication_TextInputEditText.setErrorEnabled(true);
             strengthMedication_TextInputEditText.setError("Enter Strength");
-            isValid = false;
+            return false;
         }
         if (Objects.requireNonNull(reason_inputEditText.getText()).length() > 0) {
             isValid = true;
@@ -266,49 +284,49 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         } else {
             reason_TextInputEditText.setErrorEnabled(true);
             reason_TextInputEditText.setError("Please specify reason");
-            isValid = false;
+            return false;
         }
         if (strenghtAddMedication_spinner.getSelectedItemPosition() != strenghtAddMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             strenghtAddMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (formAddMedication_spinner.getSelectedItemPosition() != formAddMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             formAddMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (recurrencyAddMedication_spinner.getSelectedItemPosition() != recurrencyAddMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             recurrencyAddMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (instructionsAddMedication_spinner.getSelectedItemPosition() != instructionsAddMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             instructionsAddMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (!startDatepickerAddmedication_Textview.getText().toString().equals(""))
             isValid = true;
         else {
             startDatepickerAddmedication_Textview.setHintTextColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (!endDatePicker_textview.getText().toString().equals(""))
             isValid = true;
         else {
             endDatePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (!timePicker_textview.getText().toString().equals(""))
             isValid = true;
         else {
             timePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         return isValid;
     }
