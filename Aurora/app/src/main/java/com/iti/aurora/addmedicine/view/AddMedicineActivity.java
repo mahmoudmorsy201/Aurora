@@ -177,7 +177,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
                         }
                         timePicker_textview.setText(hours + ":" + minute + " " + AM_PM);
                     }, hour, minute, false).show();
-            timePicker_textview.setClickable(true);
+            new Handler().postDelayed(() -> timePicker_textview.setClickable(true), 1000);
 
 
         });
@@ -259,7 +259,6 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     }
 
     private boolean checkInputMedication() {
-        //todo need to fix sequence not right
         boolean isValid = false;
         if ((Objects.requireNonNull(nameAddMedication_inputEditText.getText()).length() > 0)) {
             isValid = true;
