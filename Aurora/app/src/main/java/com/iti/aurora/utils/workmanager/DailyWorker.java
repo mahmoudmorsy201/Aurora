@@ -6,9 +6,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -16,13 +13,15 @@ import com.iti.aurora.database.ConcreteLocalSource;
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Dose;
+import com.iti.aurora.model.medicine.Medicine;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -61,9 +60,8 @@ public class DailyWorker extends Worker {
 
                     @Override
                     public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<Dose> doseList) {
-                        for (Dose doseModelLoop : doseList) {
-                            DoseAlarmManager doseAlarmManager = new DoseAlarmManager(getApplicationContext(), doseModelLoop);
-                            Log.d("WORK_MANAGER", "doWork: intializing DoesAlarmManager for " + doseModelLoop.toString());
+                        for (Dose dose : doseList) {
+                            getSpecificMedicnie(dose.getMedId(), dose);
                         }
                     }
 
@@ -74,16 +72,37 @@ public class DailyWorker extends Worker {
                 });
         return Result.success();
 
-//        if (doses != null) {
-//            for (Dose doseModelLoop : doses) {
-//                DoseAlarmManager doseAlarmManager = new DoseAlarmManager(getApplicationContext(), doseModelLoop);
-//                Log.d("WORK_MANAGER", "doWork: intializing DoesAlarmManager");
-//            }
-//        } else {
-//
-//        }
-//
-//        return Result.success();
+
+    }
+
+    private void getSpecificMedicnie(long medId, Dose dose) {
+        repositoryInterface.getSpecificMedicine(medId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new MaybeObserver<Medicine>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Medicine medicine) {
+
+                        DoseAlarmManager doseAlarmManager = new DoseAlarmManager(getApplicationContext(), dose, medicine);
+                        //  Log.d("WORK_MANAGER", "doWork: intializing DoesAlarmManager for " + doseModelLoop.toString());
+
+
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 
