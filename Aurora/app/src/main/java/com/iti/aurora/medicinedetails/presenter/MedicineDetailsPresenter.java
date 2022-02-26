@@ -4,12 +4,6 @@ import com.iti.aurora.medicinedetails.view.MedicineDetailsViewInterface;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Medicine;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.MaybeObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class MedicineDetailsPresenter implements MedicineDetailsPresenterInterface {
     MedicineDetailsViewInterface iView;
     RepositoryInterface repositoryInterface;
@@ -22,29 +16,5 @@ public class MedicineDetailsPresenter implements MedicineDetailsPresenterInterfa
     @Override
     public void deleteMedicine(Medicine medicine) {
         repositoryInterface.deleteMedicine(medicine);
-    }
-
-    public void getMedicine(long medId) {
-        repositoryInterface.getSpecificMedicine(medId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new MaybeObserver<Medicine>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(@NonNull Medicine medicine) {
-                iView.showMedicine(medicine);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
     }
 }

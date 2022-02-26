@@ -9,7 +9,6 @@ import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.Treatment;
 
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Maybe;
@@ -127,10 +126,5 @@ public class Repository implements RepositoryInterface {
     @Override
     public Single<List<Dose>> getDosesByDayOverLoad(long start, long end) {
         return localSource.getDosesByDayOverLoad(start, end);
-    }
-
-    @Override
-    public Single<List<Dose>> getDosesByMedId(long medId) {
-        return localSource.getDosesByMedId(medId);
     }
 }

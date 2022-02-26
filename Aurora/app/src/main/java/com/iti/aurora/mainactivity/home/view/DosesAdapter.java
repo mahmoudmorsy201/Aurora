@@ -86,7 +86,7 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
 
         DateTime date = new DateTime(doseList.get(position).getTimeToTake());
         DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM");
-        DateTimeFormatter fmt2 = DateTimeFormat.forPattern("hh:mm");
+        DateTimeFormatter fmt2 = DateTimeFormat.forPattern("hh:mm a");
         String dateString = date.toString(fmt);
         String timeString = date.toString(fmt2);
         holder.medicationTimeTextView.setText(MessageFormat.format("{0} {1}", timeString, dateString));

@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.iti.aurora.database.DateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "dose",
@@ -25,7 +26,7 @@ import java.util.Date;
                         onDelete = ForeignKey.CASCADE)
 
         })
-public class Dose {
+public class Dose implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "doseId")

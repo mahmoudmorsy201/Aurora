@@ -10,7 +10,6 @@ import androidx.room.Update;
 
 import com.iti.aurora.model.medicine.Dose;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -24,7 +23,7 @@ public interface DoseDAO {
     @Delete
     void deleteDose(Dose dose);
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     void updateDose(Dose dose);
 
     @Query("SELECT * FROM dose WHERE doseId = :doseId")
@@ -38,9 +37,5 @@ public interface DoseDAO {
 
     @Query("SELECT * FROM dose WHERE timeToTake > :start AND timeToTake <= :end ORDER BY timeToTake")
     List<Dose> getDosesByDayOverLoad(long start,long end);
-
-    @Query("SELECT * FROM dose WHERE medId = :medId")
-    List<Dose> getDosesByMedId(long medId);
-
 
 }

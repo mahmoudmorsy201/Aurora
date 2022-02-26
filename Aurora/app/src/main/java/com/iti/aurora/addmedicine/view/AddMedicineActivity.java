@@ -204,7 +204,6 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         medicine.setReasonOfTaking(String.valueOf(reason_inputEditText.getText()));
         List<DaysOfWeek> daysSelected = selectDaysAlertDialog.getSelectedDaysFromDialog();
 
-
         addMedicine(medicine, selectedStartDate, selectedEndDate.plusMinutes(2),
                 RecurrencyModel.valueOf(recurrencyAddMedication_spinner.getSelectedItem().toString().replace(' ', '_')),
                 daysSelected
@@ -214,7 +213,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
     @Override
     public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
-        addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel,daysSelected);
+        addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel, daysSelected);
         //TODO
         Toast.makeText(AddMedicineActivity.this, "Medicine Added", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
@@ -242,6 +241,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     }
 
     private boolean checkInputMedication() {
+        //todo need to fix sequence not right
         boolean isValid = false;
         if ((Objects.requireNonNull(nameAddMedication_inputEditText.getText()).length() > 0)) {
             isValid = true;

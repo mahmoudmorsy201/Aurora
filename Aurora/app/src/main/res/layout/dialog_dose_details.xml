@@ -3,23 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
     app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:minWidth="360dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
         <ImageView
+            android:layout_marginTop="8dp"
             android:id="@+id/deleteDoseImageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/primary_color"
             android:src="@drawable/ic_baseline_delete_forever_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/warning" />
 
         <ImageView
             android:id="@+id/medicineFormImageView"
@@ -29,7 +30,8 @@
             android:src="@drawable/ic_medicine_pill"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/deleteDoseImageView" />
+            app:layout_constraintTop_toBottomOf="@id/deleteDoseImageView"
+            app:tint="@color/primary_color" />
 
         <TextView
             android:id="@+id/medicineNameTextView"
@@ -52,10 +54,12 @@
             android:backgroundTint="@color/primary_color"
             android:src="@drawable/ic_baseline_schedule_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/medicineNameTextView" />
+            app:layout_constraintTop_toBottomOf="@id/medicineNameTextView"
+            app:tint="@color/primary_color" />
 
 
         <TextView
+            android:id="@+id/doseTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -73,9 +77,11 @@
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_baseline_text_snippet_24"
             app:layout_constraintStart_toStartOf="@id/scheduleIconImageView"
-            app:layout_constraintTop_toBottomOf="@id/scheduleIconImageView" />
+            app:layout_constraintTop_toBottomOf="@id/scheduleIconImageView"
+            app:tint="@color/primary_color" />
 
         <TextView
+            android:id="@+id/strengthAndDosageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -91,11 +97,13 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_document_read"
+            android:src="@drawable/ic_baseline_text_snippet_24"
             app:layout_constraintStart_toStartOf="@id/doseStrengthIconImageView"
-            app:layout_constraintTop_toBottomOf="@id/doseStrengthIconImageView" />
+            app:layout_constraintTop_toBottomOf="@id/doseStrengthIconImageView"
+            app:tint="@color/primary_color" />
 
         <TextView
+            android:id="@+id/medicineInstructionsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -108,36 +116,58 @@
             app:layout_constraintTop_toTopOf="@id/instructionsIconImageView" />
 
 
-
-        <LinearLayout
-            android:layout_marginTop="12dp"
+        <ImageButton
+            android:id="@+id/takeDoseImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="80dp"
+            android:background="@drawable/button_add_medication"
+            android:padding="8dp"
+            android:src="@drawable/ic_baseline_done_24"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/instructionsIconImageView"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/take"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/takeDoseImageButton"
+            app:layout_constraintStart_toStartOf="@+id/takeDoseImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/takeDoseImageButton" />
+
+
+        <ImageButton
+            android:layout_marginBottom="12dp"
+            android:id="@+id/dismissDialogImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_add_medication"
+            android:padding="8dp"
+            android:src="@drawable/ic_cancel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/instructionsIconImageView">
+            app:layout_constraintTop_toBottomOf="@id/instructionsIconImageView"
+            app:tint="@color/white" />
 
-            <ImageButton
-                android:id="@+id/takeDoseImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/button_add_medication"
-                android:padding="8dp"
-                android:src="@drawable/ic_baseline_done_24"
-                app:tint="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/dismiss"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/dismissDialogImageButton"
+            app:layout_constraintStart_toStartOf="@+id/dismissDialogImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/dismissDialogImageButton" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/take"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -44,8 +44,9 @@
     <string name="delete">Delete</string>
     <string name="youshould_take">\"You should take medicnie \"</string>
     <string name="take">Take</string>
-    <string name="doYouWantToSaveMedicine">Do you want to edit this medicine ?</string>
     <string name="dismiss">Dismiss</string>
     <string name="scheduledFor">"Scheduled for "</string>
+    <string name="space">&#160;</string>
+    <string name="back_in_five_minuts">will back in( 5 )minutes</string>
 
 </resources>

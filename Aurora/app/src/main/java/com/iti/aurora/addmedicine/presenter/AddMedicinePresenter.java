@@ -11,9 +11,12 @@ import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 import com.iti.aurora.utils.workmanager.DoseAlarmManager;
+
 import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;
@@ -24,7 +27,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     AddMedicineViewInterface _view;
     RepositoryInterface _repo;
     SelectDaysAlertDialog selectDaysAlertDialog;
-
+    Medicine medicineReference;
 
     Context context;
 
@@ -51,11 +54,12 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     @Override
                     public void onSuccess(@NonNull Long aLong) {
                         medicine.setMedId(aLong);
+                        medicineReference = medicine;
                         Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
                         treatment.setRecurrency(recurrencyModel.name());
                         treatment.setDaysList(daysSelected);
 
-                        insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel,daysSelected);
+                        insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel, daysSelected);
                     }
 
                     @Override
@@ -70,7 +74,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     }
 
 
-    private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel,List<DaysOfWeek> daysSelected) {
+    private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
         _repo.insetTreatment(treatment)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,7 +131,8 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         DateTime currentWhole = new DateTime(System.currentTimeMillis());
         DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
         if (startDate.isBefore(nextDayAt12Am)) {
-            DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()));
+            //todo doseId
+            DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()), medicineReference);
         }
 
         while (startDate.isBefore(endDate)) {
