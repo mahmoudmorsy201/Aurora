@@ -1,11 +1,21 @@
 package com.iti.aurora.usersystem.signup.view;
 
-import com.google.firebase.auth.FirebaseUser;
-import com.iti.aurora.model.User;
-
 public interface SignUpViewInterface {
-    void sendUserData(User user);
-    void signInWithGoogle();
-    void gotToHomePage(FirebaseUser firebaseUser);
-    void fireSignInWithGoogleIntent();
+
+    void usernameIsEmpty();
+
+    void emailIsEmpty();
+
+    void passwordIsEmpty();
+
+    void passwordIsShort();
+
+    void authFailed();
+
+    void authSucceeded();
+
+    void loginSucceededWithGoogle();
+
+    void loginFailedWithGoogle();
+
 }

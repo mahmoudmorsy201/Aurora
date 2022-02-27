@@ -42,9 +42,11 @@
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/item_dose_in_main_activity.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/item_medicine_in_main_activity.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_add_medication.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable/image_background_for_signup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/acitivty_medication_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_edit_meds.xml" value="0.40850500479931706" />
-        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.30945231119791666" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.26695353190104165" />
         <entry key="app/src/main/res/layout/dialog_dosage_reminder.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/layout/item_add_medication.xml" value="0.246875" />
         <entry key="app/src/main/res/layout/item_med_main.xml" value="0.246875" />

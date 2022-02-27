@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.iti.aurora.model.User;
 import com.iti.aurora.utils.Constants;
 
+/*
 public class DAOUser {
     DatabaseReference databaseReference;
     FirebaseDatabase database;
@@ -54,4 +55,4 @@ public class DAOUser {
         //TODO: Add alert view to notify the user that he is already exists.
     }
 
-}
+}*/

@@ -1,14 +1,14 @@
 package com.iti.aurora.usersystem.signup.presenter;
 
 
-import android.app.Activity;
-
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.iti.aurora.model.User;
 
 public interface SignUpScreenPresenterInterface {
 
-    void createNewUser(User user);
-    void signInWithGoogle();
-    GoogleSignInClient getGoogleSignInClient();
+    void createNewUser(User user,String password);
+    void firebaseAuthWithGoogle(String idToken);
+
+    void getSignInBooleanFromShared();
+
+    void checkFirebaseUser();
 }

@@ -49,6 +49,11 @@
     <string name="space">&#160;</string>
     <string name="back_in_five_minuts">will back in( 5 )minutes</string>
     <string name="doYouWantToSaveMedicine">Do you want to edit this medicine ?</string>
+    <string name="please_enter_your_email">please enter your email</string>
+    <string name="please_enter_your_password">please enter your password</string>
+    <string name="email_already_registered">Email Already Registered</string>
+    <string name="doYouWantToSignInDirect">Do You Want To Sign In Direct</string>
+    <string name="sign_in">Sign In</string>
     <string name="doYouWantRefillReminder">Do you want refill reminder ?</string>
     <string name="remind_me">Remind me</string>
     <string name="no_thanks">No thanks</string>

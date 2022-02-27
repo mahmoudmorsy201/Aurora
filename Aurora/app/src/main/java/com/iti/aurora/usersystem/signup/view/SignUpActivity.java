@@ -1,67 +1,44 @@
 package com.iti.aurora.usersystem.signup.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.hbb20.CountryCodePicker;
 import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
-import com.iti.aurora.database.ConcreteLocalSource;
-import com.iti.aurora.database.dao.DAOUser;
+import com.iti.aurora.editmeds.view.EditMedsActivity;
 import com.iti.aurora.model.User;
-import com.iti.aurora.model.medicine.Dose;
-import com.iti.aurora.model.medicine.Medicine;
-import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.usersystem.signup.presenter.SignUpScreenPresenter;
 import com.iti.aurora.usersystem.signup.presenter.SignUpScreenPresenterInterface;
-import com.iti.aurora.usersystem.verifyphonenumber.view.VerifyPhoneNumberActivity;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import com.iti.aurora.utils.dialogs.TwoButtonsDialog;
 
 
 public class SignUpActivity extends AppCompatActivity implements SignUpViewInterface {
 
     private static final int RC_SIGN_IN = 10;
-    EditText userNameEditText, phoneNumberEditText;
+    EditText userNameEditText, emailEditText, passwordEditText;
     Button signUpButton;
-    CountryCodePicker countryCodePicker;
     SignInButton signInButton;
     private SignUpScreenPresenterInterface signUpScreenPresenterInterface;
     public static final String USER_KEY = "USER";
     public static final String TAG = "TAG";
-    DAOUser daoUser;
-    FirebaseAuth mAuth;
-    ConcreteLocalSource concreteLocalSource;
-    Medicine medicine;
-    Date dateNow;
-    Date dateTaken;
+    User user;
+    GoogleSignInOptions gso;
+    GoogleSignInClient mGoogleSignInClient;
 
 
     @Override
@@ -69,160 +46,113 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         initUI();
-        mAuth = FirebaseAuth.getInstance();
-        concreteLocalSource = ConcreteLocalSource.getInstance(this);
-        medicine = new Medicine();
-        dateNow = new Date();
-        dateTaken = new Date();
-
-        insertMedicine(medicine);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
     }
 
-    private void insertMedicine(Medicine medicine) {
-        concreteLocalSource.insertMedicine(medicine)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Long>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull Long aLong) {
-                        medicine.setMedId(aLong);
-                        Treatment treatment = new Treatment(medicine.getMedId(), dateNow, dateTaken);
-                        insertTreatment(treatment);
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
-    }
-
-    private void insertTreatment(Treatment treatment) {
-        concreteLocalSource.insetTreatment(treatment)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Long>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull Long aLong) {
-                        treatment.setTreatmentId(aLong);
-                        Dose dose = new Dose(dateNow, true, dateTaken, medicine.getMedId(), treatment.getTreatmentId());
-                        List<Dose> doses = new ArrayList<>();
-                        for(int i=0 ; i<10 ; i++) {
-                            doses.add(dose);
-
-                        }
-                        concreteLocalSource.insertDoses(doses);
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
-    }
-
-
-    private boolean checkForEditTexts() {
-        String userName = userNameEditText.getText().toString().trim();
-        String phoneNumber = phoneNumberEditText.getText().toString().trim();
-        boolean result = false;
-
-        if (userName.isEmpty()) {
-            userNameEditText.setError("User name is required");
-            userNameEditText.requestFocus();
-        }
-        if (phoneNumber.isEmpty()) {
-            phoneNumberEditText.setError("Phone number is required");
-            phoneNumberEditText.requestFocus();
-        } else {
-            result = true;
-        }
-
-        return result;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        signUpScreenPresenterInterface.getSignInBooleanFromShared();
+        signUpScreenPresenterInterface.checkFirebaseUser();
     }
 
     void initUI() {
         userNameEditText = findViewById(R.id.usernameEditText);
-        phoneNumberEditText = findViewById(R.id.phoneNumberEditText);
-        countryCodePicker = findViewById(R.id.countryCodePicker);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
         signUpButton = findViewById(R.id.signUpButton);
         signUpScreenPresenterInterface = new SignUpScreenPresenter(SignUpActivity.this, SignUpActivity.this);
-        countryCodePicker.registerCarrierNumberEditText(phoneNumberEditText);
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
-        daoUser = new DAOUser(this);
 
         signUpButton.setOnClickListener(view -> {
-            if (checkForEditTexts()) {
-                User user = createNewUser();
-                Intent intent = new Intent(SignUpActivity.this, VerifyPhoneNumberActivity.class);
-                intent.putExtra(USER_KEY, user);
-                startActivity(intent);
-            }
+            user = new User(userNameEditText.getText().toString().trim(),
+                    emailEditText.getText().toString().trim());
 
+            signUpScreenPresenterInterface.createNewUser(
+                    user, passwordEditText.getText().toString().trim());
         });
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkForEditTexts()) {
-                    signInWithGoogle();
+        signInButton.setOnClickListener(view -> {
+            signIn();
+        });
+    }
+
+
+    @Override
+    public void usernameIsEmpty() {
+        userNameEditText.setError("Username is required");
+    }
+
+    @Override
+    public void emailIsEmpty() {
+        emailEditText.setError("Email is required");
+
+
+    }
+
+    @Override
+    public void passwordIsEmpty() {
+        passwordEditText.setError("Password can not be empty");
+
+    }
+
+    @Override
+    public void passwordIsShort() {
+        passwordEditText.setError("Password is less than 7");
+
+    }
+
+    @Override
+    public void authFailed() {
+        AlertDialog.Builder builder = TwoButtonsDialog.TwoButtonsDialogBuilder(SignUpActivity.this,
+                getResources().getString(R.string.email_already_registered),
+                getResources().getString(R.string.doYouWantToSignInDirect),
+                getResources().getString(R.string.sign_in),
+                getResources().getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(SignUpActivity.this , MainActivity.class);
+                        startActivity(intent);
+                        SignUpActivity.this.finish();
+                    }
+                },
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
                 }
 
-            }
-        });
-    }
-
-
-    private User createNewUser() {
-        User user = null;
-        if (checkForEditTexts()) {
-            user = new User(userNameEditText.getText().toString(), countryCodePicker.getFullNumberWithPlus());
-            signUpScreenPresenterInterface.createNewUser(user);
-        }
-        return user;
-    }
-
-
-    @Override
-    public void sendUserData(User user) {
+        );
+        builder.show();
     }
 
     @Override
-    public void signInWithGoogle() {
-        signUpScreenPresenterInterface.signInWithGoogle();
+    public void authSucceeded() {
+        Toast.makeText(this, "Yay you are registered", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void gotToHomePage(FirebaseUser firebaseUser) {
-        if (firebaseUser != null) {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-            intent.putExtra("GOOGLE_ACCOUNT", firebaseUser);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    @Override
-    public void fireSignInWithGoogleIntent() {
-        Intent signInIntent = signUpScreenPresenterInterface.getGoogleSignInClient().getSignInIntent();
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void loginSucceededWithGoogle() {
+        Toast.makeText(this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loginFailedWithGoogle() {
+        Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -236,57 +166,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
+                signUpScreenPresenterInterface.firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
             }
         }
     }
-
-
-//    private void firebaseAuthWithGoogle(String idToken) {
-//        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithCredential:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            User newUser = new User(user.getDisplayName(),user.getPhoneNumber());
-//
-//                            Log.i(TAG, "User Phone" + user.getPhoneNumber());
-//                            daoUser.checkForDuplicates(newUser);
-//                            gotToHomePage(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                            //updateUI(null);
-//                        }
-//                    }
-//                });
-//    }
-
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        if (Objects.requireNonNull(authResult.getAdditionalUserInfo()).isNewUser()) {
-                            Log.i(TAG, "Account created");
-                            User newUser = new User(userNameEditText.getText().toString(), phoneNumberEditText.getText().toString());
-                            daoUser.checkForDuplicates(newUser);
-                        } else {
-                            Log.i(TAG, "Already Existed");
-                        }
-                        gotToHomePage(firebaseUser);
-                    }
-                });
-
-    }
-
 }

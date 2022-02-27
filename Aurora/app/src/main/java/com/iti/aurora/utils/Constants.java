@@ -4,10 +4,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 
 public class Constants {
-    public class FirebaseConstants {
+    public class FirestoreConstants {
         public static final String USERS = "users";
-        public static final String PHONE_NUMBER = "phoneNumber";
-        public static final String USER_NAME = "userName";
     }
 
     public static class AddMedicineConstants {
@@ -31,6 +29,10 @@ public class Constants {
         public static final int INTERVAL_TIME_HOUR = 24;
         public static final String WORK_MANAGER_NAME = "DAILY_WORK_MANAGER";
 
+    }
+
+    public static class SharedPreferencesConstants {
+        public static final String USER_SIGN_IN = "SignIn";
     }
 
 
