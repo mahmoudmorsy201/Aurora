@@ -16,6 +16,7 @@ public interface AddMedicinePresenterInterface {
 
     void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog);
 
+    void setDosagesForMedicine(long medicineId, int currentDosagesNumber, int dosagesPerPack);
 
     //for using alarm manager only
     void setContext(Context context);

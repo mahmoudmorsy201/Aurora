@@ -1,5 +1,6 @@
 package com.iti.aurora.addmedicine.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -73,6 +75,36 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         this.selectDaysAlertDialog = selectDaysAlertDialog;
     }
 
+    @Override
+    public void setDosagesForMedicine(long medicineId, int currentDosagesNumber, int dosagesPerPack) {
+        _repo.getSpecificMedicine(medicineId)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(Schedulers.computation())
+                .subscribe(new MaybeObserver<Medicine>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Medicine medicine) {
+                        medicine.setDosagesLeft(currentDosagesNumber);
+                        medicine.setDosagesPerPack(dosagesPerPack);
+                        _repo.updateMedicine(medicine);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     private void insertTreatment(Treatment treatment, long medicineId, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
         _repo.insetTreatment(treatment)
@@ -110,20 +142,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     }
                 });
     }
-
-        /*
-
-    final int SELF_REMINDER_HOUR = 24;
-
-        long delay;
-        if (DateTime.now().getHourOfDay() < SELF_REMINDER_HOUR) {
-            delay = new org.joda.time.Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay().plusHours(SELF_REMINDER_HOUR)).getStandardMinutes();
-        } else {
-            delay = new org.joda.time.Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay().plusDays(1).plusHours(SELF_REMINDER_HOUR)).getStandardMinutes();
-        }
-
-     */
-
 
     private List<Dose> generatePeriodicDoses(long medID, long treatmentId, DateTime startDate, DateTime endDate, int noOfHours) {
         List<Dose> doseList = new ArrayList<>();

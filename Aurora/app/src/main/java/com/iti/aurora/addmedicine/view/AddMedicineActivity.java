@@ -2,6 +2,7 @@ package com.iti.aurora.addmedicine.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.model.medicine.RecurrencyModel;
 import com.iti.aurora.model.medicine.StrengthUnit;
 import com.iti.aurora.utils.Constants;
+import com.iti.aurora.utils.dialogs.refillask.RefillDialogRemindMeClickHandler;
+import com.iti.aurora.utils.dialogs.refillask.RefillReminderDialog;
 import com.iti.aurora.utils.selectdays.DaysOfWeek;
 import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
@@ -214,10 +217,25 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     @Override
     public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
         addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel, daysSelected);
-        //TODO
-        Toast.makeText(AddMedicineActivity.this, "Medicine Added", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
-        startActivity(intent);
+
+        //TODO medicine is new medicine created with no id, fix the med id from the RxJava
+
+        RefillReminderDialog dialogRefillReminderBinding = new RefillReminderDialog(AddMedicineActivity.this, medicine.getMedId(), new RefillDialogRemindMeClickHandler() {
+            @Override
+            public void addRefillReminderToMedicine(long medicineId, int noOfDosages, int numberOfDosagesPerPack) {
+                //method implementation
+                addMedicinePresenterInterface.setDosagesForMedicine(medicineId, noOfDosages, numberOfDosagesPerPack);
+            }
+        });
+        dialogRefillReminderBinding.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialogRefillReminderBinding.show();
+        dialogRefillReminderBinding.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setSpinnerAdapter(Spinner spinner, String[] formArray) {

@@ -1,4 +1,4 @@
-package com.iti.aurora.utils.dialogs;
+package com.iti.aurora.utils.dialogs.dosedetails;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -113,7 +113,5 @@ public class DoseDetailsDialog extends Dialog {
                     public void onComplete() {
                     }
                 });
-
-
     }
 }

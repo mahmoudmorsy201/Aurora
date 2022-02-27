@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="340dp"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/refillReminderTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/doYouWantRefillReminder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/refillRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/refillReminderTitleTextView">
+
+            <RadioButton
+                android:id="@+id/remindMeRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_me" />
+
+            <RadioButton
+                android:id="@+id/noThanksRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_thanks" />
+
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/remindMeGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="
+            howManyDosagesTextView,
+            dosageUserHasTextInputLayout,
+            noOfDosagePerPackTitleTextView,
+            noOfDosagesPerPackTextInputLayout,
+            remindMeButton
+            " />
+
+        <TextView
+            android:id="@+id/howManyDosagesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/how_many_dosages_you_have"
+            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/refillRadioGroup" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dosageUserHasTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAllCaps="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/howManyDosagesTextView">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/dosageUserHasTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/no_of_dosages_you_currently_have"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minWidth="320dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/noOfDosagePerPackTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/no_of_dosages_per_pack"
+            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/dosageUserHasTextInputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/noOfDosagesPerPackTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAllCaps="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noOfDosagePerPackTitleTextView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noOfDosagesPerPackTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/enter_number_of_dosages_per_pack"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minWidth="320dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/remindMeButton"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/remind_me"
+            android:textColor="@color/white"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noOfDosagesPerPackTextInputLayout" />
+
+        <Button
+            android:id="@+id/dismissDialogButton"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/no_thanks"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noOfDosagesPerPackTextInputLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

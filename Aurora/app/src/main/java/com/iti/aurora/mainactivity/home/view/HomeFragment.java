@@ -31,8 +31,9 @@ import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenterInterface
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
-import com.iti.aurora.utils.dialogs.DoseDetailsDialog;
-import com.iti.aurora.utils.dialogs.DoseDialogClickListener;
+import com.iti.aurora.utils.dialogs.dosedetails.DoseDetailsDialog;
+import com.iti.aurora.utils.dialogs.dosedetails.DoseDialogClickListener;
+import com.iti.aurora.utils.dialogs.refillask.RefillReminderDialog;
 import com.iti.aurora.utils.workmanager.DailyWorker;
 
 import org.joda.time.DateTime;

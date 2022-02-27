@@ -49,5 +49,14 @@
     <string name="space">&#160;</string>
     <string name="back_in_five_minuts">will back in( 5 )minutes</string>
     <string name="doYouWantToSaveMedicine">Do you want to edit this medicine ?</string>
+    <string name="doYouWantRefillReminder">Do you want refill reminder ?</string>
+    <string name="remind_me">Remind me</string>
+    <string name="no_thanks">No thanks</string>
+    <string name="how_many_dosages_you_have">How many dosages you have ?</string>
+    <string name="no_of_dosages_you_currently_have">No of dosages you currently have</string>
+    <string name="no_of_dosages_per_pack">No of dosages per pack</string>
+    <string name="enter_number_of_dosages_per_pack">Enter Number of dosages per pack</string>
+    <string name="pleaseEnterNoOfCurrentDosages">Please enter no of dosages</string>
+    <string name="pleaseEnterNoOfDosagesPerPack">Please enter number of dosages per pack</string>
 
 </resources>
