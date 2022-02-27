@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -156,15 +157,29 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         };
 
         startDatepickerEditmedication_Textview.setOnClickListener(view -> {
-            new DatePickerDialog(this, startDate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            startDatepickerEditmedication_Textview.setClickable(false);
+            DatePickerDialog dialog = new DatePickerDialog(this, startDate,
+                    myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+            dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+            dialog.show();
+            if (dialog.isShowing())
+                new Handler().postDelayed(() -> startDatepickerEditmedication_Textview.setClickable(true), 1000);
+
         });
         endDateEditPicker_textview.setOnClickListener(view -> {
-            new DatePickerDialog(this, endDate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            endDateEditPicker_textview.setClickable(false);
+            DatePickerDialog dialog = new DatePickerDialog(this, endDate,
+                    myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+            dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+            dialog.show();
+            if (dialog.isShowing())
+                new Handler().postDelayed(() -> endDateEditPicker_textview.setClickable(true), 1000);
         });
-
         timePickerEdit_textview.setOnClickListener(view -> {
             new TimePickerDialog(this,
                     (view1, hourOfDay, minute) -> {
+                        timePickerEdit_textview.setClickable(false);
+
                         selectedStartDate = new DateTime(selectedStartDate.getYear(), selectedStartDate.getMonthOfYear(), selectedStartDate.getDayOfMonth(), hourOfDay, minute);
                         selectedEndDate = new DateTime(selectedEndDate.getYear(), selectedEndDate.getMonthOfYear(), selectedEndDate.getDayOfMonth(), hourOfDay, minute);
                         String AM_PM;
@@ -177,6 +192,8 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
                         }
                         timePickerEdit_textview.setText(hours + ":" + minute + " " + AM_PM);
                     }, hour, minute, false).show();
+            new Handler().postDelayed(() -> timePickerEdit_textview.setClickable(true), 1000);
+
         });
 
         editMedication_button.setOnClickListener(view -> {
@@ -337,7 +354,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         } else {
             textInputLayout_editMedication.setErrorEnabled(true);
             textInputLayout_editMedication.setError("enter name");
-            isValid = false;
+            return false;
         }
         if (Objects.requireNonNull(strengthEditMedication_inputEditText.getText().toString()).length() > 0) {
             isValid = true;
@@ -345,7 +362,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         } else {
             strengthMedicationEdit_TextInputEditText.setErrorEnabled(true);
             strengthMedicationEdit_TextInputEditText.setError("Enter Strength");
-            isValid = false;
+            return false;
         }
         if (Objects.requireNonNull(reasonEdit_inputEditText.getText()).length() > 0) {
             isValid = true;
@@ -353,49 +370,49 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         } else {
             reasonEdit_TextInputEditText.setErrorEnabled(true);
             reasonEdit_TextInputEditText.setError("Please specify reason");
-            isValid = false;
+            return false;
         }
         if (strenghtEditMedication_spinner.getSelectedItemPosition() != strenghtEditMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             strenghtEditMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (formEditMedication_spinner.getSelectedItemPosition() != formEditMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             formEditMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (recurrencyEditMedication_spinner.getSelectedItemPosition() != recurrencyEditMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             recurrencyEditMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+           return false;
         }
         if (instructionsEditMedication_spinner.getSelectedItemPosition() != instructionsEditMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;
         } else {
             instructionsEditMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (!startDatepickerEditmedication_Textview.getText().toString().equals(""))
             isValid = true;
         else {
             startDatepickerEditmedication_Textview.setHintTextColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (!endDateEditPicker_textview.getText().toString().equals(""))
             isValid = true;
         else {
             endDateEditPicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         if (!timePickerEdit_textview.getText().toString().equals(""))
             isValid = true;
         else {
             timePickerEdit_textview.setHintTextColor(getResources().getColor(R.color.warning));
-            isValid = false;
+            return false;
         }
         return isValid;
     }
