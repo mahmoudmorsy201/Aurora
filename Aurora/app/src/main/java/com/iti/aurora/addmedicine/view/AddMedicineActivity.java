@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -36,10 +35,8 @@ import com.iti.aurora.utils.selectdays.IUpdateText;
 import com.iti.aurora.utils.selectdays.SelectDaysAlertDialog;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -83,7 +80,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_add_medication);
+        setContentView(R.layout.activity_add_medicine);
         selectedStartDate = new DateTime();
         selectedEndDate = new DateTime();
         addMedicinePresenterInterface = new AddMedicinePresenter(
