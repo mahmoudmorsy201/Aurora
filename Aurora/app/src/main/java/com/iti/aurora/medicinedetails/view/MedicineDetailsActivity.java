@@ -88,7 +88,6 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
         });
 
         showMedicine(medicine);
-
     }
 
     @Override

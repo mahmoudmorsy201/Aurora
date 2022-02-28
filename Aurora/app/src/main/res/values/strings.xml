@@ -63,5 +63,7 @@
     <string name="enter_number_of_dosages_per_pack">Enter Number of dosages per pack</string>
     <string name="pleaseEnterNoOfCurrentDosages">Please enter no of dosages</string>
     <string name="pleaseEnterNoOfDosagesPerPack">Please enter number of dosages per pack</string>
+    <string name="taken">Taken</string>
+    <string name="missed">Missed</string>
 
 </resources>
