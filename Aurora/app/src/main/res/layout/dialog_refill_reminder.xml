@@ -14,7 +14,7 @@
         android:padding="24dp">
 
         <TextView
-            android:id="@+id/refillReminderTitleTextView"
+            android:id="@+id/refillMedicineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/doYouWantRefillReminder"
@@ -26,8 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
-            app:layout_constraintTop_toBottomOf="@id/refillReminderTitleTextView">
+            app:layout_constraintStart_toStartOf="@id/refillMedicineTextView"
+            app:layout_constraintTop_toBottomOf="@id/refillMedicineTextView">
 
             <RadioButton
                 android:id="@+id/remindMeRadioButton"
@@ -50,7 +50,7 @@
             android:visibility="gone"
             app:constraint_referenced_ids="
             howManyDosagesTextView,
-            dosageUserHasTextInputLayout,
+            noOfDosagesToAddTextInputLayout,
             noOfDosagePerPackTitleTextView,
             noOfDosagesPerPackTextInputLayout,
             remindMeButton,
@@ -64,11 +64,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/how_many_dosages_you_have"
-            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
+            app:layout_constraintStart_toStartOf="@id/refillMedicineTextView"
             app:layout_constraintTop_toBottomOf="@id/refillRadioGroup" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dosageUserHasTextInputLayout"
+            android:id="@+id/noOfDosagesToAddTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -96,8 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/no_of_dosages_per_pack"
-            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
-            app:layout_constraintTop_toBottomOf="@+id/dosageUserHasTextInputLayout" />
+            app:layout_constraintStart_toStartOf="@id/refillMedicineTextView"
+            app:layout_constraintTop_toBottomOf="@+id/noOfDosagesToAddTextInputLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/noOfDosagesPerPackTextInputLayout"
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/remind_me_on"
-            app:layout_constraintStart_toStartOf="@id/refillReminderTitleTextView"
+            app:layout_constraintStart_toStartOf="@id/refillMedicineTextView"
             app:layout_constraintTop_toBottomOf="@+id/noOfDosagesPerPackTextInputLayout" />
 
 

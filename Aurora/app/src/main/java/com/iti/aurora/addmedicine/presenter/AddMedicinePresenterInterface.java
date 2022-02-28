@@ -24,7 +24,7 @@ public interface AddMedicinePresenterInterface {
             DateTime startDate, DateTime endDate,
             RecurrencyModel recurrencyModel,
             List<DaysOfWeek> days,
-            int dosagesUserHave, int dosagesPerPack);
+            int dosagesUserHave, int dosagesPerPack , int remindMeOn);
 
     void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog);
 

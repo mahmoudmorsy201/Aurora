@@ -36,6 +36,7 @@
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_medicine_details.xml" value="0.33" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_dosage_reminder.xml" value="0.16" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_dose_details.xml" value="0.25" />
+        <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_refill_medicine.xml" value="0.33" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_refill_reminder.xml" value="0.25" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/fragment_medication.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/item_add_medication.xml" value="0.2898089171974522" />

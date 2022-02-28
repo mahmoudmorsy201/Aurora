@@ -234,9 +234,9 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
         RefillReminderDialog dialogRefillReminderBinding = new RefillReminderDialog(AddMedicineActivity.this, medicine.getMedId(), new RefillDialogRemindMeClickHandler() {
             @Override
-            public void addRefillReminderToMedicine(long medicineId, int noOfDosages, int numberOfDosagesPerPack) {
+            public void addRefillReminderToMedicine(long medicineId, int noOfDosages, int numberOfDosagesPerPack, int remindMeOn) {
                 //method implementation
-                addMedicinePresenterInterface.addMedicineToDbWithDosages(medicine, startDate, endDate, recurrencyModel, daysSelected, noOfDosages, numberOfDosagesPerPack);
+                addMedicinePresenterInterface.addMedicineToDbWithDosages(medicine, startDate, endDate, recurrencyModel, daysSelected, noOfDosages, numberOfDosagesPerPack, remindMeOn);
             }
 
             @Override

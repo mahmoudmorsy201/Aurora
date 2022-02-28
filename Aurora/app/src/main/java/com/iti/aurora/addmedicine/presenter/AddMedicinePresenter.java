@@ -78,9 +78,10 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     }
 
     @Override
-    public void addMedicineToDbWithDosages(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> days, int dosagesUserHave, int dosagesPerPack) {
+    public void addMedicineToDbWithDosages(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> days, int dosagesUserHave, int dosagesPerPack, int remindMeOn) {
         medicine.setDosagesLeft(dosagesUserHave);
         medicine.setDosagesPerPack(dosagesPerPack);
+        medicine.setRemindMeOn(remindMeOn);
         _repo.insertMedicine(medicine)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -66,5 +66,9 @@
     <string name="taken">Taken</string>
     <string name="missed">Missed</string>
     <string name="remind_me_on">Remind me on</string>
+    <string name="howManyDosagesToAdd">How many dosages You want to add ?</string>
+    <string name="noOfDosagesToAdd">Number of dosage to add\nYou currently have 5 dosages left </string>
+    <string name="you_currently_have">You currently Have :</string>
+    <string name="pleaseEnterNumberToAdd">Please enter number of dosages to add</string>
 
 </resources>

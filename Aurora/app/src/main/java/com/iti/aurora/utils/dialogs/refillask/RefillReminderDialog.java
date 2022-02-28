@@ -27,9 +27,11 @@ public class RefillReminderDialog extends Dialog {
 
     TextInputLayout numberOfDosageTextInputLayout;
     TextInputLayout numberOfDosagePerPackTextInputLayout;
+    TextInputLayout remindMeOnTextInputLayout;
 
     TextInputEditText numberOfDosageTextInputEditText;
     TextInputEditText numberOfDosagePerPackTextInputEditText;
+    TextInputEditText remindMeOnTextInputEditText;
 
     RadioButton remindMeRadioButton;
     RadioButton noThanksRadioButton;
@@ -52,11 +54,13 @@ public class RefillReminderDialog extends Dialog {
         remindMeRadioButton = findViewById(R.id.remindMeRadioButton);
         noThanksRadioButton = findViewById(R.id.noThanksRadioButton);
 
-        numberOfDosageTextInputLayout = findViewById(R.id.dosageUserHasTextInputLayout);
+        numberOfDosageTextInputLayout = findViewById(R.id.noOfDosagesToAddTextInputLayout);
         numberOfDosagePerPackTextInputLayout = findViewById(R.id.noOfDosagesPerPackTextInputLayout);
+        remindMeOnTextInputLayout = findViewById(R.id.remindMeOnTextInputLayout);
 
         numberOfDosageTextInputEditText = findViewById(R.id.dosageUserHasTextInputEditText);
         numberOfDosagePerPackTextInputEditText = findViewById(R.id.noOfDosagesPerPackTextInputEditText);
+        remindMeOnTextInputEditText = findViewById(R.id.remindMeOnTextInputEditText);
 
         dismissDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +106,9 @@ public class RefillReminderDialog extends Dialog {
                         numberOfDosagePerPackTextInputLayout.setError("");
                         int numberOfCurrentDosages = Integer.parseInt(numberOfDosageTextInputEditText.getText().toString());
                         int numberOfDosagesPerPack = Integer.parseInt(numberOfDosagePerPackTextInputEditText.getText().toString());
-
+                        int remindMeOnNumber = Integer.parseInt(remindMeOnTextInputEditText.getText().toString());
                         RefillReminderDialog.this.dismiss();
-                        refillDialogRemindMeClickHandler.addRefillReminderToMedicine(medicineId, numberOfCurrentDosages, numberOfDosagesPerPack);
+                        refillDialogRemindMeClickHandler.addRefillReminderToMedicine(medicineId, numberOfCurrentDosages, numberOfDosagesPerPack, remindMeOnNumber);
 
                     } else {
                         numberOfDosagePerPackTextInputLayout.setError(context.getResources().getString(R.string.pleaseEnterNoOfDosagesPerPack));

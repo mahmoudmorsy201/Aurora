@@ -2,6 +2,7 @@ package com.iti.aurora.medicinedetails.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Medicine;
 import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.dialogs.TwoButtonsDialog;
+import com.iti.aurora.utils.dialogs.refillmedicine.RefillMedicineClickHandler;
+import com.iti.aurora.utils.dialogs.refillmedicine.RefillMedicineDialog;
 
 import java.text.MessageFormat;
 
@@ -87,16 +90,27 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
         refillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RefillMedicineDialog dialog = new RefillMedicineDialog(MedicineDetailsActivity.this, medicine, new RefillMedicineClickHandler() {
+                    @Override
+                    public void refillMedicine(Medicine medicine, int noOfDosagesToAdd) {
+                        presenter.addNumberOfDosagesToMedicine(medicine, noOfDosagesToAdd);
+                    }
+                });
+                dialog.show();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        presenter.getMedicine(medicine.getMedId());
+                    }
+                });
             }
         });
-
         showMedicine(medicine);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         presenter.getMedicine(medicine.getMedId());
     }
 
@@ -114,6 +128,7 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
             numberOfBillsPerPackTextView.setText(MessageFormat.format("{0} {1}", medicine.getDosagesPerPack(), getResources().getString(R.string.dosagesPerPack)));
             instructionTextView.setText(medicine.getInstruction());
             reasonOfTakingUserValueTextView.setText(medicine.getReasonOfTaking());
+            remindMeWhenTextView.setText(MessageFormat.format("{0} {1} {2}", getResources().getString(R.string.remind_me_on), medicine.getRemindMeOn(), getResources().getString(R.string.dosageLeft)));
         }
     }
 }

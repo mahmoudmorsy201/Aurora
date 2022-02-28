@@ -8,4 +8,6 @@ public interface MedicineDetailsPresenterInterface {
 
     void getMedicine(long medId);
 
+    void addNumberOfDosagesToMedicine(Medicine medicine, int noOfDosagesToAdd);
+
 }
