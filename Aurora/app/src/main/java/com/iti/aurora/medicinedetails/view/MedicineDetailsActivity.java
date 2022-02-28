@@ -2,7 +2,6 @@ package com.iti.aurora.medicinedetails.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +17,9 @@ import com.iti.aurora.medicinedetails.presenter.MedicineDetailsPresenterInterfac
 import com.iti.aurora.model.Repository;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Medicine;
+import com.iti.aurora.model.medicine.MedicineForm;
 import com.iti.aurora.utils.Constants;
 import com.iti.aurora.utils.dialogs.TwoButtonsDialog;
-import com.iti.aurora.utils.dialogs.refillmedicine.RefillMedicineClickHandler;
 import com.iti.aurora.utils.dialogs.refillmedicine.RefillMedicineDialog;
 
 import java.text.MessageFormat;
@@ -87,25 +86,24 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
 
         editMedicineImageView.setOnClickListener(view -> startActivity(new Intent(MedicineDetailsActivity.this, EditMedsActivity.class).putExtra(Constants.MEDICINE_PASSING_FLAG, medicine)));
 
-        refillButton.setOnClickListener(new View.OnClickListener() {
+        refillButton.setOnClickListener(view -> {
+            RefillMedicineDialog dialog = new RefillMedicineDialog(MedicineDetailsActivity.this, medicine, (medicine, noOfDosagesToAdd) -> presenter.addNumberOfDosagesToMedicine(medicine, noOfDosagesToAdd));
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+            dialog.setOnDismissListener(dialogInterface -> presenter.getMedicine(medicine.getMedId()));
+        });
+
+        activeOrSuspendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RefillMedicineDialog dialog = new RefillMedicineDialog(MedicineDetailsActivity.this, medicine, new RefillMedicineClickHandler() {
-                    @Override
-                    public void refillMedicine(Medicine medicine, int noOfDosagesToAdd) {
-                        presenter.addNumberOfDosagesToMedicine(medicine, noOfDosagesToAdd);
-                    }
-                });
-                dialog.show();
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        presenter.getMedicine(medicine.getMedId());
-                    }
-                });
+                if (medicine.getActive()) {
+                    presenter.suspendMedicine(medicine);
+                } else {
+                    presenter.activateMedicine(medicine);
+                }
+                presenter.getMedicine(medicine.getMedId());
             }
         });
-        showMedicine(medicine);
     }
 
     @Override
@@ -118,11 +116,35 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
     public void showMedicine(Medicine medicine) {
         if (medicine != null) {
             medicineNameTextView.setText(medicine.getName());
+
+            if (medicine.getActive()) {
+                activeOrSuspendButton.setText(getResources().getString(R.string.active));
+            } else {
+                activeOrSuspendButton.setText(getResources().getString(R.string.suspended));
+            }
+
+            String medicineForm = medicine.getMedicineForm();
+            if (medicineForm.equalsIgnoreCase(MedicineForm.Drops.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_dropper);
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Inhaler.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_inhaler);
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Injection.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_injection);
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Pills.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_drug);
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Powder.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_powder);
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Solution.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_solution);
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Other.toString())) {
+                medicineImageView.setImageResource(R.drawable.ic_other);
+            }
+
             medicineStrengthTextView.setText(MessageFormat.format("{0} {1}", medicine.getNumberOfUnits(), medicine.getStrengthUnit()));
             if (medicine.getActive()) {
-                activeOrSuspendButton.setText(getResources().getString(R.string.suspended));
+                activeOrSuspendButton.setText(getResources().getString(R.string.suspend));
             } else {
-                activeOrSuspendButton.setText(getResources().getString(R.string.active));
+                activeOrSuspendButton.setText(getResources().getString(R.string.activate));
             }
             numberOfBillsLeftTextView.setText(MessageFormat.format("{0} {1}", medicine.getDosagesLeft(), getResources().getString(R.string.dosageLeft)));
             numberOfBillsPerPackTextView.setText(MessageFormat.format("{0} {1}", medicine.getDosagesPerPack(), getResources().getString(R.string.dosagesPerPack)));

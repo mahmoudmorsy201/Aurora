@@ -30,10 +30,11 @@
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/drawable/ic_cancel.xml" value="0.1" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/drawable/ic_outline_cancel_24.xml" value="0.1455" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/acitivty_medication_details.xml" value="0.22" />
+        <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_add_medicine.xml" value="0.5" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_edit_meds.xml" value="0.2" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_main_home.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_medicine_details.xml" value="0.33" />
+        <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/activity_medicine_details.xml" value="0.5" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_dosage_reminder.xml" value="0.16" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_dose_details.xml" value="0.25" />
         <entry key="..\:/Android/Projects/Aurora/Aurora/app/src/main/res/layout/dialog_refill_medicine.xml" value="0.33" />

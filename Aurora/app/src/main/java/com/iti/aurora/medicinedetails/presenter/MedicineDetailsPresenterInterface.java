@@ -10,4 +10,8 @@ public interface MedicineDetailsPresenterInterface {
 
     void addNumberOfDosagesToMedicine(Medicine medicine, int noOfDosagesToAdd);
 
+    void activateMedicine(Medicine medicine);
+
+    void suspendMedicine(Medicine medicine);
+
 }

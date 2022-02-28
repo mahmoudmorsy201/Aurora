@@ -129,7 +129,6 @@
             app:layout_constraintStart_toStartOf="@id/refillMedicineTextView"
             app:layout_constraintTop_toBottomOf="@+id/noOfDosagesPerPackTextInputLayout" />
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/remindMeOnTextInputLayout"
             android:layout_width="match_parent"
@@ -140,12 +139,11 @@
             app:layout_constraintTop_toBottomOf="@+id/remindMeOnTextView">
 
             <com.google.android.material.textfield.TextInputEditText
-
                 android:id="@+id/remindMeOnTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:hint="@string/no_of_dosages_you_currently_have"
+                android:hint="@string/remind_me_on"
                 android:inputType="number"
                 android:maxLines="1"
                 android:minWidth="320dp" />

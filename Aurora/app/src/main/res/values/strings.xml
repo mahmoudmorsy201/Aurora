@@ -70,5 +70,7 @@
     <string name="noOfDosagesToAdd">Number of dosage to add\nYou currently have 5 dosages left </string>
     <string name="you_currently_have">You currently Have :</string>
     <string name="pleaseEnterNumberToAdd">Please enter number of dosages to add</string>
+    <string name="suspend">Suspend</string>
+    <string name="activate">Activate</string>
 
 </resources>

@@ -54,4 +54,16 @@ public class MedicineDetailsPresenter implements MedicineDetailsPresenterInterfa
         medicine.setDosagesLeft(medicine.getDosagesLeft() + noOfDosagesToAdd);
         repositoryInterface.updateMedicine(medicine);
     }
+
+    @Override
+    public void activateMedicine(Medicine medicine) {
+        medicine.setActive(true);
+        repositoryInterface.updateMedicine(medicine);
+    }
+
+    @Override
+    public void suspendMedicine(Medicine medicine) {
+        medicine.setActive(false);
+        repositoryInterface.updateMedicine(medicine);
+    }
 }
