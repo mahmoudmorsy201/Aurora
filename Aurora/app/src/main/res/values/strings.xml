@@ -65,5 +65,6 @@
     <string name="pleaseEnterNoOfDosagesPerPack">Please enter number of dosages per pack</string>
     <string name="taken">Taken</string>
     <string name="missed">Missed</string>
+    <string name="remind_me_on">Remind me on</string>
 
 </resources>

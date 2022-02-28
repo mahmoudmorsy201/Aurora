@@ -4,4 +4,6 @@ public interface RefillDialogRemindMeClickHandler {
 
     void addRefillReminderToMedicine(long medicineId, int noOfDosages, int numberOfDosagesPerPack);
 
+    void addMedicineWithoutReminder();
+
 }

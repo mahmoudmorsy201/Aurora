@@ -62,6 +62,7 @@ public class RefillReminderDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 RefillReminderDialog.this.dismiss();
+                refillDialogRemindMeClickHandler.addMedicineWithoutReminder();
             }
         });
 

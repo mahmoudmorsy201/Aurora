@@ -12,7 +12,19 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 public interface AddMedicinePresenterInterface {
-    void addMedicineToDB(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected);
+
+    void addMedicineToDB(
+            Medicine medicine,
+            DateTime startDate, DateTime endDate,
+            RecurrencyModel recurrencyModel,
+            List<DaysOfWeek> daysSelected);
+
+    void addMedicineToDbWithDosages(
+            Medicine medicine,
+            DateTime startDate, DateTime endDate,
+            RecurrencyModel recurrencyModel,
+            List<DaysOfWeek> days,
+            int dosagesUserHave, int dosagesPerPack);
 
     void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog);
 

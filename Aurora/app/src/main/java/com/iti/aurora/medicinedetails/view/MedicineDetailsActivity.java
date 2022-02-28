@@ -37,6 +37,7 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
     TextView reasonOfTakingUserValueTextView;
 
     Button activeOrSuspendButton;
+    Button refillButton;
 
     ImageView deleteImageView;
     ImageView editMedicineImageView;
@@ -66,6 +67,7 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
         reasonOfTakingUserValueTextView = findViewById(R.id.reasonOfTakingUserValueTextView);
         deleteImageView = findViewById(R.id.deleteImageView);
         editMedicineImageView = findViewById(R.id.editImageView);
+        refillButton = findViewById(R.id.refillButton);
 
         deleteImageView.setOnClickListener(view -> TwoButtonsDialog.TwoButtonsDialogBuilder(
                 MedicineDetailsActivity.this,
@@ -80,10 +82,12 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
                 }, (dialogInterface, i) -> dialogInterface.dismiss()
         ).show());
 
-        editMedicineImageView.setOnClickListener(new View.OnClickListener() {
+        editMedicineImageView.setOnClickListener(view -> startActivity(new Intent(MedicineDetailsActivity.this, EditMedsActivity.class).putExtra(Constants.MEDICINE_PASSING_FLAG, medicine)));
+
+        refillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MedicineDetailsActivity.this, EditMedsActivity.class).putExtra(Constants.MEDICINE_PASSING_FLAG, medicine));
+
             }
         });
 
