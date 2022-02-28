@@ -12,10 +12,11 @@ public interface RemoteSourceFireStore {
     void putMedicine(Medicine medicine);
     void putTreatment(Treatment treatment);
     void putDoses(List<Dose> dosesList);
+    void putDose(Dose dose);
 
     void getUser();
     void getMedicine();
-    void getTreatment();
+    void getTreatment(String medId);
     void getDoses();
 
     void updateUserData(User user);
@@ -23,12 +24,9 @@ public interface RemoteSourceFireStore {
     void updateTreatment(Treatment treatment);
     void updateDoses(List<Dose> doseList);
 
-
     void removeUser(User user);
     void removeMedicine(Medicine medicine);
     void removeTreatment(Treatment treatment);
     void removeDoses(List<Dose> doseLists);
-
-
 
 }

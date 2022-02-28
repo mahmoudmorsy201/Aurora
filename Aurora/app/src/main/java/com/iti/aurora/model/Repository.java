@@ -89,8 +89,8 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void insertDose(Dose dose) {
-        localSource.insertDose(dose);
+    public Single<Long> insertDose(Dose dose) {
+        return localSource.insertDose(dose);
     }
 
     @Override

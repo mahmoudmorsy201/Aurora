@@ -45,6 +45,10 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         this._view = _view;
         this._repo = _repo;
         remoteSourceFireStore = FireStoreClient.getInstance();
+        //TODO for testing delete
+        remoteSourceFireStore.getUser();
+
+
     }
 
 
@@ -145,6 +149,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                         remoteSourceFireStore.putMedicine(medicineReference);
                         remoteSourceFireStore.putTreatment(treatment);
                         remoteSourceFireStore.putDoses(doses);
+
                     }
 
                     @Override

@@ -105,8 +105,8 @@ public class ConcreteLocalSource implements LocalSource {
     }
 
     @Override
-    public void insertDose(Dose dose) {
-        new Thread(() -> doseDAO.insertDose(dose)).start();
+    public Single<Long> insertDose(Dose dose) {
+        return Single.fromCallable(()-> doseDAO.insertDose(dose));
     }
 
     @Override

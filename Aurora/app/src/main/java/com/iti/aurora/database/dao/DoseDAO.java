@@ -18,7 +18,7 @@ public interface DoseDAO {
     LiveData<List<Dose>> getAllDoses();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertDose(Dose dose);
+    long insertDose(Dose dose);
 
     @Delete
     void deleteDose(Dose dose);

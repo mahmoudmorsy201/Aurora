@@ -27,7 +27,7 @@ public interface RepositoryInterface {
     LiveData<List<Treatment>> getAllStoredTreatments();
     Single<List<Treatment>> getTreatmentsMedId(long medId);
 
-    void insertDose(Dose dose);
+    Single<Long> insertDose(Dose dose);
     void deleteDose(Dose dose);
     void updateDose(Dose dose);
     @NonNull Maybe<Dose> getSpecificDose(int doseId);
