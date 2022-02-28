@@ -3,9 +3,11 @@ package com.iti.aurora.model.medicine;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity(tableName = "medicine")
 public class Medicine implements Serializable {
@@ -41,6 +43,9 @@ public class Medicine implements Serializable {
 
     @ColumnInfo(name = "medicineForm")
     private String medicineForm;
+
+    @Ignore
+    private List<Dose> doseList;
 
     /*
     public MedicineForm getMedicineForm() {
@@ -256,5 +261,13 @@ public class Medicine implements Serializable {
 
     public String getMedicineForm() {
         return medicineForm;
+    }
+
+    public List<Dose> getDoseList() {
+        return doseList;
+    }
+
+    public void setDoseList(List<Dose> doseList) {
+        this.doseList = doseList;
     }
 }

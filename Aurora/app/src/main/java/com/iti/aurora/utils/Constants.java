@@ -6,6 +6,11 @@ import android.net.Uri;
 public class Constants {
     public class FirestoreConstants {
         public static final String USERS = "users";
+        public static final String MEDICINE_FIRESTORE = "medicine";
+        public static final String TREATMENT_FIRESTORE = "treatment";
+        public static final String DOSE_FIRESTORE = "doses";
+
+
     }
 
     public static class AddMedicineConstants {

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -43,6 +44,9 @@ public class Treatment {
 
     @ColumnInfo(name = "recurrencyModel")
     private String recurrency;
+
+    @Ignore
+    private List<Medicine> medicineList;
 
 
     public Treatment() {
@@ -100,5 +104,13 @@ public class Treatment {
 
     public void setRecurrency(String recurrency) {
         this.recurrency = recurrency;
+    }
+
+    public List<Medicine> getMedicineList() {
+        return medicineList;
+    }
+
+    public void setMedicineList(List<Medicine> medicineList) {
+        this.medicineList = medicineList;
     }
 }

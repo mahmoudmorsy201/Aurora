@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
+import com.iti.aurora.firestore.FireStoreClient;
+import com.iti.aurora.firestore.RemoteSourceFireStore;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
@@ -31,6 +33,8 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     SelectDaysAlertDialog selectDaysAlertDialog;
     Medicine medicineReference;
 
+    RemoteSourceFireStore remoteSourceFireStore;
+
     Context context;
 
     public void setContext(Context context) {
@@ -40,6 +44,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     public AddMedicinePresenter(AddMedicineViewInterface _view, RepositoryInterface _repo) {
         this._view = _view;
         this._repo = _repo;
+        remoteSourceFireStore = FireStoreClient.getInstance();
     }
 
 
@@ -57,9 +62,12 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     public void onSuccess(@NonNull Long aLong) {
                         medicine.setMedId(aLong);
                         medicineReference = medicine;
+
                         Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
                         treatment.setRecurrency(recurrencyModel.name());
                         treatment.setDaysList(daysSelected);
+
+
 
                         insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel, daysSelected);
                     }
@@ -134,6 +142,9 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                             doses = new ArrayList<>();
                         }
                         _repo.insertDoses(doses);
+                        remoteSourceFireStore.putMedicine(medicineReference);
+                        remoteSourceFireStore.putTreatment(treatment);
+                        remoteSourceFireStore.putDoses(doses);
                     }
 
                     @Override
