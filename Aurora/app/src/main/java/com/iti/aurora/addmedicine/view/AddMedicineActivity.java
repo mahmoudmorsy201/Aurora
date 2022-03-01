@@ -79,6 +79,9 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getSupportActionBar() != null)
+            this.getSupportActionBar().hide();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medicine);
         selectedStartDate = new DateTime();

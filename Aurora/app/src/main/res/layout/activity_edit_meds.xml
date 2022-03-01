@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     android:background="@color/background_color">
 
+    <RelativeLayout
+        android:id="@+id/topBarCustom_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/topBarHeight"
+        android:background="@color/primary_color"
+        android:minHeight="@dimen/topBarHeight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Edit Medicine"
+            android:textColor="@color/white"
+            android:textSize="@dimen/topBarTextSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_editMedication"
@@ -14,7 +35,8 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/topBarCustom_relativeLayout">
+
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameEditMedication_inputEditText"
