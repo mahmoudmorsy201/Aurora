@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -55,6 +56,7 @@ public class DoseAlarmManager {
         PendingIntent intent1 = PendingIntent.getBroadcast(context, Integer.parseInt(String.valueOf(doseModel.getDoseId())), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
+
     }
 
 

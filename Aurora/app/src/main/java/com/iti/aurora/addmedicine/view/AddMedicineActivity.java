@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -345,6 +346,10 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
             isValid = true;
         else {
             timePicker_textview.setHintTextColor(getResources().getColor(R.color.warning));
+            return false;
+        }
+        if (System.currentTimeMillis()+ 59 * 1000 > selectedStartDate.getMillis()) {
+            Toast.makeText(this, "time should be at least 1 min from now", Toast.LENGTH_SHORT).show();
             return false;
         }
         return isValid;
