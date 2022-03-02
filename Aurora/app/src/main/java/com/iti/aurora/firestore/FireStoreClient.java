@@ -14,6 +14,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Any;
 import com.iti.aurora.model.User;
@@ -23,6 +24,7 @@ import com.iti.aurora.model.medicine.Treatment;
 import com.iti.aurora.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,9 @@ public class FireStoreClient implements RemoteSourceFireStore {
     private List<Medicine> medicineList;
     private List<Treatment> treatmentList;
     private List<Dose> doseList;
+    private Medicine medicineToGet;
+    private Treatment treatmentToGet;
+    private Dose doseToGet;
 
     private FireStoreClient() {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -47,7 +52,7 @@ public class FireStoreClient implements RemoteSourceFireStore {
         userRef = firebaseFirestore.collection(Constants.FirestoreConstants.USERS);
         medicineList = new ArrayList<>();
         treatmentList = new ArrayList<>();
-        doseList =  new ArrayList<>();
+        doseList = new ArrayList<>();
 
     }
 
@@ -148,49 +153,88 @@ public class FireStoreClient implements RemoteSourceFireStore {
     }
 
     @Override
-    public void getMedicine() {
-        userRef.document(firebaseUser.getUid())
+    public void getMedicine(String medId) {
+        DocumentReference docRef = userRef.document(firebaseUser.getUid())
                 .collection(Constants.FirestoreConstants.MEDICINE_FIRESTORE)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .document(medId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    List<DocumentSnapshot> documentSnapshots = task.getResult().getDocuments();
-                    for (DocumentSnapshot document : documentSnapshots) {
-                        Medicine medicine = document.toObject(Medicine.class);
-                        medicineList.add(medicine);
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        medicineToGet = document.toObject(Medicine.class);
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
                     }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
 
-
     }
 
     @Override
-    public void getTreatment(String medId) {
-        userRef.document(firebaseUser.getUid())
+    public void getTreatment(String treatmentId) {
+        DocumentReference docRef = userRef.document(firebaseUser.getUid())
                 .collection(Constants.FirestoreConstants.MEDICINE_FIRESTORE)
                 .document(medId)
                 .collection(Constants.FirestoreConstants.TREATMENT_FIRESTORE)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    List<DocumentSnapshot> documentSnapshots = task.getResult().getDocuments();
-                    for (DocumentSnapshot document : documentSnapshots) {
-                        Treatment treatment = document.toObject(Treatment.class);
-                        treatmentList.add(treatment);
-                        Log.d(TAG, "onComplete: "+ treatment.getRecurrency());
-                    }
+                .document(treatmentId);
+
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    treatmentToGet = document.toObject(Treatment.class);
+                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                } else {
+                    Log.d(TAG, "No such document");
                 }
+            } else {
+                Log.d(TAG, "get failed with ", task.getException());
             }
         });
-
     }
 
     @Override
-    public void getDoses() {
+    public void getDoseById(String doseId) {
+        DocumentReference documentRef = firebaseFirestore.collection(Constants.FirestoreConstants.USERS).document(firebaseAuth.getCurrentUser().getUid())
+                .collection(Constants.FirestoreConstants.MEDICINE_FIRESTORE)
+                .document(medId)
+                .collection(Constants.FirestoreConstants.TREATMENT_FIRESTORE)
+                .document(medId)
+                .collection(Constants.FirestoreConstants.DOSE_FIRESTORE)
+                .document(doseId);
+
+        documentRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    doseToGet = document.toObject(Dose.class);
+                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                } else {
+                    Log.d(TAG, "No such document");
+                }
+            } else {
+                Log.d(TAG, "get failed with ", task.getException());
+            }
+        });
+    }
+
+    public void getDoseByDay(Date start, Date end) {
+        CollectionReference collectionReference = firebaseFirestore.collection(Constants.FirestoreConstants.USERS).document(firebaseAuth.getCurrentUser().getUid())
+                .collection(Constants.FirestoreConstants.MEDICINE_FIRESTORE)
+                .document(medId)
+                .collection(Constants.FirestoreConstants.TREATMENT_FIRESTORE)
+                .document(medId)
+                .collection(Constants.FirestoreConstants.DOSE_FIRESTORE);
+         collectionReference.whereGreaterThanOrEqualTo("timeToTake", start)
+                .whereLessThanOrEqualTo("timeToTake",end).orderBy("timeToTake")
+                ;
+
 
     }
 
@@ -215,6 +259,11 @@ public class FireStoreClient implements RemoteSourceFireStore {
     }
 
     @Override
+    public void updateDose(Dose dose) {
+
+    }
+
+    @Override
     public void removeUser(User user) {
 
     }
@@ -232,5 +281,17 @@ public class FireStoreClient implements RemoteSourceFireStore {
     @Override
     public void removeDoses(List<Dose> doseLists) {
 
+    }
+
+    public Medicine getMedicineToGet() {
+        return medicineToGet;
+    }
+
+    public Treatment getTreatmentToGet() {
+        return treatmentToGet;
+    }
+
+    public Dose getDoseToGet() {
+        return doseToGet;
     }
 }

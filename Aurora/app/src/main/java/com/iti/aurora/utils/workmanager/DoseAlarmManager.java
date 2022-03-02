@@ -52,7 +52,7 @@ public class DoseAlarmManager {
         //Log.d("WORK_MANAGER", "setAlarmSingle: constructor");
         intent.putExtra(Constants.NotificationUtil.MEDICINE_TIME, new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
         intent.putExtra(Constants.NotificationUtil.DOSE_ID_KEY, doseModel.getDoseId());
-        PendingIntent intent1 = PendingIntent.getBroadcast(context, doseModel.getDoseId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent intent1 = PendingIntent.getBroadcast(context, Integer.parseInt(String.valueOf(doseModel.getDoseId())), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
     }
@@ -69,7 +69,7 @@ public class DoseAlarmManager {
             //intent.putExtra("Message", doseModel.getDoseId());
             intent.putExtra("RemindDate", new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
             //intent.putExtra("id", doseModel.getDoseId());
-            PendingIntent intent1 = PendingIntent.getBroadcast(context, doseModel.getDoseId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent intent1 = PendingIntent.getBroadcast(context, Integer.parseInt(String.valueOf(doseModel.getDoseId())), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alaManager[i] = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alaManager[i].setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
             i++;

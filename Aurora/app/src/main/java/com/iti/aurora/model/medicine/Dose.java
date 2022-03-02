@@ -31,7 +31,7 @@ public class Dose implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "doseId")
     @NonNull
-    private int doseId;
+    private long doseId;
 
     @ColumnInfo(name = "medId")
     @NonNull
@@ -84,11 +84,11 @@ public class Dose implements Serializable {
         this.treatmentId = treatmentId;
     }
 
-    public int getDoseId() {
+    public long getDoseId() {
         return doseId;
     }
 
-    public void setDoseId(int doseId) {
+    public void setDoseId(long doseId) {
         this.doseId = doseId;
     }
 

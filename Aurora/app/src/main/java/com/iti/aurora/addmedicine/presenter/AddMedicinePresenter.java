@@ -45,10 +45,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         this._view = _view;
         this._repo = _repo;
         remoteSourceFireStore = FireStoreClient.getInstance();
-        //TODO for testing delete
-        remoteSourceFireStore.getUser();
-
-
     }
 
 
@@ -70,7 +66,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                         Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
                         treatment.setRecurrency(recurrencyModel.name());
                         treatment.setDaysList(daysSelected);
-
 
 
                         insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel, daysSelected);
@@ -177,10 +172,11 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                             doses = new ArrayList<>();
                         }
                         _repo.insertDoses(doses);
-                        remoteSourceFireStore.putMedicine(medicineReference);
-                        remoteSourceFireStore.putTreatment(treatment);
-                        remoteSourceFireStore.putDoses(doses);
 
+                        //TODO look what is wrong with firebase
+                        //remoteSourceFireStore.putMedicine(medicineReference);
+                        //remoteSourceFireStore.putTreatment(treatment);
+                        //remoteSourceFireStore.putDoses(doses);
                     }
 
                     @Override

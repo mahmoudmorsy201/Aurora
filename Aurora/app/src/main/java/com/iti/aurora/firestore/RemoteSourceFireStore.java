@@ -15,14 +15,16 @@ public interface RemoteSourceFireStore {
     void putDose(Dose dose);
 
     void getUser();
-    void getMedicine();
+    void getMedicine(String medId);
     void getTreatment(String medId);
-    void getDoses();
+    void getDoseById(String doseId);
+
 
     void updateUserData(User user);
     void updateMedicine(Medicine medicine);
     void updateTreatment(Treatment treatment);
     void updateDoses(List<Dose> doseList);
+    void updateDose(Dose dose);
 
     void removeUser(User user);
     void removeMedicine(Medicine medicine);
