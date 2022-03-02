@@ -48,4 +48,22 @@ public class MedicineDetailsPresenter implements MedicineDetailsPresenterInterfa
             }
         });
     }
+
+    @Override
+    public void addNumberOfDosagesToMedicine(Medicine medicine, int noOfDosagesToAdd) {
+        medicine.setDosagesLeft(medicine.getDosagesLeft() + noOfDosagesToAdd);
+        repositoryInterface.updateMedicine(medicine);
+    }
+
+    @Override
+    public void activateMedicine(Medicine medicine) {
+        medicine.setActive(true);
+        repositoryInterface.updateMedicine(medicine);
+    }
+
+    @Override
+    public void suspendMedicine(Medicine medicine) {
+        medicine.setActive(false);
+        repositoryInterface.updateMedicine(medicine);
+    }
 }

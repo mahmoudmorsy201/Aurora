@@ -40,7 +40,7 @@ public class NotifierAlarm extends BroadcastReceiver {
         int NOTIFICATION_ID = new Random(System.currentTimeMillis()).nextInt(120);
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ALARM)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                 .build();
         //todo here luncher activity name form notification click
         Intent intent1 = new Intent(context, MainActivity.class);
@@ -57,6 +57,8 @@ public class NotifierAlarm extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             channel = new NotificationChannel("my_channel_01", "Medicine", NotificationManager.IMPORTANCE_HIGH);
             channel.setSound(alarmsound, audioAttributes);
+            channel.enableLights(true);
+            channel.enableVibration(true);
         }
 //todo add icon of medication
         Notification notification = builder

@@ -89,7 +89,10 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null)
+            this.getSupportActionBar().hide();
         setContentView(R.layout.activity_edit_meds);
         selectedStartDate = new DateTime();
         selectedEndDate = new DateTime();
@@ -388,7 +391,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
             isValid = true;
         } else {
             recurrencyEditMedication_spinner.getChildAt(0).setBackgroundColor(getResources().getColor(R.color.warning));
-           return false;
+            return false;
         }
         if (instructionsEditMedication_spinner.getSelectedItemPosition() != instructionsEditMedication_spinner.getItemIdAtPosition(0)) {
             isValid = true;

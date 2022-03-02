@@ -83,6 +83,37 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     }
 
     @Override
+    public void addMedicineToDbWithDosages(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> days, int dosagesUserHave, int dosagesPerPack, int remindMeOn) {
+        medicine.setDosagesLeft(dosagesUserHave);
+        medicine.setDosagesPerPack(dosagesPerPack);
+        medicine.setRemindMeOn(remindMeOn);
+        _repo.insertMedicine(medicine)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Long>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Long aLong) {
+                        medicine.setMedId(aLong);
+                        medicineReference = medicine;
+
+                        Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
+                        treatment.setRecurrency(recurrencyModel.name());
+                        treatment.setDaysList(days);
+
+                        insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel, days);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                });
+    }
+
+    @Override
     public void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog) {
         this.selectDaysAlertDialog = selectDaysAlertDialog;
     }
@@ -165,7 +196,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         DateTime currentWhole = new DateTime(System.currentTimeMillis());
         DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
         if (startDate.isBefore(nextDayAt12Am)) {
-            //todo doseId
             DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()), medicineReference);
         }
 

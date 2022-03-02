@@ -79,6 +79,9 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getSupportActionBar() != null)
+            this.getSupportActionBar().hide();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medicine);
         selectedStartDate = new DateTime();
@@ -231,15 +234,17 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
 
     @Override
     public void addMedicine(Medicine medicine, DateTime startDate, DateTime endDate, RecurrencyModel recurrencyModel, List<DaysOfWeek> daysSelected) {
-        addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel, daysSelected);
-
-        //TODO medicine is new medicine created with no id, fix the med id from the RxJava
 
         RefillReminderDialog dialogRefillReminderBinding = new RefillReminderDialog(AddMedicineActivity.this, medicine.getMedId(), new RefillDialogRemindMeClickHandler() {
             @Override
-            public void addRefillReminderToMedicine(long medicineId, int noOfDosages, int numberOfDosagesPerPack) {
+            public void addRefillReminderToMedicine(long medicineId, int noOfDosages, int numberOfDosagesPerPack, int remindMeOn) {
                 //method implementation
-                addMedicinePresenterInterface.setDosagesForMedicine(medicineId, noOfDosages, numberOfDosagesPerPack);
+                addMedicinePresenterInterface.addMedicineToDbWithDosages(medicine, startDate, endDate, recurrencyModel, daysSelected, noOfDosages, numberOfDosagesPerPack, remindMeOn);
+            }
+
+            @Override
+            public void addMedicineWithoutReminder() {
+                addMedicinePresenterInterface.addMedicineToDB(medicine, startDate, endDate, recurrencyModel, daysSelected);
             }
         });
         dialogRefillReminderBinding.getWindow().setBackgroundDrawableResource(android.R.color.transparent);

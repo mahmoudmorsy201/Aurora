@@ -29,7 +29,18 @@ public class Medicine implements Serializable {
     @ColumnInfo(name = "reasonOfTaking")
     private String reasonOfTaking;
 
-//    @TypeConverters(DoseListConverter.class)
+    @ColumnInfo(name = "remindMeOn")
+    private int remindMeOn;
+
+    public int getRemindMeOn() {
+        return remindMeOn;
+    }
+
+    public void setRemindMeOn(int remindMeOn) {
+        this.remindMeOn = remindMeOn;
+    }
+
+    //    @TypeConverters(DoseListConverter.class)
 //    private List<Dose> doseList;
 
     @ColumnInfo(name = "isActive")
