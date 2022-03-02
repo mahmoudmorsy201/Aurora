@@ -51,6 +51,8 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar()!=null)
+            getSupportActionBar().hide();
         setContentView(R.layout.activity_medicine_details);
         repositoryInterface = Repository.getInstance(ConcreteLocalSource.getInstance(this), this);
 
