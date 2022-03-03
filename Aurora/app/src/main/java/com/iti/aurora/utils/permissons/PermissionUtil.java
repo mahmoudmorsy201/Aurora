@@ -32,10 +32,9 @@ public class PermissionUtil {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             String packageName = context.getPackageName();
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            if (pm.isIgnoringBatteryOptimizations(packageName)) {
-                // if you want to desable doze mode for this package
-
-            } else { // if you want to enable doze mode
+            if (pm.isIgnoringBatteryOptimizations(packageName))
+                intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            else {
                 intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                 intent.setData(Uri.parse("package:" + packageName));
             }

@@ -44,6 +44,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
         setContentView(R.layout.activity_sign_up);
         initUI();
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -111,28 +113,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
 
     @Override
     public void authFailed() {
-        AlertDialog.Builder builder = TwoButtonsDialog.TwoButtonsDialogBuilder(SignUpActivity.this,
-                getResources().getString(R.string.email_already_registered),
-                getResources().getString(R.string.doYouWantToSignInDirect),
-                getResources().getString(R.string.sign_in),
-                getResources().getString(R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        SignUpActivity.this.finish();
-                    }
-                },
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }
-
-        );
-        builder.show();
+        Toast.makeText(this, "Something went wrong please try again later", Toast.LENGTH_LONG).show();
     }
 
     @Override

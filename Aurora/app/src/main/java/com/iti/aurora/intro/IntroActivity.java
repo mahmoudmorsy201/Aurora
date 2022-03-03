@@ -22,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
+import com.iti.aurora.usersystem.signup.view.SignUpActivity;
 
 public class IntroActivity extends Activity {
 
@@ -103,7 +104,7 @@ public class IntroActivity extends Activity {
 
     private void launchHomeScreen() {
         // todo prefernces for skip   prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(IntroActivity.this, MainActivity.class));
+        startActivity(new Intent(IntroActivity.this, SignUpActivity.class));
 
         finish();
     }

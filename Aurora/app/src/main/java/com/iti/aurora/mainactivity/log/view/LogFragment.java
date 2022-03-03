@@ -52,7 +52,7 @@ public class LogFragment extends Fragment implements LogFragmentViewInterface {
 
 
         logCalendarView = view.findViewById(R.id.logCalendarView);
-
+        logCalendarView.setMaxDate(System.currentTimeMillis());
         DateTime now = new DateTime(System.currentTimeMillis());
 
         DateTime startDate = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0);

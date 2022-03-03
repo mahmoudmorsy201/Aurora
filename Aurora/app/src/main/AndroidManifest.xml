@@ -26,20 +26,17 @@
 
         <activity
             android:name=".editmeds.view.EditMedsActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"/>
 
         <activity android:name=".MainActivity" />
 
         <activity android:name=".mainactivity.healthtaker.UserMedsActivity" />
 
         <activity android:name=".intro.IntroActivity" />
-
+        <activity android:name=".usersystem.signup.view.SignUpActivity" />
         <activity
-            android:name=".usersystem.signup.view.SignUpActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
