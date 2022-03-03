@@ -50,11 +50,11 @@
 
     <Button
         android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_margin="12dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         android:text="@string/sign_up"
         android:textAlignment="center" />
 
@@ -63,8 +63,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="20dp"
-        android:layout_weight="0.4" />
+        android:layout_marginHorizontal="12dp"
+        android:layout_weight=".5" />
 
 
 </LinearLayout>

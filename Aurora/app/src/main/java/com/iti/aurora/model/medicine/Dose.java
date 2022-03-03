@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.iti.aurora.database.DateConverter;
 
 import java.io.Serializable;
@@ -50,6 +52,12 @@ public class Dose implements Serializable {
     @TypeConverters({DateConverter.class})
     private Date timeTaken;
 
+    @Ignore
+    DocumentReference user;
+
+    @Ignore
+    DocumentReference medicine;
+
     public Dose() {
     }
 
@@ -57,6 +65,7 @@ public class Dose implements Serializable {
         this.medId = medId;
         this.treatmentId = treatmentId;
         this.timeToTake = timeToTake;
+        isTaken = false;
     }
 
     public Dose(Date timeToTake, Boolean isTaken, Date timeTaken, long medId, long treatmentId) {
@@ -114,6 +123,22 @@ public class Dose implements Serializable {
 
     public void setTimeTaken(Date timeTaken) {
         this.timeTaken = timeTaken;
+    }
+
+    public DocumentReference getUser() {
+        return user;
+    }
+
+    public void setUser(DocumentReference user) {
+        this.user = user;
+    }
+
+    public DocumentReference getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(DocumentReference medicine) {
+        this.medicine = medicine;
     }
 
     @Override

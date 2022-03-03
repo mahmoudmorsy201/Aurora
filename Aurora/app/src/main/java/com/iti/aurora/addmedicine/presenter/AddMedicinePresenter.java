@@ -1,11 +1,12 @@
 package com.iti.aurora.addmedicine.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
-import com.iti.aurora.firestore.FireStoreClient;
-import com.iti.aurora.firestore.RemoteSourceFireStore;
+import com.iti.aurora.firestore.FirestoreClient;
+import com.iti.aurora.firestore.RemoteSourceFirestore;
+import com.iti.aurora.firestore.firestoremirror.FireStoreMirrorClientMirror;
+import com.iti.aurora.firestore.firestoremirror.RemoteSourceFireStoreMirror;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
@@ -33,7 +34,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     SelectDaysAlertDialog selectDaysAlertDialog;
     Medicine medicineReference;
 
-    RemoteSourceFireStore remoteSourceFireStore;
+    RemoteSourceFirestore remoteSourceFireStore;
 
     Context context;
 
@@ -44,7 +45,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     public AddMedicinePresenter(AddMedicineViewInterface _view, RepositoryInterface _repo) {
         this._view = _view;
         this._repo = _repo;
-        remoteSourceFireStore = FireStoreClient.getInstance();
+        remoteSourceFireStore = FirestoreClient.getInstance();
     }
 
 
@@ -62,12 +63,9 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     public void onSuccess(@NonNull Long aLong) {
                         medicine.setMedId(aLong);
                         medicineReference = medicine;
-
                         Treatment treatment = new Treatment(medicine.getMedId(), startDate.toDate(), endDate.toDate());
                         treatment.setRecurrency(recurrencyModel.name());
                         treatment.setDaysList(daysSelected);
-
-
                         insertTreatment(treatment, aLong, startDate, endDate, recurrencyModel, daysSelected);
                     }
 
@@ -106,11 +104,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     public void onError(@NonNull Throwable e) {
                     }
                 });
-    }
-
-    @Override
-    public void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog) {
-        this.selectDaysAlertDialog = selectDaysAlertDialog;
     }
 
     @Override
@@ -171,12 +164,11 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                         } else {
                             doses = new ArrayList<>();
                         }
-                        _repo.insertDoses(doses);
+                        setDoseIdForDoseList(doses);
+                        remoteSourceFireStore.putMedicine(medicineReference, doses);
 
-                        //TODO look what is wrong with firebase
-                        //remoteSourceFireStore.putMedicine(medicineReference);
-                        //remoteSourceFireStore.putTreatment(treatment);
-                        //remoteSourceFireStore.putDoses(doses);
+
+
                     }
 
                     @Override
@@ -185,6 +177,37 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                     }
                 });
     }
+
+    private void setDoseIdForDoseList(List<Dose> doseList) {
+        for(Dose dose : doseList) {
+            _repo.insertDose(dose)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<Long>() {
+                        @Override
+                        public void onSubscribe(@NonNull Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(@NonNull Long aLong) {
+                            dose.setDoseId(aLong);
+                            _repo.insertDose(dose);
+                        }
+
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void getSelectedDaysAlertdialog(SelectDaysAlertDialog selectDaysAlertDialog) {
+        this.selectDaysAlertDialog = selectDaysAlertDialog;
+    }
+
 
     private List<Dose> generatePeriodicDoses(long medID, long treatmentId, DateTime startDate, DateTime endDate, int noOfHours) {
         List<Dose> doseList = new ArrayList<>();

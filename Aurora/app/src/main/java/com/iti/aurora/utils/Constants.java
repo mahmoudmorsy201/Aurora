@@ -16,6 +16,7 @@ public class Constants {
         public static final String DOSE_FIRESTORE = "doses";
 
 
+        public static final String USERS2 = "users2";
     }
 
     public static class AddMedicineConstants {
