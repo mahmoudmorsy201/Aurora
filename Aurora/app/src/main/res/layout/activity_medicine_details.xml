@@ -103,6 +103,7 @@
 
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/remindersTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,6 +115,7 @@
         app:layout_constraintTop_toBottomOf="@id/medicineImageView" />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/activeOrSuspendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
