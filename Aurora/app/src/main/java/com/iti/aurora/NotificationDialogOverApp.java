@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class NotificationDialogOverApp {
     private WindowManager.LayoutParams mParams;
     private WindowManager mWindowManager;
     private LayoutInflater layoutInflater;
+    private ImageView medicnieIcon_ImageView;
     TextView timerTextView, medicnieNameTextView, instructionTextView, reasonTextView;
     RepositoryInterface repositoryInterface;
 
@@ -52,6 +54,23 @@ public class NotificationDialogOverApp {
         medicnieNameTextView = mView.findViewById(R.id.medicnieName_textview);
         instructionTextView = mView.findViewById(R.id.instruction_TextView);
         reasonTextView = mView.findViewById(R.id.reason_TextView);
+        medicnieIcon_ImageView=mView.findViewById(R.id.medicnieIcon_ImageView);
+
+       // medicnieIcon_ImageView.setImageResource();
+        if (medicine.getMedicineForm().equalsIgnoreCase("Pills"))
+            medicnieIcon_ImageView.setBackgroundResource(R.drawable.ic_medicine_pill);
+        else if (medicine.getMedicineForm().equalsIgnoreCase("Injection"))
+            medicnieIcon_ImageView.setBackgroundResource(R.drawable.icon_vaccine);
+        else if (medicine.getMedicineForm().equalsIgnoreCase("Powder"))
+            medicnieIcon_ImageView.setBackgroundResource(R.drawable.icon_powder);
+        else if (medicine.getMedicineForm().equalsIgnoreCase("Drops"))
+            medicnieIcon_ImageView.setBackgroundResource(R.drawable.ic_dropper);
+        else if (medicine.getMedicineForm().equalsIgnoreCase("Inhaler"))
+            medicnieIcon_ImageView.setBackgroundResource(R.drawable.ic_inhaler);
+        else
+            medicnieIcon_ImageView.setBackgroundResource(R.drawable.ic_medicine_pill);
+
+
 
         timerTextView.setText(time);
         medicnieNameTextView.setText(medicine.getName().concat(" " + medicine.getMedicineForm()));

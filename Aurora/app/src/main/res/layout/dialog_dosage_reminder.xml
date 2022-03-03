@@ -4,13 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:background="@null"
+    android:layout_margin="20dp"
+
+    android:background="@color/background_color"
     app:cardCornerRadius="32dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background_color"
         android:orientation="vertical">
 
         <TextView
@@ -21,7 +23,7 @@
             android:gravity="center"
             android:text="1:53 AM"
             android:textColor="@color/black"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -37,7 +39,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_baseline_add_circle_outline_24"
                 app:tint="@color/primary_color" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
