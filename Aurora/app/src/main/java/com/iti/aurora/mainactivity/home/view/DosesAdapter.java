@@ -80,6 +80,8 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
                             holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_dropper);
                         else if (medicine.getMedicineForm().equalsIgnoreCase("Inhaler"))
                             holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_inhaler);
+                        else if (medicine.getMedicineForm().equalsIgnoreCase("Solution"))
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_solution);
                         else
                             holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_medicine_pill);
 
