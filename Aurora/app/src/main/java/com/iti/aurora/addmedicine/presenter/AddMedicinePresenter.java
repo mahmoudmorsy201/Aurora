@@ -3,10 +3,9 @@ package com.iti.aurora.addmedicine.presenter;
 import android.content.Context;
 
 import com.iti.aurora.addmedicine.view.AddMedicineViewInterface;
+
 import com.iti.aurora.firestore.FirestoreClient;
 import com.iti.aurora.firestore.RemoteSourceFirestore;
-import com.iti.aurora.firestore.firestoremirror.FireStoreMirrorClientMirror;
-import com.iti.aurora.firestore.firestoremirror.RemoteSourceFireStoreMirror;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;

@@ -27,8 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.iti.aurora.R;
 import com.iti.aurora.addmedicine.view.AddMedicineActivity;
 import com.iti.aurora.database.ConcreteLocalSource;
-import com.iti.aurora.firestore.FirestoreClient;
-import com.iti.aurora.firestore.RemoteSourceFirestore;
 import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenter;
 import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenterInterface;
 import com.iti.aurora.model.Repository;

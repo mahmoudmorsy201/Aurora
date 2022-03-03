@@ -14,9 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aurora">
+
         <activity
             android:name=".medicinedetails.view.MedicineDetailsActivity"
             android:exported="false" />
+
         <activity
             android:name=".addmedicine.view.AddMedicineActivity"
             android:exported="false"
@@ -24,31 +26,27 @@
 
         <activity
             android:name=".editmeds.view.EditMedsActivity"
-            android:exported="true">
+            android:exported="true"/>
 
-
-        </activity>
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"/>
 
+        <activity android:name=".MainActivity" />
+
+        <activity android:name=".mainactivity.healthtaker.UserMedsActivity" />
+
+        <activity android:name=".intro.IntroActivity" />
+
+        <activity
+            android:name=".usersystem.signup.view.SignUpActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
-        </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".intro.IntroActivity"/>
-        <activity
-            android:name=".usersystem.signup.view.SignUpActivity"
-            android:exported="true"
-
-            android:windowSoftInputMode="stateVisible|adjustResize">
-
-
         </activity>
 
         <receiver android:name=".utils.workmanager.NotifierAlarm" />
