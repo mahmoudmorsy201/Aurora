@@ -138,7 +138,7 @@ public class MedicineDetailsActivity extends AppCompatActivity implements Medici
                 medicineImageView.setImageResource(R.drawable.ic_powder);
             } else if (medicineForm.equalsIgnoreCase(MedicineForm.Solution.toString())) {
                 medicineImageView.setImageResource(R.drawable.ic_solution);
-            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Other.toString())) {
+            } else if (medicineForm.equalsIgnoreCase(MedicineForm.Others.toString())) {
                 medicineImageView.setImageResource(R.drawable.ic_other);
             }
 

@@ -7,5 +7,5 @@ public enum MedicineForm {
     Powder,
     Drops,
     Inhaler,
-    Other
+    Others
 }

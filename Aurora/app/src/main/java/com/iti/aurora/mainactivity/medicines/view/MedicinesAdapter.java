@@ -43,6 +43,20 @@ public class MedicinesAdapter extends RecyclerView.Adapter<MedicinesAdapter.View
         holder.medicineNameTextView.setText(medicineList.get(position).getName());
         holder.medicineStrengthTextView.setText(medicineList.get(position).getNumberOfUnits() + " " + medicineList.get(position).getStrengthUnit());
         holder.medicineInstructionsTextView.setText(medicineList.get(position).getInstruction());
+        if (medicineList.get(position).getMedicineForm().equalsIgnoreCase("Pills"))
+            holder.medicineFormImageView.setBackgroundResource(R.drawable.ic_medicine_pill);
+        else if (medicineList.get(position).getMedicineForm().equalsIgnoreCase("Injection"))
+            holder.medicineFormImageView.setBackgroundResource(R.drawable.icon_vaccine);
+        else if (medicineList.get(position).getMedicineForm().equalsIgnoreCase("Powder"))
+            holder.medicineFormImageView.setBackgroundResource(R.drawable.icon_powder);
+        else if (medicineList.get(position).getMedicineForm().equalsIgnoreCase("Drops"))
+            holder.medicineFormImageView.setBackgroundResource(R.drawable.ic_dropper);
+        else if (medicineList.get(position).getMedicineForm().equalsIgnoreCase("Inhaler"))
+            holder.medicineFormImageView.setBackgroundResource(R.drawable.ic_inhaler);
+        else
+            holder.medicineFormImageView.setBackgroundResource(R.drawable.ic_inhaler);
+
+
         holder.containerConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

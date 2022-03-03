@@ -72,5 +72,21 @@
     <string name="pleaseEnterNumberToAdd">Please enter number of dosages to add</string>
     <string name="suspend">Suspend</string>
     <string name="activate">Activate</string>
+    <string name="refilMsgVofification">Don\'\'t forget to Refill ( {0} {1} ) you set refill reminder when left ({2}) you have now only ({3})</string>
+    <string name="next" >Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+    <string name="description_medicine">Pill reminder and alarm for all medication needs pill and medicine reminders, drug-to-drug interactions</string>
+    <string name="title_alert">Pill reminder and alarm for all\n medication needs and refill</string>
+    <string name="description_alert">helps you manage and take your medication on time with our first-of-its-kind cloud-synced mobile medication management platform</string>
+    <string name="description_log"><![CDATA[" Daily, weekly & monthly med reporting with logbook to share with your doctor"]]></string>
+    <string name="title_log">Medicine reporting</string>
+    <string name="title_taker_intro">Family and caregiver support</string>
+    <string name="description_taker">connect your caregivers or doctor on the app so they’ll see real-time reports on how you’re doing taking your medication as directed.</string>
+    <string name="powerOptimizationTitle">"Do you want to Enable App in Optimize mode "</string>
+    <string name="OptimzeTitle">"Ignore Power Optimze "</string>
+    <string name="yes">Yes</string>
+    <string name="EnableNotiDialog">Enable Notification Dialog</string>
+    <string name="EnableNotiDialogContent">Do you want  enable notification dialog to show you foses and refill over apps?</string>
 
 </resources>

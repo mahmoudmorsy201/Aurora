@@ -1,67 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/containerRelativeLayout"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="4dp"
     android:padding="4dp">
 
     <ImageView
         android:id="@+id/notificationIconImageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:src="@drawable/ic_notification_layer_list" />
-
-    <TextView
-        android:id="@+id/medicationTimeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:padding="4dp"
         android:layout_marginStart="12dp"
-        android:layout_toEndOf="@+id/notificationIconImageView"
-        android:text="09:00 AM"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/medicationNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_toEndOf="@+id/medicationTimeTextView"
         android:text="Medication 1"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/notificationIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/notificationIconImageView" />
 
     <TextView
         android:id="@+id/medicationDosageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/medicationTimeTextView"
-        android:layout_alignStart="@id/medicationTimeTextView"
-        android:layout_marginTop="4dp"
         android:text="1.00 Capsule"
-        android:textSize="18sp" />
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/notificationIconImageView"
+        app:layout_constraintStart_toStartOf="@+id/medicationNameTextView" />
 
-    <ImageView
-        android:id="@+id/medicationTypeImageView"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_alignTop="@id/medicationTimeTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/ic_outline_medical_services_24"
-        app:tint="@color/purple_700" />
+    <TextView
+        android:id="@+id/medicationTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/notificationIconImageView"
+        android:text="09:00 AM"
+        android:textSize="14sp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/medicationDosageTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/medicationNameTextView" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/medicationDosageTextView"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/darker_gray" />
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
