@@ -43,14 +43,14 @@ public class UserMedsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_meds);
         firebaseFirestore = FirebaseFirestore.getInstance();
         userMedsRecyclerView = findViewById(R.id.userMedsRecyclerview);
-        String docRef = getIntent().getStringExtra("UserDocRef");
-        userMedsAdapter = new UserMedsAdapter(UserMedsActivity.this , new ArrayList<>());
+        String docRef = "/" + getIntent().getStringExtra("UserDocRef");
+        userMedsAdapter = new UserMedsAdapter(UserMedsActivity.this, new ArrayList<>());
         userMedsRecyclerView.setLayoutManager(new LinearLayoutManager(UserMedsActivity.this, RecyclerView.VERTICAL, false));
         userMedsRecyclerView.setAdapter(userMedsAdapter);
 
         DocumentReference documentReference = firebaseFirestore.document(docRef);
 
-        firebaseFirestore.collection("doses").whereEqualTo("user", documentReference).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("doses").whereEqualTo("user", "/" + documentReference.getPath()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

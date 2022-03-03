@@ -145,7 +145,7 @@ public class Dose implements Serializable {
     }
 
     public void setMedicine(String medicine) {
-        this.medicine = "/" + medicine;
+        this.medicine =  medicine;
     }
 
     @Override
