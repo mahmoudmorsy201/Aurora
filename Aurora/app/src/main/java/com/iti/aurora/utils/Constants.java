@@ -1,7 +1,12 @@
 package com.iti.aurora.utils;
 
+import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
+
+import com.iti.aurora.R;
+import com.iti.aurora.model.medicine.MedicineForm;
 
 public class Constants {
     public class FirestoreConstants {
@@ -28,8 +33,13 @@ public class Constants {
         public static final String MEDICINE_TIME = "MEDICINE_TIME";
 
         public static final String MEDICNIE_SPECS = "MEDICNIE_SPECS";
+        public static final AudioAttributes audioAttributesFactory = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build();
     }
 
+    //todo don't forget to add in production
     public static class WorkManagerConstants {
         public static final int INTERVAL_TIME_HOUR = 24;
         public static final String WORK_MANAGER_NAME = "DAILY_WORK_MANAGER";
@@ -40,6 +50,31 @@ public class Constants {
         public static final String USER_SIGN_IN = "SignIn";
     }
 
-
     public static final String MEDICINE_PASSING_FLAG = "MEDICINE_PASSING_FLAG";
+
+    public static int getMedicnieIcon(String medicnieName) {
+
+        switch (medicnieName) {
+            case "Pills":
+                return R.drawable.medicine_noti;
+            case "Solution":
+                return R.drawable.mixture;
+
+            case "Injection":
+                return R.drawable.injection;
+
+            case "Powder":
+                return R.drawable.ic_powder;
+
+            case "Drops":
+                return R.drawable.ic_dropper;
+
+            case "Inhaler":
+                return R.drawable.ic_inhaler;
+
+            default:
+                return R.drawable.ic_baseline_notifications_24;
+
+        }
+    }
 }
