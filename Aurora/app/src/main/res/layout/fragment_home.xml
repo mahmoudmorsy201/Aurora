@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:layout_marginBottom="60dp">
 
     <CalendarView
@@ -34,9 +35,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainCalendarView"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="0.92"
         app:rippleColor="@color/primary_color"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/ic_add_fab" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

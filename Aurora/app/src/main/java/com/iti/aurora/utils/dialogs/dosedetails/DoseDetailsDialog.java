@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,7 @@ import com.iti.aurora.R;
 import com.iti.aurora.model.RepositoryInterface;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
+import com.iti.aurora.utils.notification.NotificationCenter;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -21,6 +23,7 @@ import org.joda.time.format.DateTimeFormat;
 import java.text.MessageFormat;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -72,6 +75,8 @@ public class DoseDetailsDialog extends Dialog {
 
         takeDosageImageButton.setOnClickListener(view -> {
             listener.markDoseAsTaken(dose, medicine);
+            if (medicine.getDosagesLeft() <= medicine.getRemindMeOn())
+                NotificationCenter.showRefill(getContext(), medicine);
             this.dismiss();
         });
 
@@ -83,7 +88,7 @@ public class DoseDetailsDialog extends Dialog {
         if (dose.getTaken() == null || !dose.getTaken()) {
             takeDosageImageButton.setEnabled(true);
             takeDosageImageButton.setAlpha(1.0f);
-        }else{
+        } else {
             takeDosageImageButton.setEnabled(false);
             takeDosageImageButton.setAlpha(0.1f);
         }

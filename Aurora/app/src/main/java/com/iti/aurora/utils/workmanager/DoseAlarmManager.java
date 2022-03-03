@@ -55,7 +55,8 @@ public class DoseAlarmManager {
         intent.putExtra(Constants.NotificationUtil.DOSE_ID_KEY, doseModel.getDoseId());
         PendingIntent intent1 = PendingIntent.getBroadcast(context, Integer.parseInt(String.valueOf(doseModel.getDoseId())), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
+        if (new DateTime(doseModel.getTimeToTake()).getMillis() > System.currentTimeMillis())
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
 
     }
 

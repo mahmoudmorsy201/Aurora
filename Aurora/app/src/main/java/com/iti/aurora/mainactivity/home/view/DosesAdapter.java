@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.aurora.R;
@@ -69,6 +70,19 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
                     public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Medicine medicine) {
                         holder.medicationNameTextView.setText(medicine.getName());
                         holder.medicationDosageTextView.setText(MessageFormat.format("{0} {1} of {2}", medicine.getNumberOfUnits(), medicine.getMedicineForm(), medicine.getStrengthUnit()));
+                        if (medicine.getMedicineForm().equalsIgnoreCase("Pills"))
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_medicine_pill);
+                        else if (medicine.getMedicineForm().equalsIgnoreCase("Injection"))
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.icon_vaccine);
+                        else if (medicine.getMedicineForm().equalsIgnoreCase("Powder"))
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.icon_powder);
+                        else if (medicine.getMedicineForm().equalsIgnoreCase("Drops"))
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_dropper);
+                        else if (medicine.getMedicineForm().equalsIgnoreCase("Inhaler"))
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_inhaler);
+                        else
+                            holder.notificationIconImageView.setBackgroundResource(R.drawable.ic_medicine_pill);
+
 
                     }
 
@@ -89,7 +103,7 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
         DateTimeFormatter fmt2 = DateTimeFormat.forPattern("hh:mm a");
         String dateString = date.toString(fmt);
         String timeString = date.toString(fmt2);
-        holder.medicationTimeTextView.setText(MessageFormat.format("{0} {1}", timeString, dateString));
+        holder.medicationTimeTextView.setText(MessageFormat.format("{0} ", timeString));
         holder.containerRelativeLayout.setOnClickListener(view -> dosesRecyclerItemClick.showDoseDialog(doseList.get(position)));
     }
 
@@ -100,7 +114,7 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout containerRelativeLayout;
+        ConstraintLayout containerRelativeLayout;
         ImageView notificationIconImageView;
         TextView medicationTimeTextView;
         TextView medicationNameTextView;

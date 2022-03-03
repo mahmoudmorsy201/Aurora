@@ -161,12 +161,9 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
 
         startDatepickerEditmedication_Textview.setOnClickListener(view -> {
             startDatepickerEditmedication_Textview.setClickable(false);
-            DatePickerDialog dialog = new DatePickerDialog(this, startDate,
-                    myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
-            dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
-            dialog.show();
-            if (dialog.isShowing())
-                new Handler().postDelayed(() -> startDatepickerEditmedication_Textview.setClickable(true), 1000);
+
+            Toast.makeText(this, "can't edit start date ", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(() -> startDatepickerEditmedication_Textview.setClickable(true), 1000);
 
         });
         endDateEditPicker_textview.setOnClickListener(view -> {
@@ -258,6 +255,8 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
         endDateEditPicker_textview.setText(dateFormat.format(treatments.get(0).getEndDate()));
         recurrencyEditMedication_spinner.setSelection(selectDosesRecurrencyArrayPosition);
         timePickerEdit_textview.setText(outPut);
+        selectedStartDate = new DateTime(treatments.get(0).getStartDate().getTime());
+        selectedEndDate = new DateTime(treatments.get(0).getEndDate().getTime());
         showSelectedDays();
     }
 
@@ -417,6 +416,7 @@ public class EditMedsActivity extends AppCompatActivity implements EditMedicineV
             timePickerEdit_textview.setHintTextColor(getResources().getColor(R.color.warning));
             return false;
         }
+
         return isValid;
     }
 
