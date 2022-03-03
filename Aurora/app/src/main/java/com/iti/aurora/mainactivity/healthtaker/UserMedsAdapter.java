@@ -64,7 +64,7 @@ public class UserMedsAdapter extends RecyclerView.Adapter<UserMedsAdapter.ViewHo
             holder.isTakenTextView.setText(context.getResources().getString(R.string.taken));
             holder.isTakenImageView.setImageResource(R.drawable.ic_taken_done);
         }
-        DocumentReference documentReference = doseList.get(position).getMedicine();
+        //DocumentReference documentReference = doseList.get(position).getMedicine();
 //        firebaseFirestore.document(documentReference.toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 //            @Override
 //            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -74,17 +74,17 @@ public class UserMedsAdapter extends RecyclerView.Adapter<UserMedsAdapter.ViewHo
 //                }
 //            }
 //        });
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Medicine medicine = task.getResult().toObject(Medicine.class);
-                    holder.nameMedicineTextView.setText(medicine.getName());
-                    holder.strenghtTextView.setText(MessageFormat.format("{0} {1}", medicine.getNumberOfUnits(), medicine.getStrengthUnit()));
-                    holder.reasonMedicnieTextView.setText(medicine.getReasonOfTaking());
-                }
-            }
-        });
+//        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    Medicine medicine = task.getResult().toObject(Medicine.class);
+//                    holder.nameMedicineTextView.setText(medicine.getName());
+//                    holder.strenghtTextView.setText(MessageFormat.format("{0} {1}", medicine.getNumberOfUnits(), medicine.getStrengthUnit()));
+//                    holder.reasonMedicnieTextView.setText(medicine.getReasonOfTaking());
+//                }
+//            }
+//        });
 
     }
 

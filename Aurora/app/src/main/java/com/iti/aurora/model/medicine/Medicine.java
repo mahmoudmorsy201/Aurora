@@ -50,7 +50,7 @@ public class Medicine implements Serializable {
     private int unit;
 
     @Ignore
-    private DocumentReference user;
+    private String user;
 
     public Medicine() {
     }
@@ -225,11 +225,11 @@ public class Medicine implements Serializable {
         this.remindMeOn = remindMeOn;
     }
 
-    public DocumentReference getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(DocumentReference user) {
-        this.user = user;
+    public void setUser(String user) {
+        this.user = "/" + user;
     }
 }

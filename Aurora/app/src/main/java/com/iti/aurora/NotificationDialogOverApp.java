@@ -63,7 +63,7 @@ public class NotificationDialogOverApp {
         reasonTextView.setText(medicine.getReasonOfTaking());
         mView.findViewById(R.id.skip_button).setOnClickListener(view -> close());
         mView.findViewById(R.id.snooze_button).setOnClickListener(view -> {
-            DoseAlarmManager doseAlarmManager = new DoseAlarmManager(context);
+            DoseAlarmManager doseAlarmManager = new DoseAlarmManager(context, dose, medicine , true);
             Toast.makeText(context, R.string.back_in_five_minuts, Toast.LENGTH_SHORT).show();
             close();
         });

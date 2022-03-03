@@ -18,6 +18,7 @@ import com.iti.aurora.utils.workmanager.DoseAlarmManager;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -165,9 +166,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                         }
                         setDoseIdForDoseList(doses);
                         remoteSourceFireStore.putMedicine(medicineReference, doses);
-
-
-
                     }
 
                     @Override
@@ -178,7 +176,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     }
 
     private void setDoseIdForDoseList(List<Dose> doseList) {
-        for(Dose dose : doseList) {
+        for (Dose dose : doseList) {
             _repo.insertDose(dose)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -191,6 +189,11 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
                         @Override
                         public void onSuccess(@NonNull Long aLong) {
                             dose.setDoseId(aLong);
+                            DateTime currentWhole = new DateTime(System.currentTimeMillis());
+                            DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
+                            if (new DateTime(dose.getTimeToTake()).isBefore(nextDayAt12Am)) {
+                                DoseAlarmManager alarmManager = new DoseAlarmManager(context, new Dose(aLong, dose.getMedId(), dose.getTreatmentId(), dose.getTimeToTake()), medicineReference);
+                            }
                             _repo.insertDose(dose);
                         }
 
@@ -211,14 +214,8 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
     private List<Dose> generatePeriodicDoses(long medID, long treatmentId, DateTime startDate, DateTime endDate, int noOfHours) {
         List<Dose> doseList = new ArrayList<>();
 
-        DateTime currentWhole = new DateTime(System.currentTimeMillis());
-        DateTime nextDayAt12Am = new DateTime(currentWhole.getYear(), currentWhole.getMonthOfYear(), currentWhole.getDayOfMonth(), 0, 0).plusDays(1);
-        if (startDate.isBefore(nextDayAt12Am)) {
-            DoseAlarmManager alarmManager = new DoseAlarmManager(this.context, new Dose(medID, treatmentId, startDate.toDate()), medicineReference);
-        }
 
         while (startDate.isBefore(endDate)) {
-
             Dose dose = new Dose(medID, treatmentId, startDate.toDate());
             doseList.add(dose);
             startDate = startDate.plusHours(noOfHours);

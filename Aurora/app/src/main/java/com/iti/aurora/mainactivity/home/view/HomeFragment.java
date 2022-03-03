@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
 
         //todo don't forget change interval time -> use Constant
         periodic = new PeriodicWorkRequest.Builder(DailyWorker.class,
-                1,
+                5,
                 TimeUnit.MINUTES)
                 .addTag(workMangerName)
                 .build();

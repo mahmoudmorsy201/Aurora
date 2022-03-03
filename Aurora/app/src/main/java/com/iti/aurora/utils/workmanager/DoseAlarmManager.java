@@ -25,30 +25,26 @@ import java.util.List;
 
 public class DoseAlarmManager {
 
-    /* public DoseAlarmManager(Context context, List<Dose> doseModelList) {
-         setAlarm(context, doseModelList);
-     }*/
-    Medicine medicine;
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     public DoseAlarmManager(Context context, Dose doseMode, Medicine medicine) {
         setAlarmSingle(context, doseMode, medicine);
         Log.d("WORK_MANAGER", "DoseAlarmManager: Constructor");
     }
 
+
     //todo add dose model to dialog notification
-    public DoseAlarmManager(Context context) {
-        setAlarmSnooze(context);
+    public DoseAlarmManager(Context context, Dose dose, Medicine medicine, boolean isSnooze) {
+        setAlarmSnooze(context, dose, medicine);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setAlarmSingle(Context context, Dose doseModel, Medicine medicine) {
         Intent intent = new Intent(context, NotifierAlarm.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.NotificationUtil.MEDICNIE_SPECS, (Serializable) medicine);
+        bundle.putSerializable(Constants.NotificationUtil.MEDICNIE_SPECS, medicine);
         intent.putExtra("MED_DATA", bundle);
 
-        bundle.putSerializable(Constants.NotificationUtil.DOSE_SPECS, (Serializable) doseModel);
+        bundle.putSerializable(Constants.NotificationUtil.DOSE_SPECS, doseModel);
         intent.putExtra("DOSE_DATA", bundle);
         //Log.d("WORK_MANAGER", "setAlarmSingle: constructor");
         intent.putExtra(Constants.NotificationUtil.MEDICINE_TIME, new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
@@ -69,9 +65,7 @@ public class DoseAlarmManager {
         for (Dose doseModel : doseModelList) {
             Intent intent = new Intent(context, NotifierAlarm.class);
 
-            //intent.putExtra("Message", doseModel.getDoseId());
             intent.putExtra("RemindDate", new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
-            //intent.putExtra("id", doseModel.getDoseId());
             PendingIntent intent1 = PendingIntent.getBroadcast(context, Integer.parseInt(String.valueOf(doseModel.getDoseId())), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alaManager[i] = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alaManager[i].setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, new DateTime(doseModel.getTimeToTake()).getMillis(), intent1);
@@ -81,15 +75,20 @@ public class DoseAlarmManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setAlarmSnooze(Context context) {
+    private void setAlarmSnooze(Context context, Dose doseModel, Medicine medicine) {
         Intent intent = new Intent(context, NotifierAlarm.class);
-        Log.d("WORK_MANAGER", "setAlarmSingle: constructor");
-        intent.putExtra("Message", "doseModel.getTimeTaken()");
-        intent.putExtra("RemindDate", "reminder daate");
-        intent.putExtra("id", 12);
-        PendingIntent intent1 = PendingIntent.getBroadcast(context, 12, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.NotificationUtil.MEDICNIE_SPECS, medicine);
+        intent.putExtra("MED_DATA", bundle);
+
+        bundle.putSerializable(Constants.NotificationUtil.DOSE_SPECS, doseModel);
+        intent.putExtra("DOSE_DATA", bundle);
+        intent.putExtra(Constants.NotificationUtil.MEDICINE_TIME, new DateTime(doseModel.getTimeToTake()).toString(DateTimeFormat.forPattern("hh:mm")));
+        intent.putExtra(Constants.NotificationUtil.DOSE_ID_KEY, doseModel.getDoseId());
+        PendingIntent intent1 = PendingIntent.getBroadcast(context, Integer.parseInt(String.valueOf(doseModel.getDoseId())), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 8, intent1);
+
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000 * 10, intent1);
     }
 
 }

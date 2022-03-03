@@ -53,12 +53,19 @@ public class Dose implements Serializable {
     private Date timeTaken;
 
     @Ignore
-    DocumentReference user;
+    String user;
 
     @Ignore
-    DocumentReference medicine;
+    String medicine;
 
     public Dose() {
+    }
+
+    public Dose(long doseId, long medId, long treatmentId, Date timeToTake) {
+        this.doseId = doseId;
+        this.medId = medId;
+        this.treatmentId = treatmentId;
+        this.timeToTake = timeToTake;
     }
 
     public Dose(long medId, long treatmentId, Date timeToTake) {
@@ -125,20 +132,20 @@ public class Dose implements Serializable {
         this.timeTaken = timeTaken;
     }
 
-    public DocumentReference getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(DocumentReference user) {
-        this.user = user;
+    public void setUser(String user) {
+        this.user = "/" + user;
     }
 
-    public DocumentReference getMedicine() {
+    public String getMedicine() {
         return medicine;
     }
 
-    public void setMedicine(DocumentReference medicine) {
-        this.medicine = medicine;
+    public void setMedicine(String medicine) {
+        this.medicine = "/" + medicine;
     }
 
     @Override

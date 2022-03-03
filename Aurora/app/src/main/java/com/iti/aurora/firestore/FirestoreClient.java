@@ -64,7 +64,7 @@ public class FirestoreClient implements RemoteSourceFirestore {
         DocumentReference userReference = firebaseFirestore.collection("users2")
                 .document(firebaseUser.getUid());
 
-        medicine.setUser(userReference);
+        medicine.setUser(userReference.getPath());
         firebaseFirestore.collection("medicines")
                 .add(medicine).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -73,8 +73,8 @@ public class FirestoreClient implements RemoteSourceFirestore {
                 DocumentReference medicineReference = firebaseFirestore.collection("medicines")
                         .document(documentReference.getId());
                 for (Dose dose : doseList) {
-                    dose.setMedicine(medicineReference);
-                    dose.setUser(userReference);
+                    dose.setMedicine(medicineReference.getPath());
+                    dose.setUser(userReference.getPath());
                     firebaseFirestore.collection("doses").add(dose).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {

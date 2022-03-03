@@ -50,18 +50,6 @@ public class UserMedsActivity extends AppCompatActivity {
 
         DocumentReference documentReference = firebaseFirestore.document(docRef);
 
-        /*
-        firebaseFirestore.collection("medicines").whereEqualTo("user", documentReference).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        medicineList.add(doc.toObject(Medicine.class));
-                    }
-                }
-            }
-        });*/
-
         firebaseFirestore.collection("doses").whereEqualTo("user", documentReference).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
