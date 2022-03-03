@@ -23,9 +23,12 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.iti.aurora.R;
 import com.iti.aurora.addmedicine.view.AddMedicineActivity;
 import com.iti.aurora.database.ConcreteLocalSource;
+import com.iti.aurora.firestore.FirestoreClient;
+import com.iti.aurora.firestore.RemoteSourceFirestore;
 import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenter;
 import com.iti.aurora.mainactivity.home.presenter.HomeFragmentPresenterInterface;
 import com.iti.aurora.model.Repository;
@@ -119,9 +122,6 @@ public class HomeFragment extends Fragment implements HomeFragmentViewInterface 
             Intent intent = new Intent(context, AddMedicineActivity.class);
             startActivity(intent);
         });
-
-        //FirebaseUser user = getIntent().getParcelableExtra("GOOGLE_ACCOUNT");
-        //mainActivityPresenterInterface.getLocalDoses();
 
         return view;
     }

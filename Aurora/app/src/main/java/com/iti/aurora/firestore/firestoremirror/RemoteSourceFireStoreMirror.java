@@ -1,4 +1,4 @@
-package com.iti.aurora.firestore;
+package com.iti.aurora.firestore.firestoremirror;
 
 import com.iti.aurora.model.User;
 import com.iti.aurora.model.medicine.Dose;
@@ -7,7 +7,7 @@ import com.iti.aurora.model.medicine.Treatment;
 
 import java.util.List;
 
-public interface RemoteSourceFireStore {
+public interface RemoteSourceFireStoreMirror {
     void putUser(User user);
     void putMedicine(Medicine medicine);
     void putTreatment(Treatment treatment);

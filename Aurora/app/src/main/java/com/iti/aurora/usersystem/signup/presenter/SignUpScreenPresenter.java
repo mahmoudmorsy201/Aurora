@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.iti.aurora.MainActivity;
 import com.iti.aurora.R;
@@ -39,15 +40,14 @@ public class SignUpScreenPresenter implements SignUpScreenPresenterInterface {
     private FirebaseFirestore fireStore;
     private FirebaseAuth firebaseAuth;
     private CollectionReference userRef;
-    private SharedPreferencesFactory sharedPreferencesFactory;
+    private static final String TAG = "SignUpScreenPresenter";
 
     public SignUpScreenPresenter(SignUpViewInterface _view, Activity activity) {
         this._view = _view;
         this.activity = activity;
         firebaseAuth = FirebaseAuth.getInstance();
         fireStore = FirebaseFirestore.getInstance();
-        userRef = fireStore.collection(Constants.FirestoreConstants.USERS);
-        sharedPreferencesFactory = SharedPreferencesFactory.getInstance(activity);
+        userRef = fireStore.collection(Constants.FirestoreConstants.USERS2);
     }
 
 
@@ -81,16 +81,16 @@ public class SignUpScreenPresenter implements SignUpScreenPresenterInterface {
                             _view.authFailed();
                         } else {
                             Intent intent = new Intent(activity, MainActivity.class);
-                            CollectionReference reference = fireStore.collection(Constants.FirestoreConstants.USERS);
+                            user.setDocumentReference(userRef.document(firebaseAuth.getCurrentUser().getUid()));
+                            CollectionReference reference = fireStore.collection(Constants.FirestoreConstants.USERS2);
                             reference.document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).set(user)
                                     .addOnSuccessListener(aVoid -> {
-                                        savedFlagInSharedPrefs(true);
                                         _view.authSucceeded();
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("", "Register Error is :" + e.getMessage());
-                                    _view.authFailed();
+                                    Log.d("TAG", "Register Error is :" + e.getMessage());
+                                    // _view.authFailed();
                                 }
                             });
                             activity.startActivity(intent);
@@ -99,6 +99,24 @@ public class SignUpScreenPresenter implements SignUpScreenPresenterInterface {
                     }
                 });
 
+    }
+
+    private void signIn(String email, String password) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -119,22 +137,19 @@ public class SignUpScreenPresenter implements SignUpScreenPresenterInterface {
                     Log.d("TAG", "Account created");
                     assert firebaseUser != null;
                     User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail());
+                    user.setDocumentReference(userRef.document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()));
                     userRef.document(firebaseAuth.getCurrentUser().getUid()).set(user)
                             .addOnSuccessListener(aVoid -> {
-                                savedFlagInSharedPrefs(true);
                                 _view.loginSucceededWithGoogle();
                             }).addOnFailureListener(e -> {
-                                Log.d("", "Register Error is :" + e.getMessage());
-                                _view.loginFailedWithGoogle();
-                            });
-                    activity.startActivity(intent);
-                    activity.finish();
+                        Log.d("TAG", "Register Error is :" + e.getMessage());
+                        _view.loginFailedWithGoogle();
+                    });
                 } else {
                     Log.i("TAG", "Already Existed");
-                    sharedPreferencesFactory.putBoolean(true);
-                    activity.startActivity(intent);
-                    activity.finish();
                 }
+                activity.startActivity(intent);
+                activity.finish();
 
             }
         });
@@ -142,29 +157,12 @@ public class SignUpScreenPresenter implements SignUpScreenPresenterInterface {
     }
 
 
-    private void savedFlagInSharedPrefs(boolean isSignedIn) {
-        sharedPreferencesFactory.putBoolean(isSignedIn);
-    }
-
     @Override
-    public void getSignInBooleanFromShared() {
-        boolean flagSignIn = sharedPreferencesFactory.getBoolean();
-        if (flagSignIn) {
+    public void checkFirebaseUser() {
+        if (firebaseAuth.getCurrentUser() != null) {
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
             activity.finish();
-        }
-    }
-
-    @Override
-    public void checkFirebaseUser() {
-        if(firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(activity,MainActivity.class);
-            sharedPreferencesFactory.putBoolean(true);
-            activity.startActivity(intent);
-            activity.finish();
-        }else {
-            sharedPreferencesFactory.putBoolean(false);
         }
     }
 

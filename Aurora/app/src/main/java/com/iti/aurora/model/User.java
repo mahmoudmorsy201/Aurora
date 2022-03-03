@@ -2,6 +2,7 @@ package com.iti.aurora.model;
 
 
 
+import com.google.firebase.firestore.DocumentReference;
 import com.iti.aurora.model.medicine.Treatment;
 
 import java.io.Serializable;
@@ -9,9 +10,23 @@ import java.util.List;
 
 public class User implements Serializable {
 
+    //patient
     private String username;
     private String email;
+    //health takers
     private List<User> users;
+
+    private DocumentReference documentReference;
+
+    public DocumentReference getDocumentReference() {
+        return documentReference;
+    }
+
+    public void setDocumentReference(DocumentReference documentReference) {
+        this.documentReference = documentReference;
+    }
+
+    //todo remove treatment list if u don't need it
     private List<Treatment> treatmentList;
 
     public User() {

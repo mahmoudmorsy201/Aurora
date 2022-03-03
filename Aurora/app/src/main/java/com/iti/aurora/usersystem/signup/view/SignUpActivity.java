@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     @Override
     protected void onStart() {
         super.onStart();
-        signUpScreenPresenterInterface.getSignInBooleanFromShared();
+
         signUpScreenPresenterInterface.checkFirebaseUser();
     }
 
@@ -119,7 +119,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(SignUpActivity.this , MainActivity.class);
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                         startActivity(intent);
                         SignUpActivity.this.finish();
                     }

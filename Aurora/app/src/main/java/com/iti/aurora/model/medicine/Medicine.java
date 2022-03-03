@@ -1,20 +1,19 @@
 package com.iti.aurora.model.medicine;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.firestore.DocumentReference;
+
 import java.io.Serializable;
-import java.util.List;
 
 @Entity(tableName = "medicine")
 public class Medicine implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "medId")
-    @NonNull
     long medId;
 
     @ColumnInfo(name = "medName")
@@ -32,17 +31,6 @@ public class Medicine implements Serializable {
     @ColumnInfo(name = "remindMeOn")
     private int remindMeOn;
 
-    public int getRemindMeOn() {
-        return remindMeOn;
-    }
-
-    public void setRemindMeOn(int remindMeOn) {
-        this.remindMeOn = remindMeOn;
-    }
-
-    //    @TypeConverters(DoseListConverter.class)
-//    private List<Dose> doseList;
-
     @ColumnInfo(name = "isActive")
     private Boolean isActive;
 
@@ -55,62 +43,17 @@ public class Medicine implements Serializable {
     @ColumnInfo(name = "medicineForm")
     private String medicineForm;
 
-    @Ignore
-    private List<Dose> doseList;
-
-    /*
-    public MedicineForm getMedicineForm() {
-        MedicineForm medicineForm;
-        switch (this.medicineForm) {
-            case 0:
-                medicineForm = MedicineForm.Pill;
-                break;
-            case 1:
-                medicineForm = MedicineForm.Solution;
-                break;
-            case 2:
-                medicineForm = MedicineForm.Injection;
-                break;
-            case 3:
-                medicineForm = MedicineForm.Powder;
-                break;
-            case 4:
-                medicineForm = MedicineForm.Drops;
-                break;
-            case 5:
-                medicineForm = MedicineForm.Inhaler;
-                break;
-            default:
-                medicineForm = MedicineForm.Other;
-        }
-        return medicineForm;
-    }
-
-    public void setMedicineForm(MedicineForm medicineForm) {
-        if (medicineForm == MedicineForm.Pill)
-            this.medicineForm = 0;
-        else if (medicineForm == MedicineForm.Solution)
-            this.medicineForm = 1;
-        else if (medicineForm == MedicineForm.Injection)
-            this.medicineForm = 2;
-        else if (medicineForm == MedicineForm.Powder)
-            this.medicineForm = 3;
-        else if (medicineForm == MedicineForm.Drops)
-            this.medicineForm = 4;
-        else if (medicineForm == MedicineForm.Inhaler)
-            this.medicineForm = 5;
-        else if (medicineForm == MedicineForm.Other) {
-            this.medicineForm = 6;
-        }
-    }
-
-     */
-
     @ColumnInfo(name = "numberOfUnits")
     private int numberOfUnits;
 
     @ColumnInfo(name = "StrengthUnits")
     private int unit;
+
+    @Ignore
+    private DocumentReference user;
+
+    public Medicine() {
+    }
 
     public StrengthUnit getStrengthUnit() {
         StrengthUnit strengthUnit;
@@ -274,11 +217,19 @@ public class Medicine implements Serializable {
         return medicineForm;
     }
 
-    public List<Dose> getDoseList() {
-        return doseList;
+    public int getRemindMeOn() {
+        return remindMeOn;
     }
 
-    public void setDoseList(List<Dose> doseList) {
-        this.doseList = doseList;
+    public void setRemindMeOn(int remindMeOn) {
+        this.remindMeOn = remindMeOn;
+    }
+
+    public DocumentReference getUser() {
+        return user;
+    }
+
+    public void setUser(DocumentReference user) {
+        this.user = user;
     }
 }

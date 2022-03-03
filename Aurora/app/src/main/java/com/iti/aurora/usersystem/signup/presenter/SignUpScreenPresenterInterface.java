@@ -5,10 +5,9 @@ import com.iti.aurora.model.User;
 
 public interface SignUpScreenPresenterInterface {
 
-    void createNewUser(User user,String password);
-    void firebaseAuthWithGoogle(String idToken);
+    void createNewUser(User user, String password);
 
-    void getSignInBooleanFromShared();
+    void firebaseAuthWithGoogle(String idToken);
 
     void checkFirebaseUser();
 }

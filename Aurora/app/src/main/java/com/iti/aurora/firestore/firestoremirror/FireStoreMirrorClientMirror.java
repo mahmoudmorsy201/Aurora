@@ -1,4 +1,4 @@
-package com.iti.aurora.firestore;
+package com.iti.aurora.firestore.firestoremirror;
 
 import android.util.Log;
 
@@ -14,9 +14,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.Any;
 import com.iti.aurora.model.User;
 import com.iti.aurora.model.medicine.Dose;
 import com.iti.aurora.model.medicine.Medicine;
@@ -29,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FireStoreClient implements RemoteSourceFireStore {
+public class FireStoreMirrorClientMirror implements RemoteSourceFireStoreMirror {
 
     private FirebaseFirestore firebaseFirestore;
     private static final String TAG = "FireStoreClient";
@@ -37,7 +34,7 @@ public class FireStoreClient implements RemoteSourceFireStore {
     private FirebaseUser firebaseUser;
     private CollectionReference userRef;
     private String medId;
-    private static FireStoreClient fireStoreClient = null;
+    private static FireStoreMirrorClientMirror fireStoreClientMirror = null;
     private List<Medicine> medicineList;
     private List<Treatment> treatmentList;
     private List<Dose> doseList;
@@ -45,7 +42,7 @@ public class FireStoreClient implements RemoteSourceFireStore {
     private Treatment treatmentToGet;
     private Dose doseToGet;
 
-    private FireStoreClient() {
+    private FireStoreMirrorClientMirror() {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -56,12 +53,12 @@ public class FireStoreClient implements RemoteSourceFireStore {
 
     }
 
-    public static FireStoreClient getInstance() {
-        if (fireStoreClient == null) {
-            fireStoreClient = new FireStoreClient();
+    public static FireStoreMirrorClientMirror getInstance() {
+        if (fireStoreClientMirror == null) {
+            fireStoreClientMirror = new FireStoreMirrorClientMirror();
 
         }
-        return fireStoreClient;
+        return fireStoreClientMirror;
     }
 
 
@@ -231,9 +228,8 @@ public class FireStoreClient implements RemoteSourceFireStore {
                 .collection(Constants.FirestoreConstants.TREATMENT_FIRESTORE)
                 .document(medId)
                 .collection(Constants.FirestoreConstants.DOSE_FIRESTORE);
-         collectionReference.whereGreaterThanOrEqualTo("timeToTake", start)
-                .whereLessThanOrEqualTo("timeToTake",end).orderBy("timeToTake")
-                ;
+        collectionReference.whereGreaterThanOrEqualTo("timeToTake", start)
+                .whereLessThanOrEqualTo("timeToTake", end).orderBy("timeToTake");
 
 
     }
