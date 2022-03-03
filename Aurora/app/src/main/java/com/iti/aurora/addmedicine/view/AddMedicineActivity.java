@@ -253,8 +253,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AddMedicin
         dialogRefillReminderBinding.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                Intent intent = new Intent(AddMedicineActivity.this, MainActivity.class);
-                startActivity(intent);
+                AddMedicineActivity.this.finish();
             }
         });
     }
